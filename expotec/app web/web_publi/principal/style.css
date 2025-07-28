@@ -1,0 +1,52 @@
+body{
+    margin: 0;
+    font-family: sans-serif;
+
+}
+
+.container_nav{
+    background-color:#f2ebd5 ;
+    display: flex;
+    justify-content: space-between; /* separa los dos bloques */
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.container_prin{
+    background-color: red;
+}
+
+.registro, .contacto{
+    display: flex;
+    list-style: none;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+a{
+    text-decoration:none;
+    color: black;
+}
+
+.boton {
+    background-color: #a67153 ;
+    width: 115px;
+    height: 30px;
+
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+.boton a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 30px; 
+    color: white;
+    text-decoration: none;
+}
