@@ -9,3 +9,7 @@ function abrirVentanaEmergente(url) {
     // Crear la ventana emergente centrada
     window.open(url, 'VentanaEmergente', `width=${ancho},height=${alto},top=${top},left=${left}`);
 }
+
+fetch('http://120.0.0.1:8000/api/reservas/')
+    .then(res => res.json())
+    .then(data => console.log(data))
