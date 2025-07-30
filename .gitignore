@@ -1,0 +1,16 @@
+# Entorno virtual
+env/
+venv/
+*.pyc
+__pycache__/
+
+# Archivos de configuración o base de datos local
+db.sqlite3
+
+# Archivos de VSCode o sistema
+.vscode/
+*.log
+.DS_Store
+
+# Archivos generados
+/static/
