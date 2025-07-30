@@ -2,11 +2,18 @@ body{
     margin: 0;
     font-family: sans-serif;
     color: #f2f2f2;
-    background-color: #f2f2f2;
+    background-color: var(--background-color);
     /**background: linear-gradient(to bottom, #444, #000);**/
     background-repeat: no-repeat;
     background-size: cover; /* Ajustar tamaño del fondo para cubrir toda la pantalla */
     min-height: 100vh; /* Asegura que el body tenga al menos la altura de la ventana */
+}
+
+:root {
+    --primary-color: #a67153;/* Azul */
+    --secondary-color: #a69981; /* Gris */
+    --accent-color: #402217;/* Verde */
+    --background-color: #f2ebd5; /*Gris claro*/
 }
 
 h2{
@@ -20,12 +27,12 @@ h2{
 }
 
 form{
-    background-color: #6084A6;
+    background-color: #875543;
     padding: 20px 0;
     max-width: 550px;
     max-height: 830px;
     margin: auto;
-    box-shadow: 0 0 55px rgba(176, 188, 253, 0.541);
+    box-shadow: 0 0 55px rgb(145 40 3 / 71%);
     margin-top: 40px;
     border-radius: 8px;
     margin-bottom: 40px;
@@ -41,20 +48,20 @@ form{
 }
 
 
-button, input, textarea, select{
+button, input{
     width: 100%;
     box-sizing: border-box;
     padding: 6px 12px;
     border: none;
     border: 1px solid #fff8;
-    box-shadow: 0 0 15px #fff5;
+    box-shadow: 0 0 15px #ab522b;
     background-color: transparent;
     border-radius: 4px;
     color: #fff;
     font-size: 0.90em;
     
 }
-option{
+/* option{
     background-color: #666;
     font-size: 0.80em;
 }
@@ -73,14 +80,14 @@ textarea{
     resize: none;
     min-height: 100px;
     min-width: 200px;
-}
+} */
 
-lebel{
+label{
     font-size: 0.88em;
     line-height: 2;
 }
 
-.checkbox{
+/* .checkbox{
     width: 15px;
     height: auto;
 }
@@ -96,4 +103,4 @@ legend{
     padding: 0 6px;
     color: #f2f2f2;
     font-size: 1.1em;
-}
+} */
