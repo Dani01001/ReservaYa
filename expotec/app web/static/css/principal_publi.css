@@ -91,49 +91,42 @@ a{
     color: white;
     text-decoration: none;
 }
-
-.restaurante1, .restaurante2, .restaurante3{
-    /* padding: 100px; */
-    margin: 50px 0 0 400px;
-}
-
-.container_rest{
+.container_restaurantes {
     display: flex;
+    gap: 20px;
+    flex-wrap: wrap; 
+    justify-content: center; 
 }
 
-.image_rest img{
-    display: block;
-    width: 150px;
-    height: 250px;
+.restaurante1, .restaurante2, .restaurante3 {
+    flex: 0 1 300px;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.container_rest {
+    display: flex;
+    flex-direction: column;
+}
+
+.image_rest img {
+    width: 100%;       
+    height: auto;      
     object-fit: cover;
-    /* padding: 100px; */
-    /* margin: 200px; */
+    margin-bottom: 10px;
 }
 
-.sucursal{
-    padding-top: 50px;
-    padding-left:50px;
-    padding-right: 400px;
+.sucursal {
+    margin-top: 0;
+    padding: 0;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.sucursal p {
+    margin: 0;
+}
 
 footer{
     background-color:var(--secondary-color);
