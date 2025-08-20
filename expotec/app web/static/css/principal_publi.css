@@ -71,7 +71,7 @@ a{
     color: white;
 }
 
-.boton {
+.boton{
     background-color: var(--accent-color) ;
     width: 115px;
     height: 30px;
@@ -81,6 +81,17 @@ a{
     align-items: center;
     padding: 0;
 }
+
+/* .registro, .iniciar_sesion{
+    background-color: var(--accent-color) ;
+    width: 115px;
+    height: 30px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+} */
 
 .boton a {
     display: block;
