@@ -46,9 +46,8 @@ img{
     
 }   
 
-
-
 .registro, .contacto{
+    /* color: #000; */
     display: flex;
     list-style: none;
     gap: 20px;
@@ -58,11 +57,32 @@ img{
 
 a{
     text-decoration:none;
-    color: white;
+    /* color: white; */
+}
+
+.derecha a{
+    color: #000;
+}
+
+.izquierda a{
+    color: #fff;
 }
 
 .boton{
-    background-color: var(--accent-color) ;
+    background-color: var(--primary-color) ;
+    color: #fff;
+    width: 115px;
+    height: 30px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+.boton_nav{
+    background-color: var(--accent-color);
+    color: #000;
     width: 115px;
     height: 30px;
     border-radius: 10px;
@@ -93,21 +113,27 @@ a{
     text-decoration: none;
 }
 
+.reservar{
+    margin: 15px 0 0 0;
+}
+
 .container_restaurantes {
-    background-color: blue;
+    /* background-color: blue; */
     display: flex;
-    gap: 20px;
+    gap: 30px;
     flex-wrap: wrap;
     justify-content: center; 
     align-items: flex-start;
     padding: 20px;
-    margin: 0 auto;
+    margin:  50px 0 0 0px;
 }
 
-.restaurante1, .restaurante2, .restaurante3 {
-    background-color: yellow;
+.restaurante1, .restaurante2, .restaurante3, .restaurante4, .restaurante5 {
+    /* background-color: yellow; */
     flex: 0 1 250px;   /* ancho base 300px, no crece demasiado */
     max-width: 280px;  /* ancho máximo */
+    border-style:solid;
+    border-color: var(--accent-color);
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -118,7 +144,7 @@ a{
 }
 
 .container_rest{
-    background-color: aqua;
+    /* background-color: aqua; */
     width: 100%;
     display: flex;
     flex-direction: column; /* imagen arriba, texto debajo */
@@ -126,9 +152,8 @@ a{
 }
 
 .image_rest {
-    
     width: 100%;
-    height: 160px;            /*altura fija para TODAS las imágenes*/
+    height: 150px;            /*altura fija para TODAS las imágenes*/
     overflow: hidden;        /* recorta lo que sobresalga */
     border-radius: 8px;
     /* margin-bottom: 10px; */
@@ -144,8 +169,8 @@ a{
 }
 
 .sucursal{
-    background-color: blueviolet;
-    padding-top: 50px;
+    /* background-color: blueviolet; */
+    padding-top: 15px;
     margin: 0 auto;       /* centra horizontalmente */
     max-width: 800px;     /* ancho máximo opcional */
     text-align: center; 
