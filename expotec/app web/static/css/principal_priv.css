@@ -1,0 +1,168 @@
+* { margin:0; 
+  padding:0; 
+  box-sizing:border-box; 
+  font-family: Arial, sans-serif; }
+
+body { display:flex; 
+  min-height:100vh; 
+  color:#333; }
+
+  /* Sidebar */
+.sidebar {
+  width: 180px; 
+  background: #402217;
+  padding: 15px 10px;}
+
+.sidebar h2 {
+  margin-bottom: 15px; 
+  font-size: 18px; 
+  color: #fff;
+  }
+.sidebar a {
+  color:#fff; 
+  text-decoration:none; 
+  padding:8px; 
+  margin:5px 0;
+  display:flex; 
+  align-items:center; 
+  border-radius:6px;
+  transition:0.3s;}
+  
+.sidebar a i { 
+  margin-right:10px; }
+  
+.sidebar a:hover, .sidebar a.active { 
+  background:#a67153; }
+
+  /* Topbar */
+.topbar {
+    background:#f2ebd5; 
+    padding:15px 20px; 
+    display:flex;
+    justify-content: space-between; 
+    align-items:center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+
+  /* Main Content */
+main { flex:1; 
+  background:#f4f4f4; 
+  padding:20px; }
+  
+.main h1 { margin-bottom:20px; }
+  
+.card {
+  background:#fff; 
+  padding:20px; 
+  border-radius:10px; 
+  margin-bottom:20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+  transition:0.3s;
+  }
+.card:hover { transform: translateY(-3px); 
+  box-shadow:0 6px 18px rgba(0,0,0,0.15); }
+
+.card h2 { margin-bottom:10px; }
+
+.btn { padding:10px 15px; 
+  background:#a67153; 
+  color:#fff; 
+  border:none; 
+  border-radius:6px; 
+  cursor:pointer; 
+  transition:0.3s; }
+  
+.btn:hover { background:#402217; }
+
+  /* Botones pequeños dentro del modal */
+  
+.btn-small {
+  padding: 5px 8px;
+  font-size: 12px;
+  margin-left: 5px;
+  }
+
+  /* Modal */
+.modal {
+  display:none; 
+  position:fixed; 
+  top:0; 
+  left:0; 
+  width:100%; 
+  height:100%;
+  background: rgba(0,0,0,0.6); 
+  justify-content:center; 
+  align-items:center; 
+  z-index:1000;
+  }
+.modal-content {
+  background:#fff; 
+  padding:25px; 
+  border-radius:10px; 
+  width:400px; 
+  max-height:80vh; 
+  overflow-y:auto;
+  position:relative;
+  }
+.close { 
+  position:absolute; 
+  top:10px; right:15px; 
+  cursor:pointer; 
+  font-size:20px; 
+  color:#333; }
+
+  /* Footer compacto */
+footer {
+  background: #402217;
+  color: #fff;
+  text-align: center;
+  padding: 2px 0;    
+  font-size: 10px;   
+  line-height: 1.2;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  }
+
+#file-name {
+  margin-top: 10px;
+  font-style: italic;
+  color: #333;
+  }
+button {
+  padding: 8px 16px;
+  cursor: pointer;
+  }
+
+  /* Tabla de reservas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+th, td {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+    text-align: left;
+  }
+/* --- Modal Ver Detalles --- */
+#modalVer .modal-content {
+  width: 420px;
+  max-width: 90%;
+  padding: 25px;
+  border-radius: 12px;
+}
+
+#modalVer h3 {
+  margin-bottom: 15px;
+  color: #402217;
+}
+
+#modalVer p {
+  margin: 8px 0;
+  font-size: 14px;
+}
+
+#modalVer strong {
+  color: #a67153;
+}

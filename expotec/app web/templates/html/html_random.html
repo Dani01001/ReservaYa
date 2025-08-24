@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Prueba Conexión</title>
+</head>
+<body>
+  <h1>Probar conexión con Django</h1>
+  <button onclick="probarConexion()">Probar</button>
+
+  <pre id="resultado"></pre>
+
+  <script>
+    function probarConexion() {
+      fetch("http://192.168.100.250:8000/api/prueba/") // usa la IP real
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById("resultado").textContent = JSON.stringify(data, null, 2);
+        })
+        .catch(error => {
+          document.getElementById("resultado").textContent = "Error: " + error;
+        });
+    }
+  </script>
+</body>
+</html>
