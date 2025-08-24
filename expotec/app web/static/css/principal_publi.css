@@ -1,8 +1,16 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
 body{
     margin: 0;
     font-family: sans-serif;
     background-color:   var(--background-color)  ;
     /* min-height: 100vh */
+    /* overflow-x: hidden; */
+    display: flex;
+    flex-direction: column;
 }
 
 :root {
@@ -12,6 +20,10 @@ body{
     --background-color: #F2F2F2; /*Gris claro*/
 }
 
+main{
+    flex: 1; /* Empuja el footer hacia abajo si hay poco contenido */
+}
+
 
 .container_nav{
     background-color: var(--secondary-color);
@@ -19,20 +31,10 @@ body{
     justify-content: space-between; /* separa los dos bloques */
     align-items: center;
     padding: 10px 50px;
+    width: auto;
 }
 
-/* .container_prin{
-    background-color: var(--primary-color);
-    width: auto;
-    height: 90px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: white;
-    padding-left: 100px;
-    padding-right: 50px;
-    
-} */
+
 
 img{
     width: 200px;
@@ -120,12 +122,12 @@ a{
 .container_restaurantes {
     /* background-color: blue; */
     display: flex;
-    gap: 30px;
+    gap: 50px;
     flex-wrap: wrap;
     justify-content: center; 
     align-items: flex-start;
     padding: 20px;
-    margin:  50px 0 0 0px;
+    margin:  50px 0 50px 0px;
 }
 
 .restaurante1, .restaurante2, .restaurante3, .restaurante4, .restaurante5 {
@@ -181,11 +183,23 @@ a{
 }
 
 footer{
-    background-color:var(--secondary-color);
+    /* background-color: var(--secondary-color);
     text-align: center;
     padding: 20px;
     height: 200px;
     bottom: 0;
+    position:;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #222;
+    color: #fff;
+    text-align: center;
+    padding: 10px; */
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 10px;
    
 }
 
