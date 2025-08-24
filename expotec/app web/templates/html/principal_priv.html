@@ -3,37 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> <!-- librería de iconos de Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> <!-- Font Awesome -->
     <link rel="stylesheet" href="../../static/css/principal_priv.css">
     <title>ReservaYa</title>
 </head>
 <body>
-  <!-- Sidebar -->
-  <div class="sidebar">
+    <!-- Sidebar -->
+    <div class="sidebar">
         <h2>Restaurante</h2>
         <a href="#" class="active"><i class="fa fa-calendar"></i> Reservas</a>
         <a href="#"><i class="fa fa-utensils"></i> Menú</a>
         <a href="#"><i class="fa fa-map-marker-alt"></i> Sucursales</a>
-        <a href="#" onclick="abrirVentanaEmergente('../html/login_restaurantes.html'); return false;">
+        <a href="#" id="btnLogin">
             <i class="fa fa-sign-in-alt"></i> Iniciar Sesión
         </a>
-  </div>
+    </div>
 
-  <div style="flex:1;">
+    <div style="flex:1;">
         <!-- Topbar -->
         <div class="topbar">
             <span>Bienvenido, Restaurante (---)</span>
-            <button class="btn" onclick="alert('Cerrando sesión');">Cerrar sesión</button>
+            <button class="btn" id="btnCerrarSesion">Cerrar sesión</button>
         </div>
+
         <main>
             <div class="main">
                 <h1>Panel de Control</h1>
+
                 <!-- Card de Reservas -->
                 <div class="card">
                     <h2>Reservas de Hoy</h2>
                     <button class="btn" id="abrirModalGestion">Gestionar Reservas</button>
                 </div>
 
+                <!-- Card de Menú -->
                 <div class="card">
                     <h2>Menú</h2>
                     <p>Aquí iría la lista de platos.</p>
@@ -42,61 +45,43 @@
                     <input type="file" id="fileInput" style="display: none;" />
                 </div>
 
+                <!-- Card de Sucursales -->
                 <div class="card">
                     <h2>Sucursales</h2>
                     <p>Aquí irían las sucursales registradas.</p>
-                    <button class="btn">Agregar Sucursal</button>
+                    <button class="btn" id="btnAgregarSucursal">Agregar Sucursal</button>
                 </div>
             </div>
         </main>
+
         <footer>
             <div class="integrantes">
                 &copy; 2025 ReservaYa | Contacto: info@reservaya.com
             </div>
-            <div class="" id="contacto">  
-            </div>
+            <div id="contacto"></div>
         </footer>
     </div>
-    <script src="../../static/js/principal_priv.js" defer></script>
-    <script src="../../static/js/agregar-menu.js" defer></script>
-    <script src="../../static/js/script.js" defer></script>
-    
 
     <!-- Modal de Gestión de Reservas -->
     <div id="modalGestion" class="modal">
         <div class="modal-content">
             <span class="close" id="cerrarModalGestion">&times;</span>
             <h2>Reservas de Hoy</h2>
-            <table>
+            <table id="tablaReservas">
                 <tr>
                     <th>Cliente</th>
                     <th>Hora</th>
                     <th>Acciones</th>
                 </tr>
-                <tr>
-                    <td>Juan Pérez</td>
-                    <td>19:00</td>
-                    <td>
-                        <button class="btn-small" onclick="verDetalles('Juan Pérez')">Ver</button>
-                        <button class="btn-small" onclick="eliminarReserva(this)">Eliminar</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Ana Gómez</td>
-                    <td>20:30</td>
-                    <td>
-                        <button class="btn-small" onclick="verDetalles('Ana Gómez')">Ver</button>
-                        <button class="btn-small" onclick="eliminarReserva(this)">Eliminar</button>
-                    </td>
-                </tr>
+                <!-- Filas dinámicas -->
             </table>
         </div>
     </div>
 
-      <!-- Modal de Ver Detalles -->
+    <!-- Modal de Ver Detalles -->
     <div id="modalVer" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="cerrarModalVer()">&times;</span>
+            <span class="close" id="cerrarModalVer">&times;</span>
             <h3>Datos del Cliente</h3>
             <p><strong>Nombre:</strong> <span id="verNombre"></span></p>
             <p><strong>Email:</strong> <span id="verEmail"></span></p>
@@ -104,5 +89,10 @@
             <p><strong>Hora de Reserva:</strong> <span id="verHora"></span></p>
         </div>
     </div>
+
+    <!-- Scripts -->
+    <script src="../../static/js/principal_priv.js" defer></script>
+    <script src="../../static/js/agregar-menu.js" defer></script>
+    <script src="../../static/js/script.js" defer></script>
 </body>
 </html>

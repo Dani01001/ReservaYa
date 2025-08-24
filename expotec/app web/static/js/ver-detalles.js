@@ -3,10 +3,13 @@ function verDetalles(idReserva) {
     fetch(`/api/reservas/${idReserva}`)
         .then(response => response.json())
         .then(reserva => {
+            // Rellenar campos del modal
             document.getElementById("verNombre").textContent = reserva.cliente;
             document.getElementById("verEmail").textContent = reserva.email || 'N/A';
             document.getElementById("verTelefono").textContent = reserva.telefono || 'N/A';
             document.getElementById("verHora").textContent = reserva.hora;
+
+            // Mostrar modal
             document.getElementById("modalVer").style.display = "block";
         })
         .catch(error => console.error("Error al obtener detalles:", error));
@@ -31,8 +34,6 @@ const cerrarModal = document.getElementById("cerrarModalGestion");
 
 function abrirModalGestion() {
     modalGestion.style.display = "block";
-
-    // Limpiar la tabla (solo encabezado)
     tablaReservas.innerHTML = `
         <tr>
             <th>Cliente</th>
@@ -41,13 +42,11 @@ function abrirModalGestion() {
         </tr>
     `;
 
-    // Traer las reservas desde la base de datos
-    fetch("/api/reservas") // Cambia a tu endpoint real si es diferente
+    fetch("/api/reservas")
         .then(response => response.json())
         .then(reservas => {
             reservas.forEach(reserva => {
                 const fila = document.createElement("tr");
-
                 fila.innerHTML = `
                     <td>${reserva.cliente}</td>
                     <td>${reserva.hora}</td>
@@ -56,7 +55,6 @@ function abrirModalGestion() {
                         <button class="btn-small" onclick="eliminarReserva(this)">Eliminar</button>
                     </td>
                 `;
-
                 tablaReservas.appendChild(fila);
             });
         })
@@ -65,16 +63,4 @@ function abrirModalGestion() {
 
 // Cerrar modal de gestión
 cerrarModal.onclick = () => modalGestion.style.display = "none";
-window.onclick = e => { 
-    if (e.target == modalGestion) modalGestion.style.display = "none"; 
-};
-
-// --- Función para eliminar reserva (opcional) ---
-function eliminarReserva(btn) {
-    const fila = btn.closest("tr");
-    const nombreCliente = fila.querySelector("td").textContent;
-    if (confirm(`¿Deseas eliminar la reserva de ${nombreCliente}?`)) {
-        // Aquí puedes agregar fetch DELETE si tu API lo permite
-        fila.remove();
-    }
-}
+window.onclick = e => { if (e.target == modalGestion) modalGestion.style.display = "none"; };
