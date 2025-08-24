@@ -1,8 +1,8 @@
-:root{    
-    --primary-color: #a67153;
-    --secondary-color: #a69981; 
-    --accent-color: #402217;
-    --background-color: #f2ebd5; 
+:root {
+    --primary-color: #730707;/* Azul */
+    --secondary-color: #590202; /* Gris */
+    --accent-color: #BFBFBF;/* Verde */
+    --background-color: #F2F2F2; /*Gris claro*/
 }
 
 body {

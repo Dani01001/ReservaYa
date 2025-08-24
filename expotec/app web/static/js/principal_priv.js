@@ -45,20 +45,26 @@ function abrirModalGestion() {
     fetch("/api/reservas") // Cambia a tu endpoint real si es diferente
         .then(response => response.json())
         .then(reservas => {
-            reservas.forEach(reserva => {
+            if (reservas.length === 0) {
                 const fila = document.createElement("tr");
-
-                fila.innerHTML = `
-                    <td>${reserva.cliente}</td>
-                    <td>${reserva.hora}</td>
-                    <td>
-                        <button class="btn-small" onclick="verDetalles(${reserva.id})">Ver</button>
-                        <button class="btn-small" onclick="eliminarReserva(this)">Eliminar</button>
-                    </td>
-                `;
-
+                fila.innerHTML = `<td colspan="3" style="text-align:center;">No hay reservas hoy</td>`;
                 tablaReservas.appendChild(fila);
-            });
+            } else {
+                reservas.forEach(reserva => {
+                    const fila = document.createElement("tr");
+
+                    fila.innerHTML = `
+                        <td>${reserva.cliente}</td>
+                        <td>${reserva.hora}</td>
+                        <td>
+                            <button class="btn-small" onclick="verDetalles(${reserva.id})">Ver</button>
+                            <button class="btn-small" onclick="eliminarReserva(this)">Eliminar</button>
+                        </td>
+                    `;
+
+                    tablaReservas.appendChild(fila);
+                });
+            }
         })
         .catch(error => console.error("Error al cargar reservas:", error));
 }
@@ -78,3 +84,9 @@ function eliminarReserva(btn) {
         fila.remove();
     }
 }
+document.addEventListener("DOMContentLoaded", () => {
+    const btnGestionar = document.getElementById("abrirModalGestion");
+    if (btnGestionar) {
+        btnGestionar.addEventListener("click", abrirModalGestion);
+    }
+});
