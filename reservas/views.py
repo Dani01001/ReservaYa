@@ -1,18 +1,16 @@
-from django.shortcuts import render, redirect
-from .forms import ReservaForm
-from .models import Reserva
+from rest_framework import viewsets
+from .models import Restaurante, Mesa, Reserva
+from .serializers import RestauranteSerializer, MesaSerializer, ReservaSerializer
 
-def crear_reserva(request):
-    if request.method == 'POST':
-        form = ReservaForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('listar_reservas')  # Redirige a la vista listar_reservas
-    else:
-        form = ReservaForm()
-    
-    return render(request, 'reservas/crear_reserva.html', {'form': form})
+class RestauranteViewSet(viewsets.ModelViewSet):
+    queryset = Restaurante.objects.all()
+    serializer_class = RestauranteSerializer
 
-def listar_reservas(request):
-    reservas = Reserva.objects.all()
-    return render(request, 'reservas/listar_reservas.html', {'reservas': reservas})
+class MesaViewSet(viewsets.ModelViewSet):
+    queryset = Mesa.objects.all()
+    serializer_class = MesaSerializer
+
+class ReservaViewSet(viewsets.ModelViewSet):
+    queryset = Reserva.objects.all()
+    serializer_class = ReservaSerializer
+
