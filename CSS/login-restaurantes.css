@@ -1,0 +1,84 @@
+:root {
+    --primary-color: #730707;/* Azul */
+    --secondary-color: #590202; /* Gris */
+    --accent-color: #BFBFBF;/* Verde */
+    --background-color: #F2F2F2; /*Gris claro*/
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #f2f2f2;
+    background: linear-gradient(to bottom, var(--accent-color), var(--background-color)), 
+                url("https://www.winterhalter.com/fileadmin/user_upload/Website/Mexico/Blog/Como_financiar_tu_restaurante.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-restaurantes {
+    background-color: var(--primary-color); 
+    padding: 30px 40px;
+    max-width: 400px;
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 0 35px var(--secondary-color);
+    text-align: center;
+}
+
+.login-restaurantes h1 {
+    margin: 0 0 20px;
+    font-size: 1.6em;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.login-restaurantes input {
+    width: 100%;
+    padding: 12px;
+    margin: 12px 0;
+    border: 1px solid #ffffff88;
+    border-radius: 6px;
+    font-size: 1em;
+    background: transparent;
+    color: #fff;
+    box-shadow: 0 0 12px rgba(171, 82, 43, 0.4);
+}
+
+.login-restaurantes input::placeholder {
+    color: #ddd;
+}
+
+.login-restaurantes input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 18px var(--primary-color)
+}
+
+.login-restaurantes button {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1em;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.login-restaurantes button:hover {
+    background-color: var(--secondary-color)
+}
+
+.error {
+    color: #ffffff;
+    font-size: 14px;
+    margin-top: 10px;
+}
