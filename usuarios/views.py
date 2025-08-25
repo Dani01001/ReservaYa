@@ -5,6 +5,13 @@ import json
 
 Usuario = get_user_model()
 
+def lista_usuarios(request):
+    if request.method == "GET":
+     usuarios = Usuario.objects.values("id", "username", "email")
+     return JsonResponse(list(usuarios), safe=False)
+    return JsonResponse({"error": "Metodo no permitido"}, status=405)
+
+
 @csrf_exempt
 def registrar_usuario(request):
     if request.method == "POST":
