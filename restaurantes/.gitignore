@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+
+# Entorno virtual
+env/
+venv/
+*.egg-info/
+
+# Base de datos SQLite
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
