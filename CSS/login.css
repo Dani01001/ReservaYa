@@ -33,7 +33,7 @@ form{
     max-height: 830px;
     margin: auto;
     box-shadow: 0 0 55px rgb(145 40 3 / 71%);
-    margin-top: 40px;
+    margin-top: 150px;
     border-radius: 8px;
     margin-bottom: 40px;
 }
@@ -59,8 +59,8 @@ button, input{
     border-radius: 4px;
     color: #fff;
     font-size: 0.90em;
+    
 }
-
 option{
     background-color: #666;
     font-size: 0.80em;
