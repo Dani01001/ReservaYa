@@ -10,10 +10,10 @@ body{
 }
 
 :root {
-    --primary-color: #a67153;/* Azul */
-    --secondary-color: #a69981; /* Gris */
-    --accent-color: #402217;/* Verde */
-    --background-color: #f2ebd5; /*Gris claro*/
+    --primary-color: #730707;
+    --secondary-color: #590202; 
+    --accent-color: #BFBFBF;
+    --background-color: #F2F2F2;
 }
 
 h2{
@@ -27,7 +27,7 @@ h2{
 }
 
 form{
-    background-color: #875543;
+    background-color: var(--primary-color);
     padding: 20px 0;
     max-width: 550px;
     max-height: 830px;
@@ -54,7 +54,7 @@ button, input{
     padding: 6px 12px;
     border: none;
     border: 1px solid #fff8;
-    box-shadow: 0 0 15px #ab522b;
+    box-shadow: 0 0 15px #f62f2f;
     background-color: transparent;
     border-radius: 4px;
     color: #fff;
