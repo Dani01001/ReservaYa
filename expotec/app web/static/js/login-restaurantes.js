@@ -26,17 +26,17 @@ form.addEventListener("submit", function(e) {
     })
     .then(response => response.json())
     .then(data => {
-        if (data.exito) {
-            alert("Login exitoso");
-            errorMessage.textContent = "";
-            // Aquí puedes redirigir al usuario o cargar su dashboard
-            // window.location.href = "/dashboard";
-        } else {
-            errorMessage.textContent = "Usuario o contraseña incorrectos";
-        }
-    })
+    if (data.exito) {
+        // Login exitoso
+        errorMessage.textContent = "";
+        // Redirigir a la página que desees
+        window.location.href = "..\templates\html\principal_priv.html"; 
+    } else {
+        errorMessage.textContent = "Usuario o contraseña incorrectos";
+    }
+})
     .catch(error => {
         console.error("Error al conectar con la base de datos:", error);
-        errorMessage.textContent = "No se pudo verificar la base de datos";
+        errorMessage.textContent = "No se pudo verificar sus datos";
     });
 });

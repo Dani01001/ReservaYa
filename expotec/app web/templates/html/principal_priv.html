@@ -14,9 +14,10 @@
         <a href="#" class="active"><i class="fa fa-calendar"></i> Reservas</a>
         <a href="#"><i class="fa fa-utensils"></i> Menú</a>
         <a href="#"><i class="fa fa-map-marker-alt"></i> Sucursales</a>
-        <a href="#" id="btnLogin">
-            <i class="fa fa-sign-in-alt" href="login_restaurantes.html"></i> Iniciar Sesión
-        </a>
+        <div id="adminProfile" class="profile-btn">
+            <i class="fas fa-user-shield"></i>
+            <span class="profile-text" id="nombreUsuario">Admin</span>
+        </div>
     </div>
 
     <div style="flex:1;">
@@ -73,7 +74,6 @@
                     <th>Hora</th>
                     <th>Acciones</th>
                 </tr>
-                <!-- Filas dinámicas -->
             </table>
         </div>
     </div>
@@ -90,51 +90,51 @@
         </div>
     </div>
 
+        <!-- Modal Agregar Sucursal -->
+    <div id="modalSucursal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span class="close" id="cerrarModalSucursal">&times;</span>
+        <h3>Agregar Sucursal</h3>
+
+        <form id="formSucursal">
+            <div>
+                <label for="sucursalNombre">Nombre</label><br>
+                <input id="sucursalNombre" name="nombre" required />
+            </div>
+
+            <div>
+                <label for="sucursalDireccion">Dirección</label><br>
+                <input id="sucursalDireccion" name="direccion" required />
+            </div>
+
+            <div>
+                <label for="sucursalTelefono">Teléfono</label><br>
+                <input id="sucursalTelefono" name="telefono" />
+            </div>
+
+            <div style="display:flex;gap:8px;align-items:center;margin-top:8px;">
+                <button type="button" id="btnGeocode">Buscar en mapa</button>
+                <small id="geoStatus" style="margin-left:8px;color:#666;"></small>
+            </div>
+
+            <!-- Campos lat/lng ocultos (llenados por geocoding o por el mapa si lo activás) -->
+            <input type="hidden" id="sucursalLat" name="lat" />
+            <input type="hidden" id="sucursalLng" name="lng" />
+
+            <div style="margin-top:12px;">
+                <button type="submit" class="btn">Guardar Sucursal</button>
+                <button type="button" id="cancelarSucursal" class="btn">Cancelar</button>
+            </div>
+        </form>
+
+        <!-- Opcional: contenedor para el mapa (si usas Leaflet) -->
+        <div id="mapSucursal" style="width:100%;height:300px;margin-top:12px;display:none;border-radius:8px;overflow:hidden;"></div>
+    </div>
+    </div>
+
     <!-- Scripts -->
     <script src="../../static/js/principal_priv.js" defer></script>
     <script src="../../static/js/agregar-menu.js" defer></script>
     <script src="../../static/js/script.js" defer></script>
-
-    <!-- JS inline mínimo para manejar cierres de modales si quieres un fallback -->
-    <script>
-        // Cerrar modal Ver Detalles
-        document.getElementById("cerrarModalVer").addEventListener("click", () => {
-            document.getElementById("modalVer").style.display = "none";
-        });
-
-        // Cerrar modal Gestión de Reservas
-        document.getElementById("cerrarModalGestion").addEventListener("click", () => {
-            document.getElementById("modalGestion").style.display = "none";
-        });
-
-        // Cerrar modales si se hace clic fuera
-        window.addEventListener("click", (e) => {
-            if (e.target === document.getElementById("modalVer")) {
-                document.getElementById("modalVer").style.display = "none";
-            }
-            if (e.target === document.getElementById("modalGestion")) {
-                document.getElementById("modalGestion").style.display = "none";
-            }
-        });
-
-        // Botón cerrar sesión
-        document.getElementById("btnCerrarSesion").addEventListener("click", () => {
-            alert("Cerrando sesión");
-        });
-
-        // Botón iniciar sesión
-        document.getElementById("btnLogin").addEventListener("click", () => {
-            window.open('../html/login_restaurantes.html', '_blank', 'width=600,height=600');
-        });
-
-        // Botón agregar archivo
-        const addFileBtn = document.getElementById("addFileBtn");
-        const fileInput = document.getElementById("fileInput");
-        const fileName = document.getElementById("file-name");
-        addFileBtn.addEventListener("click", () => fileInput.click());
-        fileInput.addEventListener("change", () => {
-            fileName.textContent = fileInput.files[0]?.name || "";
-        });
-    </script>
 </body>
 </html>
