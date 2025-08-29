@@ -261,8 +261,31 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 // ---- fin Sucursales ----
+document.addEventListener("DOMContentLoaded", () => {
+    const nombreUsuarioSpan = document.getElementById("nombreUsuario");
+    const adminProfile = document.getElementById("adminProfile");
 
-document.getElementById("adminProfile").addEventListener("click", function() {
-    // Redirige al panel de administración
-    window.location.href = "panel_admin.html";
+    // Asegúrate de que el backend tenga un endpoint que devuelva:
+    // { "usuario": "Nombre del Usuario" }
+    fetch("/api/usuario")  
+        .then(response => {
+            if (!response.ok) throw new Error("No se pudo obtener usuario");
+            return response.json();
+        })
+        .then(data => {
+            if (data.usuario) {
+                nombreUsuarioSpan.textContent = data.usuario;
+            } else {
+                nombreUsuarioSpan.textContent = "Usuario";
+            }
+        })
+        .catch(err => {
+            console.error("Error al obtener usuario:", err);
+            nombreUsuarioSpan.textContent = "Usuario";
+        });
+
+    // Click para ir al panel de admin
+    adminProfile.addEventListener("click", () => {
+        window.location.href = "panel_admin.html";
+    });
 });
