@@ -18,3 +18,24 @@ fetch('http://192.168.100.250:8000/api/reservas/')
     .catch(error => {
         console.error("Error alconectar con la api", error);
     });
+
+
+
+
+
+
+// Seleccionar el botón de reservar en el html de los restaurantes
+const btnReservar = document.querySelector(".btn-reservar");
+
+// Abrir la página de reservas en una nueva ventana centrada en la pantalla en el html de los restaurantes
+btnReservar.addEventListener("click", () => {
+  const width = 700;
+  const height = 700;
+  const left = window.screenX + (window.outerWidth - width) / 2;
+  const top = window.screenY + (window.outerHeight - height) / 2;
+  window.open(
+    "reservas.html",
+    "ReservaYa",
+    `width=${width},height=${height},left=${left},top=${top},toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=no`
+  );
+});
