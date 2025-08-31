@@ -47,7 +47,6 @@ form{
     color: #f2f2f2;
 }
 
-
 button, input{
     width: 100%;
     box-sizing: border-box;
@@ -61,7 +60,50 @@ button, input{
     font-size: 0.90em;
     
 }
-/* option{
+
+label{
+    font-size: 0.88em;
+    line-height: 2;
+}
+
+
+
+
+h2{
+    text-align: center;
+    margin: 0;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-weight: 100;
+    font-size: 1.5em;
+    padding: 10px;
+}
+
+
+.form_input{
+    padding: 10px 20px;
+    font-size: 1em;
+}
+
+.form_input ::placeholder{
+    color: #f2f2f2;
+}
+
+
+button, input, textarea, select{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 6px 12px;
+    border: none;
+    border: 1px solid #fff8;
+    box-shadow: 0 0 15px #fff5;
+    background-color: transparent;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 0.90em;
+    
+}
+option{
     background-color: #666;
     font-size: 0.80em;
 }
@@ -80,14 +122,14 @@ textarea{
     resize: none;
     min-height: 100px;
     min-width: 200px;
-} */
+}
 
 label{
     font-size: 0.88em;
     line-height: 2;
 }
 
-/* .checkbox{
+.checkbox{
     width: 15px;
     height: auto;
 }
@@ -103,4 +145,4 @@ legend{
     padding: 0 6px;
     color: #f2f2f2;
     font-size: 1.1em;
-} */
+}

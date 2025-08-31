@@ -1,32 +1,33 @@
-:root {
-    --primary-color: #730707;/* Azul */
-    --secondary-color: #590202; /* Gris */
-    --accent-color: #BFBFBF;/* Verde */
-    --background-color: #F2F2F2; /*Gris claro*/
-}
-
-body {
+body{
     font-family: sans-serif;
     margin: 0;
     background-color: var(--background-color);
     
 }
 
-.fondo {
-    background-image: 
-        linear-gradient(
-            to left,
-            rgba(166, 113, 83, 0) 30%,   /* transparente */
-            var(--primary-color) 100%
-        ),
-        url("https://www.winterhalter.com/fileadmin/user_upload/Website/Mexico/Blog/Como_financiar_tu_restaurante.jpg");
+:root {
+    --primary-color: #a67153;
+    --secondary-color: #a69981; 
+    --accent-color: #402217;
+    --background-color: #f2ebd5; 
+}
     
-    background-size: cover;         /* Ajusta la imagen al 100% */
+.fondo{
+    background-image: 
+    linear-gradient(to left,
+    /* rgba(255, 255, 255, 0) 60%,
+    rgba(255, 255, 255, 0.5) 80%,
+    rgba(255, 255, 255, 1) 100% */
+    rgba(166, 113, 83, 0) 30%,     /* transparente */
+    var(--primary-color) 100%      
+    ),
+    url("https://www.winterhalter.com/fileadmin/user_upload/Website/Mexico/Blog/Como_financiar_tu_restaurante.jpg");
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     width: 100%;
     height: 953px;
-}
+} 
 
 .contain{
     margin: 0;
@@ -48,21 +49,6 @@ body {
     justify-content: center;
     width: 500px;
     font-size: 1.5em;
-}
-
-.contain a{
-    background-color: var(--accent-color);
-    width: 170px;
-    height: 40px;
-    border-radius: 10px;
-    font-size: 1.3em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    text-decoration: none;
-    color:white;
-    margin-left: 170px;
 }
 
 .contain a{

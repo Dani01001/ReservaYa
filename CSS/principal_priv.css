@@ -153,31 +153,6 @@ th, td {
     border-bottom: 1px solid var(--background-color);
     text-align: left;
   }
-
-.profile-btn {
-    display: flex;
-    align-items: center;
-    padding: 8px;
-    color: #fff;
-    cursor: pointer;
-    border-radius: 6px;
-    margin: 5px 0;
-    transition: 0.3s;
-}
-
-.profile-btn:hover {
-    background-color: var(--primary-color);
-}
-
-.profile-btn i {
-    margin-right: 10px;
-    font-size: 18px;
-}
-
-.profile-text {
-    font-size: 14px;
-    font-weight: bold;
-}
 /* --- Modal Ver Detalles --- */
 #modalVer .modal-content {
   width: 420px;
