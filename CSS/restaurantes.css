@@ -30,10 +30,6 @@ svg {
     width: auto;
 }
 
-img{
-    width: 200px;
-}
-
 .container_prin h1{
     margin: 0;
 }   
@@ -212,10 +208,10 @@ a{
   align-items: center;
 }
 
-.detalles img {
-  width: 85%;
-  max-width: 1000px;
-  height: auto;
+.detalles iframe{
+  width: 80%;
+  max-width: 700px;
+  height: 400px;
   border-radius: 12px;
   margin-bottom: 20px;
   display: block;
@@ -225,18 +221,8 @@ a{
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
 }
 
-.detalles img:hover {
-  transform: scale(0.90);
-}
-
-.detalles img.gps {
-  width: 80%;
-  max-width: 2000px;
-  transition: transform 0.3s ease;
-}
-
-.detalles img.gps:hover {
-  transform: scale(1.05);
+.detalles iframe:hover {
+  transform: scale(1.05); 
 }
 
 .detalles h1 {
@@ -287,7 +273,8 @@ a{
   grid-template-columns: 1fr 1fr;
   gap: 0;
   width: 100%;
-  margin-bottom: 10px;
+  margin-top: 15px;
+  margin-bottom: 5px;
 }
 
 .detalle-1{
