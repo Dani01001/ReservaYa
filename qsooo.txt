@@ -1,0 +1,58 @@
+¡Perfecto, Toshi! Vamos a armarte este análisis **comparando tu app web** con dos posibles competidores reales y conocidos que ofrecen sistemas de reservas para restaurantes:
+
+* **Tu producto**: App web para reservas, QR y autopago, hecha por vos y tu compañero.
+* **Competidor A**: *PedidosYa Reservas* (sistema de reservas integrado en algunos locales).
+* **Competidor B**: *OpenTable* (plataforma internacional de reservas con presencia en LatAm).
+
+---
+
+## 📊 **Análisis de la competencia**
+
+| **FACTOR**          | **Mi producto**                     | **Competidor A** (*PedidosYa*) | **Competidor B** (*OpenTable*)      | **Importancia para el cliente (1–5)** |
+| ------------------- | ----------------------------------- | ------------------------------ | ----------------------------------- | ------------------------------------- |
+| **Producto**        | F – solución completa adaptada      | F – integrado pero limitado    | F – robusto pero complejo           | 1                                     |
+| **Precio**          | F – económico o gratuito al inicio  | D – cobra comisión por pedido  | D – alto costo mensual              | 1                                     |
+| **Calidad**         | D – versión inicial en desarrollo   | F – estable y funcional        | F – alta, pero requiere buen manejo | 1                                     |
+| **Servicio**        | F – soporte personalizado           | D – soporte generalizado       | D – soporte solo para grandes       | 2                                     |
+| **Fiabilidad**      | D – en pruebas aún                  | F – confiable                  | F – muy confiable                   | 1                                     |
+| **Estabilidad**     | D – nueva y sin historial           | F – sólida y estable           | F – muy estable                     | 1                                     |
+| **Compañía**        | D – proyecto escolar                | F – empresa grande             | F – empresa internacional           | 3                                     |
+| **Reputación**      | D – sin historial aún               | F – conocida regionalmente     | F – muy reconocida                  | 2                                     |
+| **Ubicación**       | F – local, entiende el contexto     | D – no siempre se adapta       | D – poco personalizado              | 2                                     |
+| **Apariencia**      | F – diseño moderno y personalizable | D – diseño estándar            | D – sobrio pero poco local          | 2                                     |
+| **Método de venta** | F – personalizado directo           | D – automatizado               | D – requiere registro e inversión   | 3                                     |
+| **Publicidad**      | D – sin aún                         | F – gran presencia             | F – gran presencia                  | 2                                     |
+| **Imagen**          | F – fresca, joven e innovadora      | D – corporativa                | D – muy profesional                 | 3                                     |
+
+---
+
+## 🔍 **Ventajas competitivas (Fortalezas)**
+
+* **Precio accesible** o gratuito para los primeros restaurantes.
+* **Atención personalizada y rápida**, cosa que los grandes no pueden ofrecer.
+* **Flexibilidad para adaptarse** al estilo de cada restaurante.
+* **Conocimiento del mercado local** (lo que otras apps no tienen).
+* **Diseño visual atractivo y moderno** pensado para atraer a pequeños y medianos negocios.
+
+---
+
+## ⚠️ **Desventajas (Debilidades)**
+
+* Falta de historial y reputación.
+* Puede tener errores al inicio (por ser la primera versión).
+* No tiene aún un equipo técnico completo detrás.
+* Menor visibilidad y publicidad en redes.
+
+---
+
+## 🧩 ¿Qué hacer con esta info?
+
+Este análisis te ayuda a demostrar que:
+
+* **Tu app tiene espacio real en el mercado**, porque apunta a restaurantes que los grandes no atienden.
+* **Tu mayor ventaja es la personalización, el precio y la cercanía.**
+* Si mejorás **la fiabilidad y la calidad**, tu producto puede competir sin problema con apps grandes, especialmente en zonas donde ellos no llegan o no se adaptan bien.
+
+---
+
+¿Querés que esto te lo prepare también en un Excel o tabla para imprimir? ¿O te gustaría que lo pasemos a una presentación tipo diapositiva para defenderlo frente a docentes?

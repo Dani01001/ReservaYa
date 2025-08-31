@@ -24,29 +24,67 @@ main{
     flex: 1; /* Empuja el footer hacia abajo si hay poco contenido */
 }
 
+header{
+    background-image: url(https://teresarestaurant.com/wp-content/uploads/2025/01/WA_00138-scaled.jpg);
+    background-repeat: no-repeat;  /* no repetir */
+    background-size: cover;        /* que se adapte a todo el ancho/alto */
+    background-position: center;   /* centrada */
+    /* width: 100%;
+    height: 100vh; */
+
+}
+
 
 .container_nav{
-    background-color: var(--secondary-color);
+    background-color: #020202d3 ;
     display: flex ;
     justify-content: space-between; /* separa los dos bloques */
     align-items: center;
-    padding: 10px 50px;
-    width: auto;
+    padding: 0px 300px;
+    /* width: auto; */
+    /* height: 200px; */
 }
 
+.mid{
+    color: white;
+    display: block;  
+    justify-content: center; 
+    /* padding: 100px;     */
+}
+
+
+.mid h1{
+    font-family:cursive;
+    text-align: center;
+    color: white;
+    font-size: 3rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.7); /* mejora visibilidad */
+}
+
+.mid p{
+    font-family:cursive;
+    text-align: center;
+    color: white;
+    font-size: 1.5rem;
+    /* font-weight: bold; */
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.7); /* mejora visibilidad */
+}
 
 
 img{
     width: 200px;
 }
 
-.container_prin h1{
-    /* background-color: red; */
-    /* padding-left: 100px; */
-    margin: 0;
-   
-    
-}   
+.container_prin{
+    background-color: #020202d3 ;
+    display: flex ;
+    justify-content: center; /* centra en el eje X */
+    /* align-items: top; */
+    padding: 150px 0px 100px 0;
+    /* width: auto; */
+    height: 500px;
+}
 
 .registro, .contacto{
     /* color: #000; */
@@ -62,13 +100,11 @@ a{
     /* color: white; */
 }
 
-.derecha a{
+/* .derecha a{
     color: #000;
-}
+} */
 
-.izquierda a{
-    color: #fff;
-}
+
 
 .boton{
     background-color: var(--primary-color) ;
@@ -83,8 +119,8 @@ a{
 }
 
 .boton_nav{
-    background-color: var(--accent-color);
-    color: #000;
+    /* background-color: var(--accent-color); */
+    /* color: #000; */
     width: 115px;
     height: 30px;
     border-radius: 10px;
@@ -92,6 +128,42 @@ a{
     justify-content: center;
     align-items: center;
     padding: 0;
+}
+ 
+.boton_nav:hover{
+    transition: 1s;
+    background-color: var(--accent-color);
+    /* color: #000; */
+}
+.boton_nav a:hover{
+    transition: 0.5s;
+    color: #000;
+}
+
+.boton_nav a{
+    color: #fff;
+    width: 115px;
+    height: 30px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+.boton_contacto{
+    /* background-color: red; */
+    color: #fff;
+    width: 115px;
+    height: 30px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+.boton_contacto a{
+    color: #fff;
 }
 
 /* .registro, .iniciar_sesion{
@@ -207,3 +279,52 @@ footer ul{
     list-style: none;   
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+/* ANIMACIONES */
+
+.scroll-fade {
+    opacity: 0;
+    transform: translateY(50px);
+    animation: fadeInUp 1s ease-out forwards;
+    animation-delay: 0.3s;
+}
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes show{
+    from{
+        opacity: 0;
+        scale: 25%;
+    }
+
+    to{
+        opacity: 1;
+        scale: 100%;
+    }
+}
+
+.animation{
+    view-timeline-name: --image;
+    view-timeline-axis: block;
+    
+    animation-timeline: --image;
+    animation-name: show;
+
+    animation-range: entry 25% cover 50%;
+    animation-fill-mode: both;
+}
