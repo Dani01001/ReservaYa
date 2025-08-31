@@ -1,106 +1,107 @@
-body{
-    margin: 0;
-    font-family: sans-serif;
-    color: #f2f2f2;
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
     background-color: var(--background-color);
-    /**background: linear-gradient(to bottom, #444, #000);**/
-    background-repeat: no-repeat;
-    background-size: cover; /* Ajustar tamaño del fondo para cubrir toda la pantalla */
-    min-height: 100vh; /* Asegura que el body tenga al menos la altura de la ventana */
+    margin: 0;
 }
 
 :root {
     --primary-color: #730707;
-    --secondary-color: #590202; 
+    --secondary-color: #590202;
     --accent-color: #BFBFBF;
     --background-color: #F2F2F2;
 }
 
-h2{
-    text-align: center;
-    margin: 0;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    font-weight: 100;
-    font-size: 1.5em;
-    padding: 10px;
+.container-registro {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 32px 0;
 }
 
-form{
-    background-color: var(--primary-color);
-    padding: 20px 0;
-    max-width: 550px;
-    max-height: 830px;
-    margin: auto;
-    box-shadow: 0 0 55px rgb(145 40 3 / 71%);
-    margin-top: 40px;
-    border-radius: 8px;
-    margin-bottom: 40px;
-}
-
-.form_input{
-    padding: 5px 20px;
-    font-size: 1em;
-}
-
-.form_input ::placeholder{
-    color: #f2f2f2;
-}
-
-
-button, input{
+.registro {
     width: 100%;
-    box-sizing: border-box;
-    padding: 6px 12px;
+    max-width: 420px;
+    min-height: 420px;
+    background-color: #efefef;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 6px 24px rgba(35, 0, 0, 0.487);
+    margin: 32px 0;
+    font-size: 1.05rem;
+}
+
+.registro h2 {
+    text-align: center;
+    font-size: 2.1rem;
+    margin-bottom: 18px;
+    margin-top: 0;
+}
+
+.registro form {
+    display: flex;
+    flex-direction: column;
+}
+
+.registro label {
+    margin-bottom: 7px;
+    font-size: 1.05rem;
+}
+
+.registro input[type="text"],
+.registro input[type="email"],
+.registro input[type="password"],
+.registro input[type="number"],
+.registro textarea {
+    width: 97%;
+    padding: 6px;
+    border: 1px solid var(--primary-color);
+    border-radius: 8px;
+    margin-bottom: 12px;
+    font-size: 1.1rem;
+    background-color: #fff;
+    color: #333;
+}
+
+.registro input[type="submit"],
+.registro button {
+    background-color: var(--primary-color);
+    color: white;
     border: none;
-    border: 1px solid #fff8;
-    box-shadow: 0 0 15px #eb4343;
-    background-color: transparent;
-    border-radius: 4px;
-    color: #fff;
-    font-size: 0.90em;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.05rem;
+    margin-top: 8px;
+    width: 100%;
 }
 
-option{
-    background-color: #666;
-    font-size: 0.80em;
+.registro input[type="submit"]:hover,
+.registro button:hover {
+    background-color: var(--secondary-color);
 }
 
-a{
+.registro a {
     text-decoration: none;
     font-size: 1em;
     color: #051F40;
-}
-    
-    
-
-textarea{
-    font-family: sans-serif;
-    min-width: 100%;
-    resize: none;
-    min-height: 100px;
-    min-width: 200px;
+    margin-top: 12px;
+    text-align: center;
+    display: block;
 }
 
-label{
-    font-size: 0.88em;
-    line-height: 2;
+fieldset {
+    border-radius: 8px;
+    border: 1px solid var(--primary-color);
+    padding: 12px;
+    margin-bottom: 22px;
+    background-color: #fafafa;
 }
 
-.checkbox{
-    width: 15px;
-    height: auto;
-}
-
-fieldset{
-    border-radius: 5px;
-    border: 1px solid #f2f2f2;
-    padding: 8px 0 20px 0;
-    margin: 20px;
-}
-
-legend{
+legend {
     padding: 0 6px;
-    color: #f2f2f2;
+    color: var(--primary-color);
     font-size: 1.1em;
+    font-weight: bold;
 }

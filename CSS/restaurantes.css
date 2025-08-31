@@ -100,9 +100,10 @@ a{
     height: auto;
     margin-left: 10%;
     margin-top: 1%;
+    margin-bottom: 25px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 0;
 }
 
 .img-zoom {
@@ -126,32 +127,27 @@ a{
     display: flex;
     gap: 0;
     margin: 0;
-    margin-bottom: 25px;
     align-items: flex-start;
-    gap: 15px;
 }
 
 /* Apartado de la informacion general */
 
 .informacion {
   width: 100%;
-  background: linear-gradient(135deg, #fff 70%, #ffe5e5 100%);
-  border-radius: 18px;
-  box-shadow: 0 4px 24px rgba(69, 4, 4, 0.318);
-  padding: 40px 0 32px 0;
   margin: 30px auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-bottom: 100px;
 }
 
 .informacion h1 {
   font-size: 2.5rem;
   color: #730707;
-  margin-bottom: 18px;
+  margin-bottom: 10px;
   text-align: center;
-  font-weight: 800;
+  font-weight: 900;
   letter-spacing: 1px;
 }
 
@@ -159,13 +155,13 @@ a{
   font-size: 1.25rem;
   color: #25343b;
   text-align: center;
-  max-width: 700px;
+  max-width: 1200px;
   margin: 0 auto;
-  line-height: 1.6;
+  line-height: 1.2;
   font-weight: 500;
   background: rgba(255,255,255,0.6);
   border-radius: 10px;
-  padding: 16px 24px;
+  padding: 15px 24px 45px ;
   box-shadow: 0 2px 8px rgba(250, 204, 21, 0.08);
 }
 .box {
@@ -191,6 +187,7 @@ a{
     letter-spacing: 0.5px;
     box-shadow: 0 4px 16px rgba(115, 7, 7, 0.12);
     transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    visibility: hidden;
   }
 
 .btn-reservar:hover {
@@ -208,7 +205,7 @@ a{
   width: 85%;
   max-width: 900px;
   margin: 30px auto;
-  padding: 25px 30px 20px 30px;
+  padding: 25px 2px 20px 2px;
   box-shadow: 0 8px 32px rgba(69, 4, 4, 0.318);
   display: flex;
   flex-direction: column;
@@ -306,17 +303,18 @@ a{
 /* Apartado del menu de comidas */
 
 .menu-comida {
-  background-color: #e3e3e3;
+  /* background-color: #e3e3e3;
   border-radius: 14px;
   padding: 10px;
-  box-shadow: 0 2px 20px rgba(69, 4, 4, 0.318);
+  box-shadow: 0 2px 20px rgba(69, 4, 4, 0.318); */
   position: relative;
+  margin-bottom: 130px;
 }
 
 .menu-comida h1 {
   color: #000;
   text-align: center;
-  padding: 10px 0 14px 0;
+  padding: 10px 0 20px 0;
 }
 
 .menu-container {
@@ -396,12 +394,12 @@ a{
 
 .left {
   position: absolute;
-  left: 0;
+  left: 15px;
 }
 
 .right {
   position: absolute;
-  right: 0;
+  right: 15px;
 }
 
 .rating {
