@@ -23,19 +23,47 @@ fetch('http://192.168.100.250:8000/api/reservas/')
 
 
 
-
 // Seleccionar el botón de reservar en el html de los restaurantes
 const btnReservar = document.querySelector(".btn-reservar");
+const btnReservarFloat = document.querySelector(".btn-reserva-float");
 
-// Abrir la página de reservas en una nueva ventana centrada en la pantalla en el html de los restaurantes
-btnReservar.addEventListener("click", () => {
+function abrirReserva() {
   const width = 700;
   const height = 700;
   const left = window.screenX + (window.outerWidth - width) / 2;
   const top = window.screenY + (window.outerHeight - height) / 2;
+
   window.open(
     "reservas.html",
     "ReservaYa",
-    `width=${width},height=${height},left=${left},top=${top},toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=no`
+    `popup=yes,width=${width},height=${height},left=${left},top=${top},
+    toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no`
   );
+}
+
+btnReservar.addEventListener("click", abrirReserva);
+btnReservarFloat.addEventListener("click", abrirReserva);
+
+//Configurar el menu horizontal del html de restaurantes
+const menu = document.getElementById("menuScroll");
+const leftBtn = document.querySelector(".arrow.left");
+const rightBtn = document.querySelector(".arrow.right");
+
+let index = 0; // posición actual
+const cardWidth = 230; // ancho de cada card + margen
+const visibleCards = 3;
+const totalCards = menu.children.length;
+
+rightBtn.addEventListener("click", () => {
+  if (index < totalCards - visibleCards) {
+    index++;
+    menu.style.transform = `translateX(-${index * cardWidth}px)`;
+  }
+});
+
+leftBtn.addEventListener("click", () => {
+  if (index > 0) {
+    index--;
+    menu.style.transform = `translateX(-${index * cardWidth}px)`;
+  }
 });
