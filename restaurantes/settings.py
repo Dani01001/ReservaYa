@@ -76,6 +76,7 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+
 # Indica el sitio actual (obligatorio para allauth)
 SITE_ID = 2
 
