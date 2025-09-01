@@ -8,9 +8,9 @@ document.addEventListener("DOMContentLoaded", function() {
         const data = {
             username: document.getElementById("username").value,
             password: document.getElementById("password").value,
+            password2: document.getElementById("password2").value,
             email: document.getElementById("email").value,
             telefono: document.getElementById("telefono").value,
-            direccion: document.getElementById("direccion").value
         };
 
         fetch("http://192.168.170.9:8000/api/usuarios/registro/", {
@@ -22,15 +22,33 @@ document.addEventListener("DOMContentLoaded", function() {
         })
         .then(res => res.json())
         .then(respuesta => {
+            // Limpiar errores anteriores
+            document.querySelectorAll(".error").forEach(el => el.innerText = "");
+            mensaje.innerText = "";
+        
             if (respuesta.error) {
-                mensaje.innerText = "Error: " + respuesta.error;
-                mensaje.style.color = "red";
+                let errorMsg = respuesta.error;
+            
+                // Colocar mensajes en el lugar correcto
+                if (errorMsg.includes("Usuario")) {
+                    document.getElementById("username-error").innerText = errorMsg;
+                } else if (errorMsg.includes("Email")) {
+                    document.getElementById("email-error").innerText = errorMsg;
+                } else if (errorMsg.includes("contraseña") || errorMsg.includes("Contraseña")) {
+                    document.getElementById("password-error").innerText = errorMsg;
+                    document.getElementById("password2-error").innerText = errorMsg;
+                } else {
+                    mensaje.innerText = "Error: " + errorMsg; // fallback
+                    mensaje.style.color = "red";
+                }
+            
             } else {
                 mensaje.innerText = respuesta.message;
                 mensaje.style.color = "green";
-                form.reset(); // Limpiar el formulario
+                form.reset();
             }
         })
+
         .catch(error => {
             mensaje.innerText = "Error de conexión";
             mensaje.style.color = "red";

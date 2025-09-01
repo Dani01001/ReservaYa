@@ -10,30 +10,37 @@
         <form id="formRegistro" class="registro">
             <h2>Registro de Usuario</h2>
             
-            
-                <div class="form_input">
-                    <label for="username">Usuario:</label>
-                    <input type="text" id="username" name="username" required>
-                </div>
-                <div class="form_input">
-                    <label for="password">Contraseña:</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <div class="form_input">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email">
-                </div>
-            
-            
-            
-                <div class="form_input">
-                    <label for="telefono">Teléfono:</label>
-                    <input type="text" id="telefono" name="telefono">
-                </div>
-                <div class="form_input">
-                    <label for="direccion">Dirección:</label>
-                    <input type="text" id="direccion" name="direccion">
-                </div>
+            <div class="form_input">
+                <label for="username">Usuario:</label>
+                <input type="text" id="username" name="username" required>
+                <div id="username-error" class="error"></div>
+            </div>
+
+            <div class="form_input">
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" required>
+                <div id="password-error" class="error"></div>
+            </div>
+
+            <div class="form_input">
+                <label for="password2">Confirmar Contraseña:</label>
+                <input type="text" id="password2" name="password2">
+                <div id="password2-error" class="error"></div>
+            </div>  
+
+            <div class="form_input">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email">
+                <div id="email-error" class="error"></div>
+            </div>          
+
+            <div class="form_input">
+                <label for="telefono">Teléfono:</label>
+                <input type="text" id="telefono" name="telefono">
+                <div id="telefono-error" class="error"></div>
+            </div>
+
+
             
             <div class="form_input">
                 <button type="submit">Registrar</button>

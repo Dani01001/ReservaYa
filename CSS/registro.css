@@ -139,3 +139,10 @@ legend {
 .google-login-btn:hover {
     background-color: #e6ddddb2;
 }
+
+
+.error {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 4px;
+}
