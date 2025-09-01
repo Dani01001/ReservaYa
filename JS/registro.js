@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
             direccion: document.getElementById("direccion").value
         };
 
-        fetch("http://127.0.0.1:8000/api/usuarios/registro/", {
+        fetch("http://192.168.170.9:8000/api/usuarios/registro/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
