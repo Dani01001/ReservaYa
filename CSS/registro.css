@@ -105,3 +105,21 @@ legend {
     font-size: 1.1em;
     font-weight: bold;
 }
+
+
+.google-login-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background-color: #4285F4;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+.google-login-btn:hover {
+    background-color: #357ae8;
+}

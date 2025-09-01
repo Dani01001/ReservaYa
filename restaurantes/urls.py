@@ -21,6 +21,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/usuarios/", include("usuarios.urls")),   # 👈 se agrega aquí
     path("api/reservas/", include("reservas.urls")),
+    path('accounts/', include('allauth.urls')),  # <- para login con Google
 ]
 
 

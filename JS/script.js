@@ -10,7 +10,7 @@ function abrirVentanaEmergente(url) {
     window.open(url, 'VentanaEmergente', `width=${ancho},height=${alto},top=${top},left=${left}`);
 }
 
-fetch('http://192.168.0.9:8000/api/reservas/')
+fetch('http://127.0.0.1:5500/api/reservas/')
     .then(res => res.json())
     .then(data => {
         console.log("Datos desde la api", data);

@@ -31,28 +31,64 @@ ALLOWED_HOSTS = ["127.0.0.1", "localhost", "10.149.105.102"]
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
+    'django.contrib.sites',  # obligatorio para allauth
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.admin',
     'reservas',
     'rest_framework',
     'corsheaders',
     'usuarios',
+    # Allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
+# Permite login estándar y login con proveedores sociales (Google, etc.)
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',              # login normal con username/password
+    'allauth.account.auth_backends.AuthenticationBackend',    # login con social providers
+]
+
+# Redirecciones despues de login/logout
+LOGIN_REDIRECT_URL = '/'       # pagina a la que redirige despues de iniciar sesion
+LOGOUT_REDIRECT_URL = '/'      # pagina a la que redirige al cerrar sesion
+
+# Para que los formularios de allauth usen email como username opcional
+ACCOUNT_LOGIN_METHODS = {'username', 'email'}
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',  # 'offline' si quieres refresh tokens
+            'prompt': 'select_account',  # fuerza a Google a mostrar la pantalla de login
+        }
+    }
+}
+
+# Indica el sitio actual (obligatorio para allauth)
+SITE_ID = 2
+
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",             # Cors debe ir al inicio SIEMPRE
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'allauth.account.middleware.AccountMiddleware',      # obligatorio para allauth
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
 ]
 CORS_ALLOW_CREDENTIALS = True 
 
@@ -135,3 +171,4 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
