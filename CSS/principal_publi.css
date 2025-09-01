@@ -14,10 +14,10 @@ body{
 }
 
 :root {
-    --primary-color: #730707;/* Azul */
-    --secondary-color: #590202; /* Gris */
-    --accent-color: #BFBFBF;/* Verde */
-    --background-color: #F2F2F2; /*Gris claro*/
+    --primary-color: #730707;
+    --secondary-color: #590202; 
+    --accent-color: #BFBFBF;
+    --background-color: #F2F2F2; 
 }
 
 main{
