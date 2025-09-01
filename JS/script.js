@@ -34,7 +34,7 @@ function abrirReserva() {
   const top = window.screenY + (window.outerHeight - height) / 2;
 
   window.open(
-    "reservas.html",
+    "../reservas.html",
     "ReservaYa",
     `popup=yes,width=${width},height=${height},left=${left},top=${top},
     toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no`
