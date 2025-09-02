@@ -22,7 +22,7 @@ def registrar_usuario(request):
         password = data.get("password")
         email = data.get("email")
         telefono = data.get("telefono", "")
-        direccion = data.get("direccion", "")
+        password2 = data.get("password2", "")
 
         # Validaciones
         if not username or not password or not email:
@@ -42,12 +42,15 @@ def registrar_usuario(request):
         except ValidationError as e:
             return JsonResponse({"error": list(e.messages)}, status=400)
 
+        if password != password2:
+            return JsonResponse({"error": "Las contraseñas no coinciden"}, status=400)
+
         user = Usuario.objects.create_user(
             username=username,
             password=password,
             email=email,
             telefono=telefono,
-            direccion=direccion
+            password2=password2
         )
         
         return JsonResponse({
