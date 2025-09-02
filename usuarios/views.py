@@ -20,9 +20,9 @@ def registrar_usuario(request):
         data = json.loads(request.body.decode("utf-8"))
         username = data.get("username")
         password = data.get("password")
+        password2 = data.get("password2", "")
         email = data.get("email")
         telefono = data.get("telefono", "")
-        password2 = data.get("password2", "")
 
         # Validaciones
         if not username or not password or not email:
@@ -37,32 +37,34 @@ def registrar_usuario(request):
             return JsonResponse({"error": "Email ya está registrado"}, status=400)
 
         # Validar contraseña
+        password2 = data.get("password2")
+
+        if password != password2:
+            return JsonResponse({"error": "Las contraseñas no coinciden"}, status=400)
         try:
             validate_password(password)
         except ValidationError as e:
             return JsonResponse({"error": list(e.messages)}, status=400)
 
-        if password != password2:
-            return JsonResponse({"error": "Las contraseñas no coinciden"}, status=400)
-
+        # Crear usuario solo con los campos válidos
         user = Usuario.objects.create_user(
             username=username,
             password=password,
             email=email,
-            telefono=telefono,
-            password2=password2
+            telefono=telefono
         )
+
         
         return JsonResponse({
             "message": "Usuario creado con éxito",
             "user_id": user.id
         }, status=201)
-
     except json.JSONDecodeError:
         return JsonResponse({"error": "JSON inválido"}, status=400)
     except Exception as e:
-        return JsonResponse({"error": "Error interno del servidor"}, status=500)
-
+        # En desarrollo muestra el error real
+        return JsonResponse({"error": str(e)}, status=500)
+    
 @csrf_exempt
 @require_http_methods(["POST"])
 def iniciar_sesion(request):
@@ -96,7 +98,7 @@ def iniciar_sesion(request):
     except json.JSONDecodeError:
         return JsonResponse({"error": "JSON inválido"}, status=400)
     except Exception as e:
-        return JsonResponse({"error": "Error interno del servidor"}, status=500)
+        return JsonResponse({"error": str(e)}, status=500)
 
 @csrf_exempt
 @require_http_methods(["POST"])
