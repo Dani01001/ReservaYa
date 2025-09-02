@@ -16,7 +16,7 @@
         <a href="#"><i class="fa fa-map-marker-alt"></i> Sucursales</a>
         <div id="adminProfile" class="profile-btn">
             <i class="fas fa-user-shield"></i>
-            <span class="profile-text" id="nombreUsuario">Cargando...</span>
+            <span class="profile-text" id="nombreUsuario">(not working)</span>
         </div>
     </div>
 
@@ -48,9 +48,14 @@
 
                 <!-- Card de Sucursales -->
                 <div class="card">
-                    <h2>Sucursales</h2>
-                    <p>Aquí irían las sucursales registradas.</p>
-                    <button class="btn" id="btnAgregarSucursal">Agregar Sucursal</button>
+                    <h1>Agregar Sucursales de Restaurantes</h1>
+                    <div class="map-search">
+                        <input id="place-input" type="text" placeholder="Buscar restaurante...">
+                        <button id="add-branch">Agregar Sucursal</button>
+                    </div>
+                    <div id="map"></div>
+                    <h2>Sucursales agregadas:</h2>
+                    <ul id="branch-list"></ul> 
                 </div>
             </div>
         </main>
@@ -133,6 +138,8 @@
     </div>
 
     <!-- Scripts -->
+    <script src="../JS/maps.js" defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=TU_API_KEY&libraries=places&callback=initMap" async defer></script>
     <script src="../JS/principal_priv.js" defer></script>
     <script src="../JS/agregar-menu.js" defer></script>
     <script src="../JS/script.js" defer></script>
