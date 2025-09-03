@@ -1,3 +1,71 @@
+//inicio de las funcionalidades de desaparicion de login y registro y mas cosas
+document.addEventListener("DOMContentLoaded", () => {
+    const registroBtn = document.getElementById('registro');
+    const loginBtn = document.getElementById('iniciar_sesion');
+    const userSection = document.getElementById('userSection');
+    const userName = document.getElementById('userName');
+    const userInfo = document.getElementById('userInfo');
+    const btnPerfil = document.getElementById('btnPerfil');
+    const btnLogout = document.getElementById('btnLogout');
+    const registroItem = document.getElementById('registroItem');
+    const loginItem = document.getElementById('loginItem');
+    
+    if (token && username) {
+        if (registroItem) registroItem.style.display = 'none';
+        if (loginItem) loginItem.style.display = 'none';
+    
+        userSection.style.display = 'block';
+        userInfo.style.display = 'inline';
+        userName.textContent = username;
+    } else {
+        if (registroItem) registroItem.style.display = 'inline-block';
+        if (loginItem) loginItem.style.display = 'inline-block';
+    
+        userSection.style.display = 'block';
+        userInfo.style.display = 'none';
+    }
+
+    // Revisar si hay sesión guardada en localStorage
+    const token = localStorage.getItem("token");
+    const username = localStorage.getItem("username");
+
+    if (token && username) {
+        // Usuario logueado
+        if(registroBtn) registroBtn.parentElement.style.display = 'none';
+        if(loginBtn) loginBtn.parentElement.style.display = 'none';
+
+        userSection.style.display = 'block';
+        userInfo.style.display = 'inline';
+        userName.textContent = username;
+    } else {
+        // Usuario no logueado
+        if(registroBtn) registroBtn.parentElement.style.display = 'block';
+        if(loginBtn) loginBtn.parentElement.style.display = 'block';
+
+        userSection.style.display = 'block';
+        userInfo.style.display = 'none';
+    }
+
+    // Botón cerrar sesión
+    if(btnLogout){
+        btnLogout.addEventListener('click', function(){
+            localStorage.removeItem("token");
+            localStorage.removeItem("username");
+            window.location.reload();
+        });
+    }
+
+    // Botón ir a perfil
+    if(btnPerfil){
+        btnPerfil.addEventListener('click', function(){
+            window.location.href = "usuario.html";
+        });
+    }
+});
+//fin
+
+
+
 function abrirVentanaEmergente(url) {
     const ancho = 700; // Ancho de la ventana
     const alto = 850;  // Alto de la ventana
@@ -10,11 +78,8 @@ function abrirVentanaEmergente(url) {
     window.open(url, 'VentanaEmergente', `width=${ancho},height=${alto},top=${top},left=${left}`);
 }
 
-<<<<<<< HEAD
 fetch('http://10.149.105.102:5500/api/reservas/')
-=======
-fetch('http://192.168.170.35:5500/api/reservas/')
->>>>>>> d33d47a5ee5a9c86824c811abaa5a2129376f093
+
     .then(res => res.json())
     .then(data => {
         console.log("Datos desde la api", data);
@@ -22,8 +87,6 @@ fetch('http://192.168.170.35:5500/api/reservas/')
     .catch(error => {
         console.error("Error alconectar con la api", error);
     });
-
-
 
 
 

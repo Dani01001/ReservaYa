@@ -17,11 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         try {
             // Hacer la petición al backend
-<<<<<<< HEAD
             const response = await fetch("http://10.149.105.102:8000/api/reservas/crear/", {
-=======
-            const response = await fetch("http://192.168.170.35:8000/api/reservas/crear/", {
->>>>>>> d33d47a5ee5a9c86824c811abaa5a2129376f093
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

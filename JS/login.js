@@ -10,17 +10,13 @@ document.addEventListener("DOMContentLoaded", function() {
             password: document.getElementById("password").value
         };
 
-<<<<<<< HEAD
         fetch("http://10.149.105.102:8000/api/usuarios/login/", {
-=======
-        fetch("http://192.168.170.35:8000/api/usuarios/login/", {
->>>>>>> d33d47a5ee5a9c86824c811abaa5a2129376f093
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(data),
-            credentials: "include"  // para que se guarde la sesión
+            credentials: "include"
         })
         .then(res => res.json())
         .then(respuesta => {
@@ -31,12 +27,21 @@ document.addEventListener("DOMContentLoaded", function() {
                 mensaje.innerText = respuesta.message;
                 mensaje.style.color = "green";
                 form.reset();
+
+                // ⚡ Guardar datos en localStorage
+                if (respuesta.token) {
+                    localStorage.setItem("token", respuesta.token);
+                }
+                if (respuesta.username) {
+                    localStorage.setItem("username", respuesta.username);
+                }
+
                 // Cerrar ventana emergente y actualizar página principal
-                if (window.opener) {  // verifica si se abrió como popup
-                    window.opener.location.reload(); // recarga la página principal para reflejar login
-                    window.close(); // cierra esta ventana emergente
+                if (window.opener) {
+                    window.opener.location.reload();
+                    window.close();
                 } else {
-                    window.location.href = "index.html"; // fallback si no es popup
+                    window.location.href = "principal_publi.html";
                 }
             }
         })

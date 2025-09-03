@@ -23,26 +23,32 @@
                     <img src="../ReservaYA - Logo/2.png" alt="">
                 </div>
             </div>
-
+            
             <div class="derecha">
                 <ul class="registro">
                     <li class="boton_contacto">
-                        <a href="#contacto">Cotacto</a>
+                        <a href="#contacto">Contacto</a>
                     </li>
                     <li class="boton_contacto">
                         <a href="quienes_somos.html">Quienes somos</a>
                     </li>
-                     <li class="boton_nav">
-                        <a href="#" class="registro_boton" id="registro" onclick="abrirVentanaEmergente('registro.html'); return false;" >Registro</a>
+                    <li class="boton_nav" id="registroItem">
+                        <a href="#" class="registro_boton" id="registro" onclick="abrirVentanaEmergente('registro.html'); return false;">Registro</a>
                     </li>
-                    <li class="boton_nav">
-                        <a href="#" class="iniciar_sesion" id="iniciar_sesion" onclick="abrirVentanaEmergente('login.html'); return false;" >Iniciar Sesión</a>
+                    <li class="boton_nav" id="loginItem">
+                        <a href="#" class="iniciar_sesion" id="iniciar_sesion" onclick="abrirVentanaEmergente('login.html'); return false;">Iniciar Sesión</a>
+                    </li>
+                    <li id="userSection">
+                        <span id="userInfo" style="display:none;">
+                            Bienvenido, <span id="userName"></span>
+                            <button id="btnPerfil">Mi perfil</button>
+                            <button id="btnLogout">Cerrar sesión</button>
+                        </span>
                     </li>
                 </ul>
-                
             </div>
         </div>
-
+        
         <div  class="container_prin">
             <div class="mid">
                 <h1>ReservaYa</h1>

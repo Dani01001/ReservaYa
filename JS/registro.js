@@ -13,11 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
             telefono: document.getElementById("telefono").value,
         };
 
-<<<<<<< HEAD
         fetch("http://10.149.105.102:8000/api/usuarios/registro/", {
-=======
-        fetch("http://192.168.170.35:8000/api/usuarios/registro/", {
->>>>>>> d33d47a5ee5a9c86824c811abaa5a2129376f093
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -29,11 +25,10 @@ document.addEventListener("DOMContentLoaded", function() {
             // Limpiar errores anteriores
             document.querySelectorAll(".error").forEach(el => el.innerText = "");
             mensaje.innerText = "";
-        
+
             if (respuesta.error) {
                 let errorMsg = respuesta.error;
-            
-                // Colocar mensajes en el lugar correcto
+
                 if (errorMsg.includes("Usuario")) {
                     document.getElementById("username-error").innerText = errorMsg;
                 } else if (errorMsg.includes("Email")) {
@@ -42,24 +37,31 @@ document.addEventListener("DOMContentLoaded", function() {
                     document.getElementById("password-error").innerText = errorMsg;
                     document.getElementById("password2-error").innerText = errorMsg;
                 } else {
-                    mensaje.innerText = "Error: " + errorMsg; // fallback
+                    mensaje.innerText = "Error: " + errorMsg;
                     mensaje.style.color = "red";
                 }
-            
             } else {
+                // ✅ Guardar datos en localStorage (login automático)
+                if (respuesta.token) {
+                    localStorage.setItem("token", respuesta.token);
+                }
+                if (respuesta.username) {
+                    localStorage.setItem("username", respuesta.username);
+                }
+
                 mensaje.innerText = respuesta.message;
                 mensaje.style.color = "green";
                 form.reset();
-                // Cerrar ventana emergente y actualizar página principal
-                if (window.opener) {  // verifica si se abrió como popup
-                    window.opener.location.reload(); // recarga la página principal para reflejar login
-                    window.close(); // cierra esta ventana emergente
+
+                // Redirigir después de registrarse
+                if (window.opener) {
+                    window.opener.location.reload();
+                    window.close();
                 } else {
-                    window.location.href = "index.html"; // fallback si no es popup
+                    window.location.href = "principal_publi.html";
                 }
             }
         })
-
         .catch(error => {
             mensaje.innerText = "Error de conexión";
             mensaje.style.color = "red";
