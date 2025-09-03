@@ -36,7 +36,7 @@ header{
 
 
 .container_nav{
-    background-color: #020202d3 ;
+    background-color: #020202bc;
     display: flex ;
     justify-content: space-between; /* separa los dos bloques */
     align-items: center;
@@ -77,7 +77,7 @@ img{
 }
 
 .container_prin{
-    background-color: #020202d3 ;
+    background-color: #020202bc ;
     display: flex ;
     justify-content: center; /* centra en el eje X */
     /* align-items: top; */
