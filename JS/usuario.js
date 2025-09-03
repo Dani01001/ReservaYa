@@ -34,7 +34,7 @@ async function eliminarReserva(id) {
     const token = localStorage.getItem("token");
     if (!confirm("¿Seguro que deseas eliminar esta reserva?")) return;
 
-    await fetch(`http://127.0.0.1:8000/api/reservas/${id}/`, {
+    await fetch(`http://192.168.0.9:8000/api/reservas/${id}/`, {
         method: "DELETE",
         headers: { "Authorization": "Token " + token }
     });
