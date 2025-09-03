@@ -13,7 +13,11 @@ document.addEventListener("DOMContentLoaded", function() {
             telefono: document.getElementById("telefono").value,
         };
 
+<<<<<<< HEAD
         fetch("http://10.149.105.102:8000/api/usuarios/registro/", {
+=======
+        fetch("http://192.168.170.35:8000/api/usuarios/registro/", {
+>>>>>>> d33d47a5ee5a9c86824c811abaa5a2129376f093
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
