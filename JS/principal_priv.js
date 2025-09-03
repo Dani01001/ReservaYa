@@ -107,8 +107,18 @@ document.addEventListener("DOMContentLoaded", () => {
             nombreUsuarioSpan.textContent = "Usuario";
         });
 
-    adminProfile?.addEventListener("click", () => {
-        window.location.href = "../HTML/principal_priv.html";
+    adminProfile?.addEventListener("click", async () => {
+        // Llama a un endpoint que devuelva el usuario actual
+        const resp = await fetch("http://localhost:8000/api/usuario/", {
+            credentials: "include"
+        });
+        if (resp.status === 401 || resp.status === 403) {
+            // No autenticado, redirige al login de restaurantes
+            window.location.href = "/HTML/login_restaurantes.html";
+        } else {
+            // Autenticado, puedes mostrar perfil o lo que desees
+            // window.location.href = "/HTML/perfil.html";
+        }
     });
 
     // --- Botón Iniciar Sesión ---
@@ -120,5 +130,53 @@ document.addEventListener("DOMContentLoaded", () => {
         const left = (window.innerWidth - ancho) / 2;
         const top = (window.innerHeight - alto) / 2;
         window.open(url, 'LoginRestaurante', `width=${ancho},height=${alto},top=${top},left=${left}`);
+    });
+
+    // Botón Cerrar Sesión
+    const btnCerrarSesion = document.getElementById("btnCerrarSesion");
+    btnCerrarSesion?.addEventListener("click", async (e) => {
+        e.preventDefault();
+        // Realiza logout en Django
+        await fetch("http://localhost:8000/accounts/logout/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "csrfmiddlewaretoken=" + getCookie("csrftoken"),
+            credentials: "include"
+        });
+        // Redirige al login o página principal
+        window.location.href = "/HTML/login_restaurantes.html";
+    });
+
+    // Función para obtener el CSRF token de las cookies
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+            const cookies = document.cookie.split(";");
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + "=")) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    const btnUsuario = document.getElementById("btnUsuario");
+    btnUsuario?.addEventListener("click", async () => {
+        // Llama a un endpoint que devuelva el usuario actual
+        const resp = await fetch("http://localhost:8000/api/usuario/", {
+            credentials: "include"
+        });
+        if (resp.status === 401 || resp.status === 403) {
+            // No autenticado, redirige al login de restaurantes
+            window.location.href = "/HTML/login_restaurantes.html";
+        } else {
+            // Autenticado, puedes mostrar perfil o lo que desees
+            // window.location.href = "/HTML/perfil.html";
+        }
     });
 });
