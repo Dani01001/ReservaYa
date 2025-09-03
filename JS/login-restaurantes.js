@@ -13,30 +13,37 @@ form.addEventListener("submit", function(e) {
         return;
     }
 
-    // Enviar datos al backend mediante POST
-    fetch("/api/login", { // Cambia a tu endpoint real de login
+    // Enviar datos al backend mediante POST (formato x-www-form-urlencoded)
+    const data = `login=${encodeURIComponent(usuarioInput)}&password=${encodeURIComponent(contraseñaInput)}`;
+
+    fetch("http://localhost:8000/accounts/login/", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: JSON.stringify({
-            usuario: usuarioInput,
-            contraseña: contraseñaInput
-        })
+        body: data,
+        credentials: "include" // Importante para manejo de sesión
     })
-    .then(response => response.json())
-    .then(data => {
-    if (data.exito) {
-        // Login exitoso
-        errorMessage.textContent = "";
-        // Redirigir a la página que desees
-        window.location.href = "..\templates\html\principal_priv.html"; 
-    } else {
-        errorMessage.textContent = "Usuario o contraseña incorrectos";
-    }
-})
+    .then(response => {
+        if (response.redirected) {
+            // Login exitoso, redirigir
+            window.location.href = response.url;
+        } else {
+            return response.text();
+        }
+    })
+    .then(text => {
+        if (text) {
+            if (text.includes("Por favor introduzca un nombre de usuario y una contraseña correctos") ||
+                text.includes("Please enter a correct username and password")) {
+                errorMessage.textContent = "Usuario o contraseña incorrectos";
+            } else {
+                errorMessage.textContent = "Error al iniciar sesión";
+            }
+        }
+    })
     .catch(error => {
-        console.error("Error al conectar con la base de datos:", error);
+        console.error("Error al conectar con el backend:", error);
         errorMessage.textContent = "No se pudo verificar sus datos";
     });
 });
