@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnLogout = document.getElementById('btnLogout');
     const registroItem = document.getElementById('registroItem');
     const loginItem = document.getElementById('loginItem');
-    
+
     if (token && username) {
         if (registroItem) registroItem.style.display = 'none';
         if (loginItem) loginItem.style.display = 'none';
@@ -78,20 +78,8 @@ function abrirVentanaEmergente(url) {
     window.open(url, 'VentanaEmergente', `width=${ancho},height=${alto},top=${top},left=${left}`);
 }
 
-<<<<<<< HEAD
-fetch('http://10.149.105.102:5500/api/reservas/')
 
-=======
-<<<<<<< HEAD
-// ======== API FETCH DE RESERVAS ==========
-=======
-<<<<<<< HEAD
 fetch('http://10.149.105.102:5500/api/reservas/')
-=======
->>>>>>> 2f682412d70ac04c56c2213b6127ef4474a4f363
-fetch('http://192.168.170.35:5500/api/reservas/')
->>>>>>> d33d47a5ee5a9c86824c811abaa5a2129376f093
->>>>>>> 05e4341667d64b336494eab0925a0124583bfa34
     .then(res => res.json())
     .then(data => {
         console.log("Datos desde la api", data);
@@ -99,14 +87,6 @@ fetch('http://192.168.170.35:5500/api/reservas/')
     .catch(error => {
         console.error("Error al conectar con la api", error);
     });
-
-
-<<<<<<< HEAD
-
-// Seleccionar el botón de reservar en el html de los restaurantes
-=======
-// ========= RESERVAR MESA =========
->>>>>>> 05e4341667d64b336494eab0925a0124583bfa34
 const btnReservar = document.querySelector(".btn-reservar");
 const btnReservarFloat = document.querySelector(".btn-reserva-float");
 
