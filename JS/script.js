@@ -10,22 +10,24 @@ function abrirVentanaEmergente(url) {
     window.open(url, 'VentanaEmergente', `width=${ancho},height=${alto},top=${top},left=${left}`);
 }
 
+// ======== API FETCH DE RESERVAS ==========
 fetch('http://192.168.170.35:5500/api/reservas/')
     .then(res => res.json())
     .then(data => {
         console.log("Datos desde la api", data);
     })
     .catch(error => {
-        console.error("Error alconectar con la api", error);
+        console.error("Error al conectar con la api", error);
     });
 
 
-
-
-
-// Seleccionar el botón de reservar en el html de los restaurantes
+// ========= RESERVAR MESA =========
 const btnReservar = document.querySelector(".btn-reservar");
 const btnReservarFloat = document.querySelector(".btn-reserva-float");
+
+// ⚡ Aquí definís el ID del restaurante correspondiente a este HTML
+// Ejemplo: bolsi.html corresponde al restaurante con ID 1
+const RESTAURANTE_ID = 1;
 
 function abrirReserva() {
   const width = 700;
@@ -33,8 +35,9 @@ function abrirReserva() {
   const left = window.screenX + (window.outerWidth - width) / 2;
   const top = window.screenY + (window.outerHeight - height) / 2;
 
+  // Pasamos el restaurante_id por querystring
   window.open(
-    "../reservas.html",
+    `../reservas.html?restaurante=${RESTAURANTE_ID}`,
     "ReservaYa",
     `popup=yes,width=${width},height=${height},left=${left},top=${top},
     toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no`
@@ -44,7 +47,8 @@ function abrirReserva() {
 btnReservar.addEventListener("click", abrirReserva);
 btnReservarFloat.addEventListener("click", abrirReserva);
 
-//Configurar el menu horizontal del html de restaurantes
+
+// ========= SLIDER DE MENÚ =========
 const menu = document.getElementById("menuScroll");
 const leftBtn = document.querySelector(".arrow.left");
 const rightBtn = document.querySelector(".arrow.right");

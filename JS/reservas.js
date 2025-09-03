@@ -1,10 +1,18 @@
 document.addEventListener("DOMContentLoaded", function() {
     const form = document.getElementById("formReserva");
+    const params = new URLSearchParams(window.location.search);
+    const restauranteId = params.get("restaurante");
+    console.log("ID del restaurante:", restauranteId);
+
+    if (!restauranteId) {
+        alert("❌ No se pudo determinar el restaurante. Intente nuevamente.");
+        return;
+    }
 
     form.addEventListener("submit", async function(e) {
         e.preventDefault();
 
-        // ⚡ Coloque aquí el token real generado por Django
+        // ⚡ Coloque aquí el token real generado por Django(pendiente obtener el token)
         const token = "27a8d52edd23a834b68bea156801e7b37fdf6bdb";
 
         // Recolectar los datos del formulario
@@ -12,7 +20,8 @@ document.addEventListener("DOMContentLoaded", function() {
             nombre_cliente: document.getElementById("nombre").value,
             fecha: document.getElementById("fecha").value,
             hora: document.getElementById("hora").value,
-            cantidad_personas: document.getElementById("personas").value
+            cantidad_personas: document.getElementById("personas").value,
+            restaurante: restauranteId  // ← Esto es lo que faltaba
         };
 
         try {
