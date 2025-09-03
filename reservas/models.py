@@ -19,14 +19,13 @@ class Mesa(models.Model):
     
 class Reserva(models.Model):
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    restaurante = models.ForeignKey(Restaurante, on_delete=models.CASCADE)
-    mesa = models.ForeignKey(Mesa, on_delete=models.CASCADE)
+    mesa = models.ForeignKey(Mesa, on_delete=models.CASCADE, null=True, blank=True) #opcional y permitir null (es temporal apra ver si funciona el resitro nomas)
+    nombre_cliente = models.CharField(max_length=100, default="Cliente")
     fecha = models.DateField()
     hora = models.TimeField()
     cantidad_personas = models.IntegerField()
-    creada_en = models.DateTimeField(auto_now_add=True)
-
-    
+    creado_en = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Reserva de{self.usuario.username} en {self.restaurante.nombre} para {self.cantidad_personas} el {self.fecha} a las {self.hora}"
+        return f"Reserva de {self.nombre_cliente} para {self.cantidad_personas} el {self.fecha} a las {self.hora}"
+

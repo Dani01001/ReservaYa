@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'reservas',
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
     'usuarios',
     # Allauth
@@ -48,6 +49,12 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
 
 # Permite login estándar y login con proveedores sociales (Google, etc.)
 AUTHENTICATION_BACKENDS = [

@@ -46,6 +46,13 @@ document.addEventListener("DOMContentLoaded", function() {
                 mensaje.innerText = respuesta.message;
                 mensaje.style.color = "green";
                 form.reset();
+                // Cerrar ventana emergente y actualizar página principal
+                if (window.opener) {  // verifica si se abrió como popup
+                    window.opener.location.reload(); // recarga la página principal para reflejar login
+                    window.close(); // cierra esta ventana emergente
+                } else {
+                    window.location.href = "index.html"; // fallback si no es popup
+                }
             }
         })
 

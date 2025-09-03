@@ -53,7 +53,6 @@ def registrar_usuario(request):
             email=email,
             telefono=telefono
         )
-
         
         return JsonResponse({
             "message": "Usuario creado con éxito",
