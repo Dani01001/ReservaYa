@@ -19,17 +19,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-<<<<<<< HEAD
+
     path("api/usuarios/", include("usuarios.urls")),
     path('accounts/', include('allauth.urls')),
     path('api/reservas/', include('reservas.urls')),
 ]
-=======
-    path("api/usuarios/", include("usuarios.urls")),   # 👈 se agrega aquí
-    path("api/reservas/", include("reservas.api_urls")),
-    path('accounts/', include('allauth.urls')),  # <- para login con Google
-]
-
-
-
->>>>>>> 408887b354edcaa3e1c875aea566b6810d39cfd6
