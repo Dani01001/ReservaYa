@@ -40,7 +40,7 @@
             <div class="informacion">
                 <h1>La Farola</h1>
                 <p>La Farola es un restaurante popular en Asunción, conocido por su ambiente acogedor y familiar. Su menú ofrece un buffet por kilo con una amplia variedad de platos locales e internacionales, incluyendo opciones de desayunos, almuerzos, postres y helados. Los viernes se destacan las parrilladas al aire libre, que atraen a muchos comensales. También ofrece servicios de almuerzos empresariales con pagos mensuales para empresas, brindando comodidad y calidad a sus clientes. <br><br>La Farola es reconocida por su limpieza, servicio confiable y ambiente agradable, lo que la convierte en una opción frecuente tanto para locales como para turistas. Su ubicación céntrica en la esquina de Constitución y Pettirossi facilita el acceso y la hace un punto habitual de encuentro para disfrutar de una buena comida en cualquier momento del día.<br><br> Recientemente, el restaurante ha sido destacado en guías gastronómicas locales por su autenticidad y calidad, consolidándose como un referente de la gastronomía en Asunción.</p>
-                <button class="btn-reservar animation">Reservar Mesa</button>
+                <button class="btn-reservar animation" onclick="abrirVentanaEmergente('../reservas.html?restaurante=2')">Reservar Mesa</button>
             </div>
             <div class="container_sections">
                 <div class="box">
@@ -231,7 +231,7 @@
                 </div>
             </div>
         </div>
-        <div class="btn-reserva-float">
+        <div class="btn-reserva-float" onclick="abrirVentanaEmergente('../reservas.html?restaurante=2')">
             <span class="short">R</span>
             <span class="long"><b>Mesas Disponibles</b><br>Reserva!!</span>
         </div>
@@ -252,6 +252,8 @@
         </div>
     </footer>
 
-    <script src="../../JS/script.js"></script>
+    <script src="../../JS/script.js">
+        const restaurante_id = 2;
+    </script>
 </body>
 </html>
