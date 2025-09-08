@@ -1,19 +1,36 @@
 document.addEventListener("DOMContentLoaded", function() {
     const form = document.getElementById("formReserva");
+
+    // Obtener el ID del restaurante desde los parámetros de la URL
     const params = new URLSearchParams(window.location.search);
-    const restauranteId = params.get("restaurante");
+    const restauranteId = params.get("restaurante"); // Asegúrate que la URL tenga ?restaurante=ID
     console.log("ID del restaurante:", restauranteId);
 
-    if (!restauranteId) {
-        alert("❌ No se pudo determinar el restaurante. Intente nuevamente.");
-        return;
+    // Función para obtener el CSRF token desde las cookies
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+            const cookies = document.cookie.split(";");
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + "=")) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
     }
+
+    const csrftoken = getCookie("csrftoken");
 
     form.addEventListener("submit", async function(e) {
         e.preventDefault();
 
-        // ⚡ Coloque aquí el token real generado por Django(pendiente obtener el token)
-        const token = "27a8d52edd23a834b68bea156801e7b37fdf6bdb";
+        if (!restauranteId) {
+            alert("❌ No se ha especificado un restaurante.");
+            return;
+        }
 
         // Recolectar los datos del formulario
         const data = {
@@ -21,18 +38,18 @@ document.addEventListener("DOMContentLoaded", function() {
             fecha: document.getElementById("fecha").value,
             hora: document.getElementById("hora").value,
             cantidad_personas: document.getElementById("personas").value,
-            restaurante: restauranteId  // ← Esto es lo que faltaba
+            restaurante: restauranteId
         };
 
         try {
-            // Hacer la petición al backend
-            const response = await fetch("http://192.168.0.9:8000/api/reservas/crear/", {
+            const response = await fetch("http://192.168.170.96:8000/api/reservas/crear/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": "Token " + token
+                    "X-CSRFToken": csrftoken
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify(data),
+                credentials: "include" // ⚡ importante para enviar cookies de sesión
             });
 
             if (response.ok) {
