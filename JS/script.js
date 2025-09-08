@@ -10,6 +10,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const registroItem = document.getElementById('registroItem');
     const loginItem = document.getElementById('loginItem');
 
+    // Revisar si hay sesión guardada en localStorage
+    const token = localStorage.getItem("token");
+    const username = localStorage.getItem("username");
+
     if (token && username) {
         if (registroItem) registroItem.style.display = 'none';
         if (loginItem) loginItem.style.display = 'none';
@@ -21,27 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (registroItem) registroItem.style.display = 'inline-block';
         if (loginItem) loginItem.style.display = 'inline-block';
     
-        userSection.style.display = 'block';
-        userInfo.style.display = 'none';
-    }
-
-    // Revisar si hay sesión guardada en localStorage
-    const token = localStorage.getItem("token");
-    const username = localStorage.getItem("username");
-
-    if (token && username) {
-        // Usuario logueado
-        if(registroBtn) registroBtn.parentElement.style.display = 'none';
-        if(loginBtn) loginBtn.parentElement.style.display = 'none';
-
-        userSection.style.display = 'block';
-        userInfo.style.display = 'inline';
-        userName.textContent = username;
-    } else {
-        // Usuario no logueado
-        if(registroBtn) registroBtn.parentElement.style.display = 'block';
-        if(loginBtn) loginBtn.parentElement.style.display = 'block';
-
         userSection.style.display = 'block';
         userInfo.style.display = 'none';
     }
@@ -87,6 +70,7 @@ fetch('http://192.168.0.9:5500/api/reservas/')
     .catch(error => {
         console.error("Error al conectar con la api", error);
     });
+
 const btnReservar = document.querySelector(".btn-reservar");
 const btnReservarFloat = document.querySelector(".btn-reserva-float");
 
@@ -109,8 +93,13 @@ function abrirReserva() {
   );
 }
 
-btnReservar.addEventListener("click", abrirReserva);
-btnReservarFloat.addEventListener("click", abrirReserva);
+if (btnReservar) {
+  btnReservar.addEventListener("click", abrirReserva);
+}
+
+if (btnReservarFloat) {
+  btnReservarFloat.addEventListener("click", abrirReserva);
+}
 
 
 // ========= SLIDER DE MENÚ =========
@@ -121,18 +110,22 @@ const rightBtn = document.querySelector(".arrow.right");
 let index = 0; // posición actual
 const cardWidth = 230; // ancho de cada card + margen
 const visibleCards = 3;
-const totalCards = menu.children.length;
+const totalCards = menu ? menu.children.length : 0;
 
-rightBtn.addEventListener("click", () => {
-  if (index < totalCards - visibleCards) {
-    index++;
-    menu.style.transform = `translateX(-${index * cardWidth}px)`;
-  }
-});
+if (rightBtn) {
+  rightBtn.addEventListener("click", () => {
+    if (index < totalCards - visibleCards) {
+      index++;
+      menu.style.transform = `translateX(-${index * cardWidth}px)`;
+    }
+  });
+}
 
-leftBtn.addEventListener("click", () => {
-  if (index > 0) {
-    index--;
-    menu.style.transform = `translateX(-${index * cardWidth}px)`;
-  }
-});
+if (leftBtn) {
+  leftBtn.addEventListener("click", () => {
+    if (index > 0) {
+      index--;
+      menu.style.transform = `translateX(-${index * cardWidth}px)`;
+    }
+  });
+}
