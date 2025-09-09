@@ -5,9 +5,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-
 from .models import Restaurante, Mesa, Reserva
 from .serializers import RestauranteSerializer, MesaSerializer, ReservaSerializer
+
+def inicio(request):
+    return render(request, "principal_publi.html")
 
 
 # ======== Vistas de API ========

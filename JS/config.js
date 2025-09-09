@@ -1,0 +1,1 @@
+window.SERVER_HOST = "http://192.168.0.9:8000";

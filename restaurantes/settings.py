@@ -9,8 +9,11 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-import os
 
+
+import os
+from urllib.parse import urlparse
+# Host de backend
 SERVER_HOST = os.getenv("SERVER_HOST", "http://192.168.0.9:8000")
 
 from pathlib import Path
@@ -28,7 +31,10 @@ SECRET_KEY = 'django-insecure-$=x_5u9g60tv#&fnprk)4w9o2w)#zvrrbpka%9=p!h2n&%)yd0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "192.168.170.96"]
+
+# Extraer solo host sin esquema ni puerto
+parsed_url = urlparse(SERVER_HOST)
+ALLOWED_HOSTS = [parsed_url.hostname, "127.0.0.1", "localhost"]
 
 DEFAULT_PERMISSION_CLASSES = [
     'rest_framework.permissions.IsAuthenticated',
@@ -113,10 +119,12 @@ MIDDLEWARE = [
 CORS_ALLOW_CREDENTIALS = True 
 
 
+CORS_ALLOW_ALL_ORIGINS = True # Permitir todas las conexiones (solo para desarrollo)
+
 CORS_ALLOWED_ORIGINS = [
-    SERVER_HOST,
     "http://127.0.0.1:5500",
     "http://localhost:5500",
+    "http://192.168.0.9:5500",  # IP + puerto desde donde abre Live Server
 ]
 
 
@@ -127,14 +135,13 @@ AUTH_USER_MODEL = 'usuarios.Usuario' #modelo principal de usuarios
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],  # Puede agregar rutas de templates aquí si quiere
+        'DIRS': [BASE_DIR / "HTML"],  # ✅ agregar carpeta HTML
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'restaurantes.context_processors.server_host',  # 👈 NUEVO
             ],
         },
     },
