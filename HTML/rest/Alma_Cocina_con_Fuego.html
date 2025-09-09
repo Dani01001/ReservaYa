@@ -251,9 +251,10 @@
             
         </div>
     </footer>
-
-    <script src="../../JS/script.js">
+    <script>
+        window.SERVER_HOST = "{{ SERVER_HOST }}";
         const restaurante_id = 2;
     </script>
+    <script src="{% static 'JS/script.js' %}"></script>
 </body>
 </html>

@@ -29,7 +29,11 @@
                 </div>
             </div>
         </main>
-        <script src="../JS/reservas.js"></script>
+    <script>
+        window.SERVER_HOST = "{{ SERVER_HOST }}";
+    </script>
+    <script src="{% static 'JS/reservas.js' %}"></script>
     </body>
-    </html> 
+    </html>
+
 

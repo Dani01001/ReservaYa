@@ -29,6 +29,9 @@
         </form>
     </div>
     <div id="mensaje"></div>
-    <script src="../JS/login.js"></script>
+    <script>
+        window.SERVER_HOST = "{{ SERVER_HOST }}";
+    </script>
+    <script src="{% static 'JS/login.js' %}"></script>
 </body>
 </html>

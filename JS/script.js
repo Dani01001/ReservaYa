@@ -47,8 +47,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 //fin
 
-
-
 function abrirVentanaEmergente(url) {
     const ancho = 700; // Ancho de la ventana
     const alto = 850;  // Alto de la ventana
@@ -62,7 +60,7 @@ function abrirVentanaEmergente(url) {
 }
 
 
-fetch('http://192.168.170.96:5500/api/reservas/')
+fetch(`${window.SERVER_HOST}/api/reservas/`)
     .then(res => res.json())
     .then(data => {
         console.log("Datos desde la api", data);

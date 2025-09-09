@@ -123,17 +123,19 @@ AUTH_USER_MODEL = 'usuarios.Usuario' #modelo principal de usuarios
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [],  # Puede agregar rutas de templates aquí si quiere
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'restaurantes.context_processors.server_host',  # 👈 NUEVO
             ],
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'restaurantes.wsgi.application'
 
@@ -190,3 +192,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+import os
+
+SERVER_HOST = os.getenv("SERVER_HOST", "http://192.168.0.9:8000")

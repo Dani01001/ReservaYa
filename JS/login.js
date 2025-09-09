@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
             password: document.getElementById("password").value
         };
 
-        fetch("http://192.168.170.96:8000/api/usuarios/login/", {
+        fetch(`${window.SERVER_HOST}/api/usuarios/login/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

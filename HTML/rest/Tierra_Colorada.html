@@ -251,7 +251,9 @@
             
         </div>
     </footer>
-
-    <script src="../../JS/script.js"></script>
+    <script>
+        window.SERVER_HOST = "{{ SERVER_HOST }}";
+    </script>
+    <script src="{% static 'JS/script.js' %}"></script>
 </body>
 </html>
