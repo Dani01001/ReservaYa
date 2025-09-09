@@ -16,7 +16,7 @@ class Mesa(models.Model):
 
     def __str__(self):
         return f"Mesa {self.numero} ({self.restaurante.nombre})"
-    
+
 class Reserva(models.Model):
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     mesa = models.ForeignKey(Mesa, on_delete=models.CASCADE, null=True, blank=True) #opcional y permitir null (es temporal apra ver si funciona el resitro nomas)
