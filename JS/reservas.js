@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function() {
         };
 
         try {
-            const response = await fetch("http://192.168.170.96:8000/api/reservas/crear/", {
+            const response = await fetch("http://192.168.100.230:8000/api/reservas/crear/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
