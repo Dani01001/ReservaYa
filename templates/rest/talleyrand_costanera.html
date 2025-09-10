@@ -1,10 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="https://img.lovepik.com/free-png/20210918/lovepik-hamburger-png-image_400257077_wh1200.png" type="image/x-icon">
-    <link rel="stylesheet" href="../../static/CSS/rest/restaurantes.css">
+    <link rel="stylesheet" href="{% static 'CSS/rest/restaurantes.css' %}">
     <title>Bolsi</title>
 </head>
 <body>
@@ -23,10 +24,10 @@
             <div class="derecha">
                 <ul class="registro">
                     <li class="boton_nav">
-                        <a href="#" class="registro_boton" id="registro" onclick="abrirVentanaEmergente('../../templates/registro.html'); return false;" >Registro</a>
+                        <a href="#" class="registro_boton" id="registro" onclick="abrirVentanaEmergente('{% url 'registro' %}'); return false;" >Registro</a>
                     </li>
                     <li class="boton_nav">
-                        <a href="#" class="iniciar_sesion" id="iniciar_sesion" onclick="abrirVentanaEmergente('../../templates/login.html'); return false;" >Iniciar Sesión</a>
+                        <a href="#" class="iniciar_sesion" id="iniciar_sesion" onclick="abrirVentanaEmergente('{% url 'login' %}'); return false;" >Iniciar Sesión</a>
                     </li>
                 </ul>
             </div>
@@ -40,7 +41,7 @@
             <div class="informacion">
                 <h1>Bolsi</h1>
                 <p>Este establecimiento se distingue por su arquitectura histórica, al estar asentado en dos edificios patrimoniales que combinan estilos neoclásico y art déco. Su menú es variado y abarca desde platos tradicionales paraguayos como el surubí a la teja, so’o asado, chipá, reviro y milanesa, hasta opciones internacionales como sushi, empanadas y hamburguesas. Además, ofrece alternativas veganas y vegetarianas, incluyendo versiones de platos locales adaptadas a estas dietas. <br><br>Bolsi es reconocido por su ambiente acogedor y su servicio confiable, manteniendo una calidad constante que atrae tanto a locales como a turistas. Su ubicación estratégica en el centro de la ciudad lo convierte en un punto de encuentro habitual para quienes buscan disfrutar de una buena comida en cualquier momento del día o de la noche.<br><br> Recientemente, El Bolsi ha sido destacado por el portal gastronómico Taste Atlas, ocupando el puesto número 17 entre los 100 restaurantes más legendarios del mundo, lo que resalta su importancia y legado en la escena culinaria internacional.</p>
-                <button class="btn-reservar animation" onclick="abrirVentanaEmergente('../reservas.html?restaurante=1')">Reservar Mesa</button>
+                <button class="btn-reservar animation" onclick="abrirVentanaEmergente('/reservas/?restaurante=1')">Reservar Mesa</button>
             </div>
             <div class="container_sections">
                 <div class="box">
@@ -231,7 +232,7 @@
                 </div>
             </div>
         </div>
-        <div class="btn-reserva-float" onclick="abrirVentanaEmergente('../reservas.html?restaurante=1')">
+        <div class="btn-reserva-float" onclick="abrirVentanaEmergente('/reservas/?restaurante=1')">
             <span class="short">R</span>
             <span class="long"><b>Mesas Disponibles</b><br>Reserva!!</span>
         </div>

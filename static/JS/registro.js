@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
             telefono: document.getElementById("telefono").value,
         };
 
-        fetch(`${window.SERVER_HOST}/api/usuarios/registro/`, {
+        fetch("/api/usuarios/registro/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

@@ -8,6 +8,22 @@ import json
 
 Usuario = get_user_model()
 
+from django.shortcuts import render
+
+def inicio(request):
+    return render(request, "inicio.html")
+
+def registro(request):
+    return render(request, "registro.html")
+
+def login_view(request):
+    return render(request, "login.html")
+
+def principal_publi(request):
+    return render(request, "principal_publi.html")
+
+
+
 @require_http_methods(["GET"])
 def lista_usuarios(request):
     usuarios = Usuario.objects.values("id", "username", "email")
@@ -104,5 +120,4 @@ def iniciar_sesion(request):
 def cerrar_sesion(request):
     logout(request)
     return JsonResponse({"message": "Sesión cerrada"})
-
 

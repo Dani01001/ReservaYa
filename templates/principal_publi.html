@@ -1,10 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/CSS/principal_publi.css">
-    <link rel="icon" href="../static/IMG/logo 2.png" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'CSS/principal_publi.css' %}">
+    <link rel="icon" href="{% static 'IMG/logo 2.png' %}" type="image/x-icon">
     <title>ReservaYa</title>
 </head>
 <body>
@@ -20,7 +21,7 @@
                     </li>
                 </ul> -->
                 <div class="name">
-                    <img src="../static/IMG/logo 2.png" alt="">
+                    <img src="{% static 'IMG/logo 2.png' %}" alt="">
                 </div>
             </div>
             <div class="derecha">
@@ -32,10 +33,10 @@
                         <a href="quienes_somos.html">Quienes somos</a>
                     </li>
                     <li class="boton_nav" id="registroItem">
-                        <a href="#" class="registro_boton" id="registro" onclick="abrirVentanaEmergente('registro.html'); return false;">Registro</a>
+                        <a href="#" onclick="abrirVentanaEmergente('{% url "registro" %}'); return false;">Registro</a>
                     </li>
                     <li class="boton_nav" id="loginItem">
-                        <a href="#" class="iniciar_sesion" id="iniciar_sesion" onclick="abrirVentanaEmergente('login.html'); return false;">Iniciar Sesión</a>
+                        <a href="#" class="iniciar_sesion" id="iniciar_sesion" onclick="abrirVentanaEmergente('{% url "login" %}'); return false;">Iniciar Sesión</a>
                     </li>
                     <li id="userSection">
                         <span id="userInfo" style="display:none;">
@@ -130,7 +131,7 @@
                         <p>Descripcion del restaurante</p>
                     </div>
                     <div class="reservar">
-                        <a class="boton" href="../templates/rest/talleyrand_costanera.html">ReservaYa</a>
+                        <a class="boton" href="{% url 'detalle_restaurante' 'talleyrand_costanera' %}">ReservaYa</a>
                     </div>
                 </div>
             </section>
@@ -148,7 +149,7 @@
                         <p>Descripcion del restaurante</p>
                     </div>
                     <div class="reservar">
-                        <a class="boton" href="../templates/rest/sanmiguel.html">ReservaYa</a>
+                        <a class="boton" href="{% url 'detalle_restaurante' 'sanmiguel' %}">ReservaYa</a>
                     </div>
                 </div>
             </section>
@@ -166,7 +167,7 @@
                         <p>Descripcion del restaurante</p>
                     </div>
                     <div class="reservar">
-                        <a class="boton" href="../templates/rest/Bar_San_Roque.html">ReservaYa</a>
+                        <a class="boton" href="{% url 'detalle_restaurante' 'Bar_San_Roque' %}">ReservaYa</a>
                     </div>
                 </div>
             </section>
@@ -184,7 +185,7 @@
                         <p>Descripcion del restaurante</p>
                     </div>
                     <div class="reservar">
-                        <a class="boton" href="../templates/rest/Alma_Cocina_con_Fuego.html">ReservaYa</a>
+                        <a class="boton" href="{% url 'detalle_restaurante' 'alma_cocina_con_fuego' %}">ReservaYa</a>
                     </div>
                 </div>
             </section>
@@ -202,7 +203,7 @@
                         <p>Descripcion del restaurante</p>
                     </div>
                     <div class="reservar">
-                        <a class="boton" href="../templates/rest/Tierra_Colorada.html">ReservaYa</a>
+                        <a class="boton" href="{% url 'detalle_restaurante' 'Tierra_Colorada' %}">ReservaYa</a>
                     </div>
                 </div>
             </section>
@@ -227,7 +228,7 @@
     <script>
         window.SERVER_HOST = "{{ SERVER_HOST }}";
     </script>
-    <script src="../static/JS/config.js"></script>
-    <script src="../static/JS/script.js"></script>
+    <script src="{% static 'JS/config.js' %}"></script>
+    <script src="{% static 'JS/script.js' %}"></script>
 </body>
 </html>
