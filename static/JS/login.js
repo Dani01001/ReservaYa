@@ -10,7 +10,11 @@ document.addEventListener("DOMContentLoaded", function() {
             password: document.getElementById("password").value
         };
 
+<<<<<<< HEAD:JS/login.js
         fetch("http://192.168.100.230:8000/api/usuarios/login/", {
+=======
+        fetch("/api/usuarios/login/", {
+>>>>>>> dab760d8f3f242afbac3eefb1cf6021750a1dcc9:static/JS/login.js
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

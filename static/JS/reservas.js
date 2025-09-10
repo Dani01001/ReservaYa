@@ -42,7 +42,11 @@ document.addEventListener("DOMContentLoaded", function() {
         };
 
         try {
+<<<<<<< HEAD:JS/reservas.js
             const response = await fetch("http://192.168.100.230:8000/api/reservas/crear/", {
+=======
+            const response = await fetch(`${window.SERVER_HOST}/api/reservas/crear/`, {
+>>>>>>> dab760d8f3f242afbac3eefb1cf6021750a1dcc9:static/JS/reservas.js
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

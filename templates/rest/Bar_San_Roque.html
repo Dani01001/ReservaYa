@@ -1,11 +1,12 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="https://img.lovepik.com/free-png/20210918/lovepik-hamburger-png-image_400257077_wh1200.png" type="image/x-icon">
-    <link rel="stylesheet" href="../../CSS/rest/restaurantes.css">
-    <title>La Farola</title>
+    <link rel="stylesheet" href="{% static 'CSS/rest/restaurantes.css' %}">
+    <title>Don Vito</title>
 </head>
 <body>
     <header>
@@ -23,10 +24,10 @@
             <div class="derecha">
                 <ul class="registro">
                     <li class="boton_nav">
-                        <a href="#" class="registro_boton" id="registro" onclick="abrirVentanaEmergente('../../HTML/registro.html'); return false;" >Registro</a>
+                        <a href="#" class="registro_boton" id="registro" onclick="abrirVentanaEmergente('{% static 'templates/registro.html' %}'); return false;" >Registro</a>
                     </li>
                     <li class="boton_nav">
-                        <a href="#" class="iniciar_sesion" id="iniciar_sesion" onclick="abrirVentanaEmergente('../../HTML/inicio.html'); return false;" >Iniciar Sesión</a>
+                        <a href="#" class="iniciar_sesion" id="iniciar_sesion" onclick="abrirVentanaEmergente('{% static 'templates/login.html' %}'); return false;" >Iniciar Sesión</a>
                     </li>
                 </ul>
             </div>
@@ -35,12 +36,12 @@
     <main>
         <div class="container_prin">
             <div class="img-zoom">
-                <img src="https://lh5.googleusercontent.com/p/AF1QipPOI9bYC1jebU9ryY3QXekaKQt2lWhLwBXLxI7U=w596-h298-k-no" alt="La Farola">
+                <img src="https://www.lanacion.com.py/resizer/v2/74TIXQM4NFBA7FUOVEPGPP74SU.JPG?auth=e01c49783610bd29cd99c6f869a0c6404ace5d96400fbdf9b20f4227b748712d&width=1280&smart=true" alt="Don Vito">
             </div>
             <div class="informacion">
-                <h1>La Farola</h1>
-                <p>La Farola es un restaurante popular en Asunción, conocido por su ambiente acogedor y familiar. Su menú ofrece un buffet por kilo con una amplia variedad de platos locales e internacionales, incluyendo opciones de desayunos, almuerzos, postres y helados. Los viernes se destacan las parrilladas al aire libre, que atraen a muchos comensales. También ofrece servicios de almuerzos empresariales con pagos mensuales para empresas, brindando comodidad y calidad a sus clientes. <br><br>La Farola es reconocida por su limpieza, servicio confiable y ambiente agradable, lo que la convierte en una opción frecuente tanto para locales como para turistas. Su ubicación céntrica en la esquina de Constitución y Pettirossi facilita el acceso y la hace un punto habitual de encuentro para disfrutar de una buena comida en cualquier momento del día.<br><br> Recientemente, el restaurante ha sido destacado en guías gastronómicas locales por su autenticidad y calidad, consolidándose como un referente de la gastronomía en Asunción.</p>
-                <button class="btn-reservar animation" onclick="abrirVentanaEmergente('../reservas.html?restaurante=2')">Reservar Mesa</button>
+                <h1>Don Vito - Palma</h1>
+                <p>Don Vito ORIGINAL - Palma se distingue por su ambiente moderno y acogedor, ideal para familias y grupos de amigos. Su menú combina la tradición de la cocina italiana con toques contemporáneos, ofreciendo pastas caseras, pizzas al horno de leña, lasañas, ensaladas frescas y postres clásicos como tiramisú y panna cotta. También cuenta con opciones vegetarianas y alternativas sin gluten. <br><br>Don Vito es reconocido por su servicio atento y profesional, manteniendo un estándar de calidad constante que lo hace popular entre locales y turistas. Su ubicación céntrica en el barrio Palma facilita el acceso y lo convierte en un punto habitual de encuentro para disfrutar de una buena comida en cualquier momento del día.<br><br> Recientemente, el restaurante ha sido destacado en diversas guías gastronómicas locales por su autenticidad y calidad, consolidándose como un referente de la cocina italiana en Asunción.</p>
+                <button class="btn-reservar animation" onclick="abrirVentanaEmergente('../reservas.html?restaurante=3')">Reservar Mesa</button>
             </div>
             <div class="container_sections">
                 <div class="box">
@@ -111,7 +112,7 @@
                     </section>
                     <section class="detalles animation">
                         <h1>Detalles</h1>
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3607.3624417028036!2d-57.62555269999999!3d-25.292024099999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x945da7e14a009ccf%3A0x1162f1f7b715df10!2sLa%20Farola%20Restaurante!5e0!3m2!1sen!2spy!4v1756608202716!5m2!1sen!2spy" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28860.963030985753!2d-57.67099342568359!3d-25.2833527!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x945da7a9c579d897%3A0x7a32946196c4f6db!2sDon%20Vito%20ORIGINAL%20-%20Palma!5e0!3m2!1sen!2spy!4v1756607566945!5m2!1sen!2spy" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>                        
                         <div class="detalles-columnas">
                             <section class="detalle-1">
                                 <div class="detalle-item">
@@ -120,7 +121,7 @@
                                     </div>
                                     <div class="txt-detalles">
                                         <span>Ubicación</span>
-                                        <a href="https://maps.app.goo.gl/6QBd4eKx4HRqQTHV7" target="_blank" rel="noopener">Constitución 777 esq. Pettirossi, Asunción 001101</a>
+                                        <a href="https://maps.app.goo.gl/CQRFyUkqhDaoSWjh9" target="_blank" rel="noopener">Av. Palma 123 esq. San Lorenzo, Asunción 001101</a>
                                     </div>
                                 </div>
                                 <div class="detalle-item">
@@ -129,7 +130,7 @@
                                     </div>
                                     <div class="txt-detalles">
                                         <span>Precio</span>
-                                        <p>$$ (8-15 USD por persona)</p>
+                                        <p>$$ (18-45 USD por persona)</p>
                                     </div>
                                 </div>
                                 <div class="detalle-item">
@@ -138,7 +139,7 @@
                                     </div>
                                     <div class="txt-detalles">
                                         <span>Estilo de cena</span>
-                                        <p>Informal, Familiar, Buffet</p>
+                                        <p>Informal, Familiar, Italiano</p>
                                     </div>
                                 </div>
                                 <div class="detalle-item">
@@ -147,7 +148,7 @@
                                     </div>
                                     <div class="txt-detalles">
                                         <span>Horario</span>
-                                        <p>6:00 AM - 3:00 PM</p>
+                                        <p>12:00 PM - 11:00 PM</p>
                                     </div>
                                 </div>
                                 <div class="detalle-item">
@@ -156,7 +157,7 @@
                                     </div>
                                     <div class="txt-detalles">
                                         <span>Sitio web</span>
-                                        <a href="https://www.instagram.com/lafarolarestaurantepy/" target="_blank" rel="noopener">La Farola (ig)</a>
+                                        <a href="https://menu.donvito.com.py" target="_blank" rel="noopener">donvito.com.py</a>
                                     </div>
                                 </div>
                                 <div class="detalle-item">
@@ -165,7 +166,7 @@
                                     </div>
                                     <div class="txt-detalles">
                                         <span>Opciones de pago</span>
-                                        <p>Efectivo, Tarjeta de crédito, Tarjeta de débito</p>
+                                        <p>Tarjeta de crédito, Débito, Efectivo</p>
                                     </div>
                                 </div>
                             </section>
@@ -176,7 +177,7 @@
                                     </div>
                                     <div class="txt-detalles">
                                         <span>Numero de telefono</span>
-                                        <p>+595 961 567 615</p>
+                                        <p>+595 21 555 678</p>
                                     </div>
                                 </div>
                                 <div class="detalle-item">
@@ -185,7 +186,7 @@
                                     </div>
                                     <div class="txt-detalles">
                                         <span>Estilo de comida</span>
-                                        <p>Paraguaya, Internacional, Buffet</p>
+                                        <p>Italiana, Pastas, Pizzas, Internacional</p>
                                     </div>
                                 </div>
                                 <div class="detalle-item">
@@ -194,7 +195,7 @@
                                     </div>
                                     <div class="txt-detalles">
                                         <span>Barrio</span>
-                                        <p>San Roque</p>
+                                        <p>Palma</p>
                                     </div>
                                 </div>
                                 <div class="detalle-item">
@@ -203,7 +204,7 @@
                                     </div>
                                     <div class="txt-detalles">
                                         <span>Calle transversal</span>
-                                        <p>Constitución y Pettirossi</p>
+                                        <p>Av. Palma y San Lorenzo</p>
                                     </div>
                                 </div>
                                 <div class="detalle-item">
@@ -231,7 +232,7 @@
                 </div>
             </div>
         </div>
-        <div class="btn-reserva-float" onclick="abrirVentanaEmergente('../reservas.html?restaurante=2')">
+        <div class="btn-reserva-float" onclick="abrirVentanaEmergente('../reservas.html?restaurante=3')">
             <span class="short">R</span>
             <span class="long"><b>Mesas Disponibles</b><br>Reserva!!</span>
         </div>
@@ -251,9 +252,9 @@
             
         </div>
     </footer>
-
-    <script src="../../JS/script.js">
-        const restaurante_id = 2;
+    <script>
+        window.SERVER_HOST = "{{ SERVER_HOST }}";
     </script>
+    <script src="{% static 'JS/script.js' %}"></script>
 </body>
 </html>

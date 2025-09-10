@@ -16,10 +16,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
+from django.urls import path
+from usuarios import views
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("api/usuarios/", include("usuarios.urls")),
-    path('accounts/', include('allauth.urls')),
+    path('', TemplateView.as_view(template_name='principal_publi.html')),  # ← raíz
+    path("usuarios/", include("usuarios.urls")),
+    path('admin/', admin.site.urls),
+    path('api/usuarios/', include('usuarios.urls')),
     path('api/reservas/', include('reservas.urls')),
+    path('accounts/', include('allauth.urls')),
+    path("", views.inicio, name="inicio"),
+    path("registro/", views.registro, name="registro"),
+    path("login/", views.login_view, name="login"),
+    path('reservas/', include('reservas.urls')),
 ]
