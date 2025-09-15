@@ -5,6 +5,8 @@ from django.views.decorators.http import require_http_methods
 from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
 import json
+from django.shortcuts import render, redirect
+from .models import Restauranteadmin
 
 Usuario = get_user_model()
 

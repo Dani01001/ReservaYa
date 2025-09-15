@@ -114,7 +114,7 @@ function abrirReserva() {
 // ========== API DE RESERVAS ==================
 // =============================================
 
-fetch("/api/reservas/")
+fetch(`http:// 192.168.170.111:8000/api/reservas/`)
     .then(res => res.json())
     .then(data => {
         console.log("✅ Datos recibidos desde la API:", data);
