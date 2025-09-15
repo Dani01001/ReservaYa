@@ -5,9 +5,20 @@ from django.views.decorators.http import require_http_methods
 from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
 from django.shortcuts import render, redirect
+<<<<<<< HEAD
+from .models import Restauranteadmin
+=======
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
+<<<<<<< HEAD
 import json
+=======
+from django.contrib.auth.models import User
+from django.views.decorators.http import require_http_methods
+from django.conf import settings
+from django.contrib.auth import get_user_model
+>>>>>>> 4a1905319b3170d729741d03edc103e4e89e02d2
+>>>>>>> 81e7dc114585d9f6c8c8d7ba7e03095c9808c2de
 
 Usuario = get_user_model()
 

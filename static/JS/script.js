@@ -84,12 +84,21 @@ function abrirReserva() {
     );
 }
 
+<<<<<<< HEAD
+// =============================================
+// ========== API DE RESERVAS ==================
+// =============================================
+
+fetch(`http:// 192.168.170.111:8000/api/reservas/`)
+    .then(res => res.json())
+=======
 // ==== API FETCH =====
 fetch("/api/reservas/lista/")
     .then(res => {
         if (!res.ok) throw new Error(`Error HTTP ${res.status}`);
         return res.json();
     })
+>>>>>>> 4a1905319b3170d729741d03edc103e4e89e02d2
     .then(data => {
         console.log("✅ Datos recibidos desde la API:", data);
     })
