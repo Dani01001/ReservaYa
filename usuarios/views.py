@@ -5,10 +5,63 @@ from django.views.decorators.http import require_http_methods
 from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
 import json
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.views.decorators.http import require_http_methods
+from django.conf import settings
+from django.contrib.auth import get_user_model
 
 Usuario = get_user_model()
 
-from django.shortcuts import render
+@require_http_methods(["GET"])
+def lista_usuarios(request):
+    usuarios = Usuario.objects.values("id", "username", "email")
+    return JsonResponse(list(usuarios), safe=False)
+
+@require_http_methods(["GET"])
+def lista_usuarios(request):
+    usuarios = User.objects.values("id", "username", "email")
+    return JsonResponse(list(usuarios), safe=False)
+
+# Página principal pública
+def principal_publi(request):
+    return render(request, 'principal_publi.html')
+
+# Registro
+def registro_view(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # login automático tras registro
+            return redirect('principal_publi')
+    else:
+        form = UserCreationForm()
+    return render(request, 'registro.html', {"form": form})
+
+# Login
+def login_view(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('principal_publi')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'login.html', {"form": form})
+
+# Logout
+def logout_view(request):
+    logout(request)
+    return redirect('principal_publi')
+
+# Perfil (solo usuarios logueados)
+@login_required
+def perfil_view(request):
+    return render(request, 'usuario.html')
 
 def inicio(request):
     return render(request, "inicio.html")
