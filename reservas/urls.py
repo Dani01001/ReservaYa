@@ -1,32 +1,17 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from . import views
-from .views import (
-    crear_reserva,
-    RestauranteViewSet,
-    ReservaViewSet,
-    detalle_restaurante,
-    registro_view, 
-    login_view
-)
 
 router = DefaultRouter()
-router.register(r'restaurantes', RestauranteViewSet)
-router.register(r'reservas', ReservaViewSet, basename='reserva')
+router.register(r'restaurantes', views.RestauranteViewSet)
+router.register(r'reservas', views.ReservaViewSet, basename='reservas')
 
 urlpatterns = [
-    # ===== API DRF =====
-    path('api/', include(router.urls)),
-    path('api/crear-reserva/', crear_reserva, name='crear_reserva'),
-
-    # ===== Rutas frontend =====
-    # Acceso a cualquier restaurante por nombre del template sin extensión
-    path('rest/<str:nombre>/', detalle_restaurante, name='detalle_restaurante'),
-
-    # Rutas para registro e inicio de sesión
-    path('registro/', registro_view, name='registro'),
-    path('login/', login_view, name='login'),
-
-    # Ruta principal de reservas
-    path('', views.reservas_view, name='reservas'),
+    path('', include(router.urls)),                   # /api/reservas/ + viewsets
+    path('crear/', views.crear_reserva, name='crear_reserva'),
+    path('lista/', views.lista_reservas, name='lista_reservas'),
+    path('detalle/<str:nombre>/', views.detalle_restaurante, name='detalle_restaurante'),
+    path('pagina/', views.reservas_view, name='reservas'),
+    path('registro/', views.registro_view, name='registro'),
+    path('login/', views.login_view, name='login'),
 ]

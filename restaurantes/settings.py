@@ -14,7 +14,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from urllib.parse import urlparse
 # Host de backend
-SERVER_HOST = os.getenv("SERVER_HOST", "http://192.168.170.111:8000")
+SERVER_HOST = os.getenv("SERVER_HOST", "http://192.168.137.130:8000")
 
 from pathlib import Path
 
@@ -123,14 +123,13 @@ CORS_ALLOW_ALL_ORIGINS = True # Permitir todas las conexiones (solo para desarro
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5500",
     "http://localhost:5500",
-    "http://192.168.170.111:5500",  # IP + puerto desde donde abre Live Server
+    "http://192.168.137.130:5500",  # IP + puerto desde donde abre Live Server
 ]
 
 
 ROOT_URLCONF = 'restaurantes.urls'
 
 AUTH_USER_MODEL = 'usuarios.Usuario' #modelo principal de usuarios 
-
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
@@ -143,6 +142,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
+                # 'reservas.context_processors.user_context',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
