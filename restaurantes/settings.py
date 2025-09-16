@@ -151,6 +151,7 @@ TEMPLATES = [
 ]
 
 
+
 WSGI_APPLICATION = 'restaurantes.wsgi.application'
 
 

@@ -5,26 +5,107 @@ from django.views.decorators.http import require_http_methods
 from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
 from django.shortcuts import render, redirect
-<<<<<<< HEAD
-from .models import Restauranteadmin
-=======
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
-<<<<<<< HEAD
 import json
-=======
 from django.contrib.auth.models import User
-from django.views.decorators.http import require_http_methods
 from django.conf import settings
-from django.contrib.auth import get_user_model
->>>>>>> 4a1905319b3170d729741d03edc103e4e89e02d2
->>>>>>> 81e7dc114585d9f6c8c8d7ba7e03095c9808c2de
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from datetime import timedelta
+from django.utils import timezone
+
+@login_required
+def usuario(request):
+    user = request.user
+
+    # Control de cambios de username y contraseña
+    puede_cambiar_usuario = True
+    puede_cambiar_contrasena = True
+    if hasattr(user, 'profile'):
+        if user.profile.last_username_change:
+            puede_cambiar_usuario = (timezone.now() - user.profile.last_username_change) > timedelta(days=14)
+        if user.profile.last_password_change:
+            puede_cambiar_contrasena = (timezone.now() - user.profile.last_password_change) > timedelta(days=14)
+
+    # Verifica si el usuario tiene sesión con Google
+    tiene_google = user.socialaccount_set.filter(provider='google').exists()
+
+    context = {
+        'user': user,
+        'puede_cambiar_usuario': puede_cambiar_usuario,
+        'puede_cambiar_contrasena': puede_cambiar_contrasena,
+        'tiene_google': tiene_google,
+    }
+    return render(request, 'usuario.html', context)
+
+@login_required
+def actualizar_usuario(request):
+    user = request.user
+    profile = getattr(user, 'profile', None)
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+
+        if profile and profile.last_username_change:
+            puede_cambiar_usuario = (timezone.now() - profile.last_username_change) > timedelta(days=14)
+        else:
+            puede_cambiar_usuario = True
+
+        if puede_cambiar_usuario and username and username != user.username:
+            user.username = username
+            if profile:
+                profile.last_username_change = timezone.now()
+                profile.save()
+
+        if email and email != user.email:
+            user.email = email
+
+        user.save()
+        messages.success(request, 'Datos actualizados correctamente.')
+
+    return redirect('usuario')
+
+
+@login_required
+def cambiar_contrasena(request):
+    user = request.user
+    profile = getattr(user, 'profile', None)
+
+    if request.method == 'POST':
+        old_password = request.POST.get('old_password')
+        new_password = request.POST.get('new_password')
+
+        if profile and profile.last_password_change:
+            puede_cambiar_contrasena = (timezone.now() - profile.last_password_change) > timedelta(days=14)
+        else:
+            puede_cambiar_contrasena = True
+
+        if puede_cambiar_contrasena and user.check_password(old_password) and new_password:
+            user.set_password(new_password)
+            user.save()
+            if profile:
+                profile.last_password_change = timezone.now()
+                profile.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Contraseña actualizada correctamente.')
+        else:
+            messages.error(request, 'No se pudo cambiar la contraseña.')
+
+    return redirect('usuario')
+
 
 Usuario = get_user_model()
 
 # ================================
 # 📌 API de Usuarios (JSON)
 # ================================
+@login_required
+def logout_view(request):
+    logout(request)
+    return redirect("principal_publi")
+
 
 @require_http_methods(["GET"])
 def lista_usuarios(request):

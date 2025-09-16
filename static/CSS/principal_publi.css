@@ -146,7 +146,7 @@ a{
     height: 30px;
     border-radius: 10px;
     display: flex;
-    justify-content: center;
+    justify-content: center;        
     align-items: center;
     padding: 0;
 }
@@ -183,9 +183,11 @@ a{
     align-items: center;
     padding: 0;
 }
+
 .boton_contacto a{
     color: #fff;
 }
+
 
 /* .registro, .iniciar_sesion{
     background-color: var(--accent-color) ;
@@ -204,7 +206,7 @@ a{
     height: 100%;
     text-align: center;
     line-height: 30px; 
-    color: white;
+    color: #fff;
     text-decoration: none;
 }
 

@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Configuración de Perfil</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'CSS/usuario.css' %}">
+    <script src="{% static 'JS/.js' %}" defer></script>
+</head>
+<body>
+    <a href="{% url 'principal_publi' %}" class="volver-btn" title="Volver">Volver<br>&#8592;</a>
+    <div class="container">
+        <aside class="sidebar" id="sidebar">
+            <button class="hamburger-btn" title="Menú">&#9776;</button>
+            <h2>Mi Perfil</h2>
+            <ul class="menu">
+                <li><a href="#perfil" class="active"><span class="icon">👤</span><span class="text">Perfil</span></a></li>
+                <li><a href="#reservas"><span class="icon">📅</span><span class="text">Reservas</span></a></li>
+                <li><a href="#configuracion"><span class="icon">⚙️</span><span class="text">Configuración</span></a></li>
+                <li><a href="#seguridad"><span class="icon">🔒</span><span class="text">Seguridad</span></a></li>
+                <li><a href="#personalizacion"><span class="icon">🎨</span><span class="text">Personalización</span></a></li>
+                <li><a href="#notificaciones"><span class="icon">🔔</span><span class="text">Notificaciones</span></a></li>
+                <li><a href="#cerrar-sesion"><span class="icon">🚪</span><span class="text">Cerrar sesión</span></a></li>
+            </ul>
+        </aside>
+        <main class="profile-main">
+            <div class="profile-header" id="perfil">
+                <div class="avatar">
+                    <span>👤</span>
+                </div>
+                <div class="profile-info">
+                    <h1>{{ user.username }}</h1>
+                    <p>{{ user.email }}</p>
+                    {% if tiene_google %}
+                        <div class="google-status"><span>🔗</span> Sesión con Google</div>
+                    {% else %}
+                        <div class="google-status no"><span>⛔</span> No usas Google</div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="section" id="configuracion">
+                <h3>Configuración de Usuario</h3>
+                <div class="section-content">
+                    <form method="post" action="{% url 'actualizar_usuario' %}">
+                        {% csrf_token %}
+                        <label>Usuario:
+                            <input type="text" name="username" value="{{ user.username }}" {% if not puede_cambiar_usuario %}disabled{% endif %}>
+                        </label>
+                        {% if not puede_cambiar_usuario %}
+                            <div class="info-msg">Solo puedes cambiar tu usuario cada 14 días.</div>
+                        {% endif %}
+                        <label>Email:
+                            <input type="email" name="email" value="{{ user.email }}">
+                        </label>
+                        <button type="submit" {% if not puede_cambiar_usuario %}disabled{% endif %}>Guardar cambios</button>
+                    </form>
+                </div>
+            </div>
+            <div class="section" id="seguridad">
+                <h3>Cambiar Contraseña</h3>
+                <div class="section-content">
+                    <form method="post" action="{% url 'cambiar_contrasena' %}">
+                        {% csrf_token %}
+                        <label>Contraseña actual:
+                            <input type="password" name="old_password">
+                        </label>
+                        <label>Nueva contraseña:
+                            <input type="password" name="new_password">
+                        </label>
+                        {% if not puede_cambiar_contrasena %}
+                            <div class="info-msg">Solo puedes cambiar tu contraseña cada 14 días.</div>
+                        {% endif %}
+                        <button type="submit" {% if not puede_cambiar_contrasena %}disabled{% endif %}>Actualizar contraseña</button>
+                    </form>
+                </div>
+            </div>
+            <div class="section" id="reservas">
+                <h3>Mis Reservas</h3>
+                <div class="section-content">
+                    <p>No tienes reservas activas.</p>
+                </div>
+            </div>
+            <div class="section" id="personalizacion">
+                <h3>Personalización</h3>
+                <div class="section-content">
+                    <label>Tema:
+                        <select>
+                            <option>Claro</option>
+                            <option>Oscuro</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+            <div class="section" id="notificaciones">
+                <h3>Notificaciones</h3>
+                <div class="section-content">
+                    <label><input type="checkbox" checked> Recibir notificaciones por email</label><br>
+                    <label><input type="checkbox"> Notificaciones push</label>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
