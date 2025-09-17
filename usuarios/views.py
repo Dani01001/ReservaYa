@@ -14,6 +14,23 @@ from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from datetime import timedelta
 from django.utils import timezone
+from .forms import CompletarDatosForm
+
+@login_required
+def completar_datos(request):
+    user = request.user
+    if user.telefono and user.username_personalizado:
+        return redirect("home")  # ya tiene datos, lo mandamos al inicio
+
+    if request.method == "POST":
+        form = CompletarDatosForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect("home")  # redirige a la página principal
+    else:
+        form = CompletarDatosForm(instance=user)
+
+    return render(request, "usuarios/completar_datos.html", {"form": form})
 
 @login_required
 def usuario(request):

@@ -11,4 +11,5 @@ urlpatterns = [
     path("registro/", views.registrar_usuario, name="registro"),
     path("login/", views.iniciar_sesion, name="iniciar_sesion"),
     path("logout/", views.cerrar_sesion, name="cerrar_sesion"),
+    path("completar-datos/", views.completar_datos, name="completar_datos"),
 ]
