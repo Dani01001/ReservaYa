@@ -1,28 +1,27 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const registroItem = document.getElementById('registroItem');
-    const loginItem = document.getElementById('loginItem');
-    const userSection = document.getElementById('userSection');
     const userInfo = document.getElementById('userInfo');
-    const userName = document.getElementById('userName');
-    const btnPerfil = document.getElementById('btnPerfil');
-    const btnLogout = document.getElementById('btnLogout');
     const btnReservar = document.querySelector(".btn-reservar");
     const btnReservarFloat = document.querySelector(".btn-reserva-float");
+    const registroItem = document.getElementById('registroItem');
+    const loginItem = document.getElementById('loginItem');
+    const userName = document.getElementById('userName');
+    const btnLogout = document.getElementById('btnLogout');
+    const btnPerfil = document.getElementById('btnPerfil');
 
     const token = localStorage.getItem("token");
     const username = localStorage.getItem("username");
+    const userSections = document.querySelectorAll('.userSection');
 
-    if (token && username && userSection && userInfo && userName) {
+    if (token && username) {
         if (registroItem) registroItem.style.display = 'none';
         if (loginItem) loginItem.style.display = 'none';
-        userSection.style.display = 'block';
-        userInfo.style.display = 'inline';
-        userName.textContent = username;
+
+        userSections.forEach(el => el.style.display = 'flex'); 
+        if (userName) userName.textContent = username;
     } else {
         if (registroItem) registroItem.style.display = 'inline-block';
         if (loginItem) loginItem.style.display = 'inline-block';
-        if (userSection) userSection.style.display = 'block';
-        if (userInfo) userInfo.style.display = 'none';
+        userSections.forEach(el => el.style.display = 'block');
     }
 
     if (btnLogout) {
@@ -32,13 +31,11 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.reload();
         });
     }
-
     if (btnPerfil) {
         btnPerfil.addEventListener('click', () => {
             window.location.href = "/usuario/";
         });
     }
-
     if (registroItem) {
         registroItem.addEventListener('click', () => abrirVentanaEmergente('/registro/'));
     }
@@ -84,21 +81,12 @@ function abrirReserva() {
     );
 }
 
-<<<<<<< HEAD
-// =============================================
-// ========== API DE RESERVAS ==================
-// =============================================
-
-fetch(`http:// 192.168.170.111:8000/api/reservas/`)
-    .then(res => res.json())
-=======
 // ==== API FETCH =====
 fetch("/api/reservas/lista/")
     .then(res => {
         if (!res.ok) throw new Error(`Error HTTP ${res.status}`);
         return res.json();
     })
->>>>>>> 4a1905319b3170d729741d03edc103e4e89e02d2
     .then(data => {
         console.log("✅ Datos recibidos desde la API:", data);
     })

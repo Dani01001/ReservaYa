@@ -22,22 +22,26 @@
                         <a href="#contacto">Contacto</a>
                     </li>
                     <li class="boton_contacto">
-                        <a href="quienes_somos.html">Quienes somos</a>
+                        <a href="{% url 'quienes_somos' %}">Quienes somos</a>
                     </li>
-                {% if user.is_authenticated %}
-                    <li id="userSection" style="display:block;">
-                        <span id="userInfo">Bienvenido, <strong id="userName">{{ user.username }}</strong></span>
-                        <a href="{% url 'logout' %}" id="btnLogout">Cerrar sesión</a>
-                        <a href="{% url 'perfil' %}" id="btnPerfil">Mi perfil</a>
+                    {% if user.is_authenticated %}
+                    <li class="boton_contacto" id="userSection" style="width:150px;">
+                        <span id="userInfo">Bienvenido, <b id="userName">{{ user.username }}</b></span>
                     </li>
-                {% else %}
+                    <li class="boton_nav">
+                        <a href="{% url 'usuario' %}">Mi perfil</a>
+                    </li>
+                    <li class="boton_nav">
+                        <a href="{% url 'logout' %}">Cerrar sesión</a>
+                    </li>
+                    {% else %}
                     <li class="boton_nav" id="registroItem">
                         <a href="#" onclick="abrirVentanaEmergente('{% url "registro" %}'); return false;">Registro</a>
                     </li>
                     <li class="boton_nav" id="loginItem">
                         <a href="#" class="iniciar_sesion" onclick="abrirVentanaEmergente('{% url "login" %}'); return false;">Iniciar Sesión</a>
                     </li>
-                {% endif %}
+                    {% endif %}
                 </ul>
             </div>
         </div>

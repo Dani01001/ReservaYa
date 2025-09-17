@@ -68,6 +68,8 @@ def reservas_view(request):
 def inicio(request):
     return render(request, "principal_publi.html")
 
+def quienes_somos(request):
+    return render(request, "quienes_somos.html")
 
 def detalle_restaurante(request, nombre):
     if nombre.endswith(".html"):

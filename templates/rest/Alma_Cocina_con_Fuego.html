@@ -9,30 +9,7 @@
     <title>La Farola</title>
 </head>
 <body>
-    <header>
-        <div class="container_nav">
-            <div class="izquierda">
-                <ul class="contacto">
-                    <li>
-                        <a href="#contacto">Cotacto</a>
-                    </li>
-                    <li>
-                        <a href="quienes_somos.html">Quienes somos</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="derecha">
-                <ul class="registro">
-                    <li class="boton_nav">
-                        <a href="#" class="registro_boton" id="registro" onclick="abrirVentanaEmergente('{% static 'templates/registro.html' %}'); return false;" >Registro</a>
-                    </li>
-                    <li class="boton_nav">
-                        <a href="#" class="iniciar_sesion" id="iniciar_sesion" onclick="abrirVentanaEmergente('{% static 'templates/login.html' %}'); return false;" >Iniciar Sesión</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </header>
+    {% include 'includes/header.html' %}  <!-- Aquí se inserta el header -->
     <main>
         <div class="container_prin">
             <div class="img-zoom">
@@ -232,26 +209,14 @@
                 </div>
             </div>
         </div>
-        <div class="btn-reserva-float" onclick="abrirVentanaEmergente('../reservas.html?restaurante=2')">
+        <div class="btn-reserva-float" onclick="abrirVentanaEmergente('{% url "reservas" %}?restaurante=2')">
             <span class="short">R</span>
             <span class="long"><b>Mesas Disponibles</b><br>Reserva!!</span>
         </div>
     </main>
 
-    <footer>
-        <div class="integrantes">
-            <ul>
-                <li>Toshi Pedrozo</li>
-                <li>Rodrigo Aveiro</li>
-                <li>Tobias Mendieta</li>
-                <li>Jesus Amarilla</li>
-            </ul>
-        </div>
-        
-        <div class="" id="contacto">  
-            
-        </div>
-    </footer>
+    {% include 'includes/footer.html' %}
+
     <script>
         window.SERVER_HOST = "{{ SERVER_HOST }}";
         const restaurante_id = 2;

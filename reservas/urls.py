@@ -14,4 +14,5 @@ urlpatterns = [
     path('pagina/', views.reservas_view, name='reservas'),
     path('registro/', views.registro_view, name='registro'),
     path('login/', views.login_view, name='login'),
+    path('quienes-somos/', views.quienes_somos, name='quienes_somos'),
 ]
