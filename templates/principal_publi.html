@@ -22,7 +22,7 @@
                         <a href="#contacto">Contacto</a>
                     </li>
                     <li class="boton_contacto">
-                        <a href="quienes_somos.html">Quienes somos</a>
+                        <a href="{% url 'quienes_somos' %}">Quienes somos</a>
                     </li>
                     {% if user.is_authenticated %}
                     <li class="boton_contacto" id="userSection" style="width:150px;">

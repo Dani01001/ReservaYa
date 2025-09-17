@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const username = localStorage.getItem("username");
     const userSections = document.querySelectorAll('.userSection');
 
-
     if (token && username) {
         if (registroItem) registroItem.style.display = 'none';
         if (loginItem) loginItem.style.display = 'none';
@@ -32,13 +31,11 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.reload();
         });
     }
-
     if (btnPerfil) {
         btnPerfil.addEventListener('click', () => {
             window.location.href = "/usuario/";
         });
     }
-
     if (registroItem) {
         registroItem.addEventListener('click', () => abrirVentanaEmergente('/registro/'));
     }
