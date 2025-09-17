@@ -6,6 +6,7 @@ class Restauranteadmin(models.Model):
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=128)
+    restaurante = models.ForeignKey('Restaurante', on_delete=models.CASCADE, related_name='admins')
 
     def save(self, *args, **kwargs):
         if not self.pk:  # Solo hashea la contraseña al crear un nuevo usuario
@@ -16,7 +17,7 @@ class Restauranteadmin(models.Model):
         return check_password(raw_password, self.password)
 
     def __str__(self):
-        return self.nombre
+        return f"{self.usuario.username} - {self.restaurante.nombre}"
 
 class Restaurante(models.Model):
     nombre = models.CharField(max_length=100)

@@ -6,16 +6,12 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
 import json
 from django.shortcuts import render, redirect
-<<<<<<< HEAD
-from .models import Restauranteadmin
-=======
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.views.decorators.http import require_http_methods
 from django.conf import settings
-from django.contrib.auth import get_user_model
->>>>>>> 4a1905319b3170d729741d03edc103e4e89e02d2
+from .models import Restauranteadmin 
+from django.contrib.auth.hashers import make_password, check_password
 
 Usuario = get_user_model()
 
@@ -164,9 +160,25 @@ def iniciar_sesion(request):
                 })
             else:
                 return JsonResponse({"error": "Cuenta desactivada"}, status=400)
-        else:
+        try:
+            admin = Restauranteadmin.objects.get(username=username)
+            if check_password(password, admin.password):  # valida password encriptado
+                request.session["restaurante_admin_id"] = admin.id  # guarda en sesión
+                return JsonResponse({
+                    "message": "Inicio de sesión exitoso (admin restaurante)",
+                    "redirect": "/panel_admin/",  # 👈 redirigir a dashboard de admins
+                    "admin": {
+                        "id": admin.id,
+                        "username": admin.username,
+                        "restaurante_id": admin.restaurante.id,
+                        "restaurante_nombre": admin.restaurante.nombre
+                    }
+                })
+            else:
+                return JsonResponse({"error": "Credenciales inválidas"}, status=400)
+        except Restauranteadmin.DoesNotExist:
             return JsonResponse({"error": "Credenciales inválidas"}, status=400)
-
+        
     except json.JSONDecodeError:
         return JsonResponse({"error": "JSON inválido"}, status=400)
     except Exception as e:
