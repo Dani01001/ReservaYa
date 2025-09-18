@@ -10,14 +10,12 @@ from django.contrib.auth.decorators import login_required
 import json
 from django.contrib.auth.models import User
 from django.conf import settings
-<<<<<<< HEAD
-from .models import Restauranteadmin 
-from django.contrib.auth.hashers import make_password, check_password
-=======
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from datetime import timedelta
 from django.utils import timezone
+from .models import Restauranteadmin
+from django.contrib.auth.hashers import make_password, check_password
 
 @login_required
 def usuario(request):
@@ -99,7 +97,6 @@ def cambiar_contrasena(request):
 
     return redirect('usuario')
 
->>>>>>> 8933cf522929bb5eca32cd16cd150d5f5f05bc4f
 
 Usuario = get_user_model()
 
