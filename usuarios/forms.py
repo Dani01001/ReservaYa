@@ -6,13 +6,18 @@ class ActualizarUsuarioForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'email']
-# usuarios/forms.py
 
 class CompletarDatosForm(forms.ModelForm):
     class Meta:
         model = Usuario
-        fields = ["username_personalizado", "telefono"]
+        fields = ["username", "telefono"]  # 🔹 campos que realmente existen
         widgets = {
-            "username_personalizado": forms.TextInput(attrs={"class": "form-control", "placeholder": "Nombre de usuario"}),
+            "username": forms.TextInput(attrs={"class": "form-control", "placeholder": "Nombre de usuario"}),
             "telefono": forms.TextInput(attrs={"class": "form-control", "placeholder": "Número de celular"}),
         }
+
+    def __init__(self, *args, **kwargs):
+        user_instance = kwargs.pop('user_instance', None)
+        super().__init__(*args, **kwargs)
+        if user_instance:
+            self.fields['username'].initial = user_instance.username
