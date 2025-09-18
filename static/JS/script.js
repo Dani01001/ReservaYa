@@ -57,12 +57,22 @@ function abrirVentanaEmergente(url) {
     const left = (window.innerWidth - ancho) / 2;
     const top = (window.innerHeight - alto) / 2;
 
-    window.open(
+    // Abrir la ventana
+    const ventana = window.open(
         url,
         "VentanaEmergente",
         `width=${ancho},height=${alto},top=${top},left=${left}`
     );
+
+    // Comprobar si ventana se cerró y refrescar la principal
+    const intervalo = setInterval(() => {
+        if (ventana.closed) {
+            clearInterval(intervalo);
+            window.location.reload(); // fuerza recarga de la principal
+        }
+    }, 500);
 }
+
 
 function abrirReserva() {
     const params = new URLSearchParams(window.location.search);

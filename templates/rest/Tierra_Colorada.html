@@ -18,7 +18,7 @@
             <div class="informacion">
                 <h1>KFC - Mall Excelsior</h1>
                 <p>KFC Mall Excelsior ofrece una experiencia de comida rápida en el corazón del centro histórico de Asunción. Ubicado en la planta baja del renovado Mall Excelsior, este local es ideal para quienes buscan disfrutar del clásico pollo frito en un ambiente moderno y cómodo. Además de su famoso pollo, el menú incluye hamburguesas, wraps, papas fritas y bebidas refrescantes. <br><br>Con horarios extendidos los fines de semana y un servicio ágil, KFC Mall Excelsior es una opción conveniente para una comida rápida durante las compras o una salida informal con amigos y familia.</p>
-                <button class="btn-reservar animation">Reservar Mesa</button>
+                <button class="btn-reservar animation" onclick="abrirVentanaEmergente('{% url "reservas" %}?restaurante=5')">Reservar Mesa</button>
             </div>
             <div class="container_sections">
                 <div class="box">
@@ -209,15 +209,17 @@
                 </div>
             </div>
         </div>
-        <div class="btn-reserva-float">
+        <div class="btn-reserva-float" onclick="abrirVentanaEmergente('{% url "reservas" %}?restaurante=5')">
             <span class="short">R</span>
             <span class="long"><b>Mesas Disponibles</b><br>Reserva!!</span>
         </div>
     </main>
 
     {% include 'includes/footer.html' %}
+
     <script>
         window.SERVER_HOST = "{{ SERVER_HOST }}";
+        const restaurante_id = 5;
     </script>
     <script src="{% static 'JS/script.js' %}"></script>
 </body>

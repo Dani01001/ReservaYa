@@ -46,10 +46,11 @@
             <div class="form_input">
                 <button type="submit">Registrar</button>
             </div>
+            {% load socialaccount %}
             <div class="container-otros">
-                <a href="http://127.0.0.1:8000/accounts/google/login/" class="google-login-btn">
+                <a href="{% provider_login_url 'google' %}" class="google-login-btn">
                     <img src="https://i.blogs.es/dc6737/unnamed/650_1200.png" alt="google icon">
-                    Iniciar con google
+                    Iniciar con Google
                 </a>
             </div>
         </form>

@@ -130,6 +130,9 @@ CORS_ALLOWED_ORIGINS = [
 ROOT_URLCONF = 'restaurantes.urls'
 
 AUTH_USER_MODEL = 'usuarios.Usuario' #modelo principal de usuarios 
+SOCIALACCOUNT_LOGIN_ON_GET = True
+LOGIN_REDIRECT_URL = "/usuarios/completar-datos/"
+
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]

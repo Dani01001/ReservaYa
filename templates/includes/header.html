@@ -24,7 +24,7 @@
                     <a href="#" class="btn" onclick="abrirVentanaEmergente('{% url 'registro' %}'); return false;">Registro</a>
                 </li>
                 <li>
-                    <a href="#" class="btn" onclick="abrirVentanaEmergente('{% url 'iniciar_sesion' %}'); return false;">Iniciar Sesión</a>
+                    <a href="#" class="btn" onclick="abrirVentanaEmergente('{% url 'login' %}'); return false;">Iniciar Sesión</a>
                 </li>
             {% endif %}
         </ul>
@@ -58,7 +58,10 @@
         letter-spacing: 1px;
         transition: color 0.3s ease;
     }
-    .logo:hover { color: var(--secondary-color); }
+
+    .logo:hover { 
+        color: var(--secondary-color); 
+    }
 
     .nav-links {
         list-style: none;
@@ -76,7 +79,25 @@
         padding: 6px 15px;
         transition: color 0.3s ease;
     }
+    .nav-links li, .usuario-info {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        /* Elimina padding/margin vertical si hay */
+        margin: 0;
+        padding: 0;
+    }
 
+    .nav-links li a, .btn-perfil, .nombre-usuario {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        /* Elimina padding/margin vertical si hay */
+        margin: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    
     /* Subrayado animado */
     .nav-links li a::after {
         content: '';
@@ -89,7 +110,9 @@
         left: 0;
         bottom: -4px;
     }
-    .nav-links li a:hover::after { width: 100%; }
+    .nav-links li a:hover::after { 
+        width: 100%; 
+    }
 
     /* Botón */
     .btn {

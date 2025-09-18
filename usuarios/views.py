@@ -41,6 +41,7 @@ def usuario(request):
     }
     return render(request, 'usuario.html', context)
 
+
 @login_required
 def actualizar_usuario(request):
     user = request.user
@@ -185,25 +186,31 @@ def iniciar_sesion(request):
                 })
             else:
                 return JsonResponse({"error": "Cuenta desactivada"}, status=400)
-        try:
-            admin = Restauranteadmin.objects.get(username=username)
-            if check_password(password, admin.password):  # valida password encriptado
-                request.session["restaurante_admin_id"] = admin.id  # guarda en sesión
-                return JsonResponse({
-                    "message": "Inicio de sesión exitoso (admin restaurante)",
-                    "redirect": "/panel_admin/",  # 👈 redirigir a dashboard de admins
-                    "admin": {
-                        "id": admin.id,
-                        "username": admin.username,
-                        "restaurante_id": admin.restaurante.id,
-                        "restaurante_nombre": admin.restaurante.nombre
-                    }
-                })
-            else:
-                return JsonResponse({"error": "Credenciales inválidas"}, status=400)
-        except Restauranteadmin.DoesNotExist:
-            return JsonResponse({"error": "Credenciales inválidas"}, status=400)
-        
+
+        # ==========================
+        # 🔒 Bloque reservado para Restauranteadmin (comentado)
+        # try:
+        #     admin = Restauranteadmin.objects.get(username=username)
+        #     if check_password(password, admin.password):  # valida password encriptado
+        #         request.session["restaurante_admin_id"] = admin.id  # guarda en sesión
+        #         return JsonResponse({
+        #             "message": "Inicio de sesión exitoso (admin restaurante)",
+        #             "redirect": "/panel_admin/",  # 👈 redirigir a dashboard de admins
+        #             "admin": {
+        #                 "id": admin.id,
+        #                 "username": admin.username,
+        #                 "restaurante_id": admin.restaurante.id,
+        #                 "restaurante_nombre": admin.restaurante.nombre
+        #             }
+        #         })
+        #     else:
+        #         return JsonResponse({"error": "Credenciales inválidas"}, status=400)
+        # except Restauranteadmin.DoesNotExist:
+        #     return JsonResponse({"error": "Credenciales inválidas"}, status=400)
+        # ==========================
+
+        return JsonResponse({"error": "Credenciales inválidas"}, status=400)
+
     except json.JSONDecodeError:
         return JsonResponse({"error": "JSON inválido"}, status=400)
     except Exception as e:

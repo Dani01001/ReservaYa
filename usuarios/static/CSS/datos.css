@@ -1,0 +1,84 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+    color: #333;
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.completar-datos-container {
+    width: 100%;
+    max-width: 420px;
+    min-height: 320px;
+    background-color: #efefef;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 24px rgba(35, 0, 0, 0.487);
+    font-size: 1.05rem;
+    color: #333;
+}
+
+.completar-datos-container h2 {
+    text-align: center;
+    font-size: 2.1rem;
+    margin-bottom: 18px;
+    margin-top: 0;
+    color: #000;
+}
+
+.completar-datos-container label {
+    margin-bottom: 7px;
+    font-size: 1.12rem;
+    color: #000;
+}
+
+.completar-datos-container input[type="text"],
+.completar-datos-container input[type="tel"] {
+    padding: 12px;
+    border: 1px solid #730707;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    font-size: 1.05rem;
+    background-color: #fff;
+    color: #333;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.completar-datos-container button[type="submit"] {
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.12rem;
+    margin-top: 8px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid #730707;
+    background-color: #ffffff6c;
+    color: #333;
+    width: 100%;
+}
+
+.completar-datos-container button[type="submit"]:hover {
+    transition: 0.5s;
+    background-color: #590202;
+    color: #fff;
+    transform: scale(1.02);
+    box-shadow: 0 8px 24px rgba(77, 5, 5, 0.18);
+}
+
+.completar-datos-container .error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+@media screen and (max-width: 480px) {
+    .completar-datos-container {
+        padding: 20px 15px;
+    }
+}
