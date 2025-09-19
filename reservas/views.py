@@ -60,7 +60,7 @@ def home_view(request):
 @login_required
 def reservas_view(request):
     restaurante_id = request.GET.get('restaurante')
-    context = {'restaurante_id': restaurante_id}
+    context = {'restaurante_id': restaurante_id,}
     return render(request, 'reservas.html', context)
 
 

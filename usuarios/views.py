@@ -10,12 +10,48 @@ from django.contrib.auth.decorators import login_required
 import json
 from django.contrib.auth.models import User
 from django.conf import settings
+from .models import Restauranteadmin   # 👈 Comentado para no generar errores
+from django.contrib.auth.hashers import make_password, check_password
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from datetime import timedelta
 from django.utils import timezone
-from .models import Restauranteadmin
-from django.contrib.auth.hashers import make_password, check_password
+from .forms import CompletarDatosForm
+
+
+
+User = get_user_model()
+
+@login_required
+def completar_datos(request):
+    user = request.user
+
+    # Si ya tiene username y teléfono completos, mostrar mensaje
+    if user.username and user.telefono:
+        mensaje = "Los datos ya fueron completados. Cierra la ventana."
+        return render(request, "completar_datos.html", {
+            "datos_completados": True,
+            "mensaje": mensaje
+        })
+
+    if request.method == 'POST':
+        form = CompletarDatosForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()  # 🔹 Guarda username y telefono
+            mensaje = "Datos guardados correctamente. Puedes cerrar la ventana."
+            return render(request, 'completar_datos.html', {
+                'mensaje': mensaje,
+                'datos_completados': True
+        })
+    else:
+        form = CompletarDatosForm(instance=user)
+
+    return render(request, "completar_datos.html", {
+        "form": form,
+        "datos_completados": False
+    })
+
+
 
 @login_required
 def usuario(request):

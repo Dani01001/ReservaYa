@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     try {
-        const response = await fetch("http://192.168.100.230:8000/api/reservas/", {
+        const response = await fetch("http://192.168.100.17:8000/api/reservas/", {
             headers: {
                 "Authorization": "Token " + token
             }
@@ -34,7 +34,7 @@ async function eliminarReserva(id) {
     const token = localStorage.getItem("token");
     if (!confirm("¿Seguro que deseas eliminar esta reserva?")) return;
 
-    await fetch(`http://192.168.0.9:8000/api/reservas/${id}/`, {
+    await fetch(`http://192.168.100.17:8000/api/reservas/${id}/`, {
         method: "DELETE",
         headers: { "Authorization": "Token " + token }
     });
