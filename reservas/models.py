@@ -18,7 +18,6 @@ from django.contrib.auth.hashers import make_password, check_password
 
 #     def __str__(self):
 #         return f"{self.usuario.username} - {self.restaurante.nombre}"
->>>>>>> b3566924448cd7bd9f198aae6b218617f7e34c4f
 
 class Restaurante(models.Model):
     nombre = models.CharField(max_length=100)
