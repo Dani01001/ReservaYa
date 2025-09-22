@@ -48,10 +48,10 @@
             </div>
             {% load socialaccount %}
             <div class="container-otros">
-                <a href="{% provider_login_url 'google' %}" class="google-login-btn">
+                {% comment %} <a href="{% provider_login_url 'google' %}" class="google-login-btn">
                     <img src="https://i.blogs.es/dc6737/unnamed/650_1200.png" alt="google icon">
                     Iniciar con Google
-                </a>
+                </a> {% endcomment %}
             </div>
         </form>
     </div>
