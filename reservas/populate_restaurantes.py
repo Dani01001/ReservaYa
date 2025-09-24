@@ -1,7 +1,7 @@
 import os
 from reservas.models import Restaurante, Mesa
 
-HTML_DIR = os.path.join("HTML/rest")
+HTML_DIR = os.path.join("templates/rest")
 
 NUM_MESAS = 5
 

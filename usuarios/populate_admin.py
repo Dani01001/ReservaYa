@@ -1,35 +1,41 @@
-from django.contrib.auth.models import get_user_model
-from reservas.models import Restaurante, Restauranteadmin
+# usuarios/populate_admin.py
+from django.contrib.auth import get_user_model
+from reservas.models import Restaurante
+from usuarios.models import Restauranteadmin
 
-usuario = get_user_model()
+User = get_user_model()
 
 admins = [ 
-    {"usuario": "admin_bolsi", "password": "adminpass1", "restaurante": "Restaurante 1"},
-    {"usuario": "admin_farola", "password": "adminpass2", "restaurante": "Restaurante 2"},
-    {"usuario": "admin_DonVito", "password": "adminpass3", "restaurante": "Restaurante 3"},
+    {"usuario": "Talleyrand_costanera", "password": "adminpass1", "email": "talleyrand@example.com", "restaurante": "Restaurante 1"},
+    {"usuario": "Alma_Cocina_con_Fuego", "password": "adminpass2", "email": "alma@example.com", "restaurante": "Restaurante 2"},
+    # Puedes agregar más aquí
 ]
+
 for admin in admins:
-    usuario, creado = usuario.objects.get_or_create(
+    user, creado = User.objects.get_or_create(
         username=admin["usuario"],
         defaults={"email": admin["email"], "is_staff": True}
     )
-    if creado:  
-        usuario.set_password(admin["password"])
-        usuario.save()
-        print(f"Usuario {admin['usuario']} creado.")
+
+    if creado:
+        user.set_password(admin["password"])
+        user.save()
+        print(f"✅ Usuario '{admin['usuario']}' creado.")
     else:
-        print(f"Usuario {admin['usuario']} ya existe.")
-    try: 
+        print(f"ℹ️ Usuario '{admin['usuario']}' ya existía.")
+
+    try:
         restaurante = Restaurante.objects.get(nombre=admin["restaurante"])
     except Restaurante.DoesNotExist:
-        print(f"Restaurante {admin['restaurante']} no encontrado.")
+        print(f"⚠️ Restaurante '{admin['restaurante']}' no encontrado, saltando.")
         continue
 
     admin_obj, creado = Restauranteadmin.objects.get_or_create(
-        usuario=usuario,
+        usuario=user,
         restaurante=restaurante
     )
+
     if creado:
-        print(f"Administrador para {admin['restaurante']} creado.")
+        print(f"✅ Administrador para '{admin['restaurante']}' creado.")
     else:
-        print(f"Administrador para {admin['restaurante']} ya existe.")
+        print(f"ℹ️ Administrador para '{admin['restaurante']}' ya existía.")
