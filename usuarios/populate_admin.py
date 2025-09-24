@@ -7,7 +7,7 @@ User = get_user_model()
 admins = [
     {"usuario": "Talleyrand_costanera", 
      "password": "adminpass1", 
-     "restaurante": "Restaurante 1"},
+     "restaurante": "Talleyrand_costanera"},
 ]
 
 for admin in admins:

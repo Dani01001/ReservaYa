@@ -9,16 +9,14 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 import json
 from django.contrib.auth.models import User
-from django.conf import settings
-from .models import Restauranteadmin   
+from django.conf import settings 
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from datetime import timedelta
 from django.utils import timezone
 from .forms import CompletarDatosForm
-
-
+from .models import Usuario, Restauranteadmin
 
 User = get_user_model()
 
@@ -219,7 +217,7 @@ def iniciar_sesion(request):
         login(request, user)
 
         # Verificamos si es administrador de restaurante
-        from reservas.models import Restauranteadmin
+        #from reservas.models import Restauranteadmin
         try:
             admin = Restauranteadmin.objects.get(usuario=user)
             # 👆 aquí buscamos por usuario, no por username
