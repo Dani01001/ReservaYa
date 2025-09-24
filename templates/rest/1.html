@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="https://img.lovepik.com/free-png/20210918/lovepik-hamburger-png-image_400257077_wh1200.png" type="image/x-icon">
     <link rel="stylesheet" href="{% static 'CSS/rest/restaurantes.css' %}">
-    <title>Alma Cocina con Fuego</title>
+    <title>La Farola</title>
 </head>
 <body>
     {% include 'includes/header.html' %}  <!-- Aquí se inserta el header -->
@@ -16,7 +16,7 @@
                 <img src="https://lh5.googleusercontent.com/p/AF1QipPOI9bYC1jebU9ryY3QXekaKQt2lWhLwBXLxI7U=w596-h298-k-no" alt="La Farola">
             </div>
             <div class="informacion">
-                <h1>Alma Cocina con Fuego</h1>
+                <h1>La Farola</h1>
                 <p>La Farola es un restaurante popular en Asunción, conocido por su ambiente acogedor y familiar. Su menú ofrece un buffet por kilo con una amplia variedad de platos locales e internacionales, incluyendo opciones de desayunos, almuerzos, postres y helados. Los viernes se destacan las parrilladas al aire libre, que atraen a muchos comensales. También ofrece servicios de almuerzos empresariales con pagos mensuales para empresas, brindando comodidad y calidad a sus clientes. <br><br>La Farola es reconocida por su limpieza, servicio confiable y ambiente agradable, lo que la convierte en una opción frecuente tanto para locales como para turistas. Su ubicación céntrica en la esquina de Constitución y Pettirossi facilita el acceso y la hace un punto habitual de encuentro para disfrutar de una buena comida en cualquier momento del día.<br><br> Recientemente, el restaurante ha sido destacado en guías gastronómicas locales por su autenticidad y calidad, consolidándose como un referente de la gastronomía en Asunción.</p>
                 <button class="btn-reservar animation" onclick="abrirVentanaEmergente('{% url "reservas" %}?restaurante=2')">Reservar Mesa</button>
             </div>
