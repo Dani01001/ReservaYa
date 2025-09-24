@@ -22,7 +22,7 @@ class Usuario(AbstractUser):
 
 
 class Restauranteadmin(models.Model):
-    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    usuario = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='admin_restaurante')
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=128)
     restaurante = models.ForeignKey(Restaurante, on_delete=models.CASCADE, related_name='admins')
