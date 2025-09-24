@@ -1,1 +1,1 @@
-window.SERVER_HOST = "http:// 10.95.50.38:8000";
+window.SERVER_HOST = "http://10.61.123.102:8000";

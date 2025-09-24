@@ -14,7 +14,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from urllib.parse import urlparse
 # Host de backend
-SERVER_HOST = os.getenv("SERVER_HOST", "http://10.95.50.38:8000")
+SERVER_HOST = os.getenv("SERVER_HOST", "http://10.61.123.102:8000")
 
 from pathlib import Path
 
@@ -99,10 +99,28 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         'APP': {
+#             'client_id': "1051641894738-r45og5d99a3iod757dd99b121309ou7j.apps.googleusercontent.com",
+#             'secret': "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",  # 👈 el secreto de Google Cloud
+#             'key': ""
+#         },
+#         'SCOPE': [
+#             'profile',
+#             'email',
+#         ],
+#         'AUTH_PARAMS': {
+#             'access_type': 'online',
+#             'prompt': 'select_account',
+#         }
+#     }
+# }
+
 
 
 # Indica el sitio actual (obligatorio para allauth)
-SITE_ID = 2
+SITE_ID = 1
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",             # Cors debe ir al inicio SIEMPRE
@@ -123,7 +141,7 @@ CORS_ALLOW_ALL_ORIGINS = True # Permitir todas las conexiones (solo para desarro
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5500",
     "http://localhost:5500",
-    "http://10.95.50.38:5500",  # IP + puerto desde donde abre Live Server
+    "http://10.61.123.102:5500",  # IP + puerto desde donde abre Live Server
 ]
 
 
