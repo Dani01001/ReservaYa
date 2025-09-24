@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_tags %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -22,17 +23,23 @@
                         <a href="#contacto">Contacto</a>
                     </li>
                     <li class="boton_contacto">
-                        <a href="{% url 'quienes_somos' %}">Quienes somos</a>
+                        <a href="{% url 'quienes_somos' %}">Quiénes somos</a>
                     </li>
                     {% if user.is_authenticated %}
-                    <li class="boton_contacto" id="userSection" style="width:150px;">
-                        <span id="userInfo">Bienvenido, <b id="userName">{{ user.username }}</b></span>
-                    </li>
-                    <li class="boton_nav">
-                        <a href="{% url 'usuario' %}">Mi perfil</a>
-                    </li>
                     <li class="boton_nav">
                         <a href="{% url 'logout' %}">Cerrar sesión</a>
+                    </li>
+                    <li class="boton_nav" id="userSection">
+                        <a href="{% url 'usuario' %}" class="user-link">
+                            <div class="user-avatar" style="background-color: {{ user.username|random_color }}">
+                                {% if user.profile.image %}
+                                    <img src="{{ user.profile.image.url }}" alt="{{ user.username }}">
+                                {% else %}
+                                    {{ user.username|first|upper }}
+                                {% endif %}
+                            </div>
+                            <span class="user-name">{{ user.username }}</span>
+                        </a>
                     </li>
                     {% else %}
                     <li class="boton_nav" id="registroItem">
@@ -45,7 +52,7 @@
                 </ul>
             </div>
         </div>
-    
+
         <div class="container_prin">
             <div class="mid">
                 <h1>ReservaYa</h1>

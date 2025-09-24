@@ -8,25 +8,23 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 import json
-from django.contrib.auth.models import User
+import random
 from django.conf import settings
-from .models import Restauranteadmin   
+from .models import Restauranteadmin, Usuario   
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from datetime import timedelta
 from django.utils import timezone
-from .forms import CompletarDatosForm
+from .forms import CompletarDatosForm, ActualizarUsuarioForm
 
+Usuario = get_user_model()
 
-
-User = get_user_model()
 
 @login_required
 def completar_datos(request):
     user = request.user
 
-    # Si ya tiene username y teléfono completos, mostrar mensaje
     if user.username and user.telefono:
         mensaje = "Los datos ya fueron completados. Cierra la ventana."
         return render(request, "completar_datos.html", {
@@ -37,12 +35,12 @@ def completar_datos(request):
     if request.method == 'POST':
         form = CompletarDatosForm(request.POST, instance=user)
         if form.is_valid():
-            form.save()  # 🔹 Guarda username y telefono
+            form.save()
             mensaje = "Datos guardados correctamente. Puedes cerrar la ventana."
             return render(request, 'completar_datos.html', {
                 'mensaje': mensaje,
                 'datos_completados': True
-        })
+            })
     else:
         form = CompletarDatosForm(instance=user)
 
@@ -52,7 +50,6 @@ def completar_datos(request):
     })
 
 
-
 @login_required
 def usuario(request):
     user = request.user
@@ -60,73 +57,104 @@ def usuario(request):
     # Control de cambios de username y contraseña
     puede_cambiar_usuario = True
     puede_cambiar_contrasena = True
-    if hasattr(user, 'profile'):
-        if user.profile.last_username_change:
-            puede_cambiar_usuario = (timezone.now() - user.profile.last_username_change) > timedelta(days=14)
-        if user.profile.last_password_change:
-            puede_cambiar_contrasena = (timezone.now() - user.profile.last_password_change) > timedelta(days=14)
 
-    # Verifica si el usuario tiene sesión con Google
+    if hasattr(user, 'last_username_change') and user.last_username_change:
+        puede_cambiar_usuario = (timezone.now() - user.last_username_change) > timedelta(days=14)
+    if hasattr(user, 'last_password_change') and user.last_password_change:
+        puede_cambiar_contrasena = (timezone.now() - user.last_password_change) > timedelta(days=14)
+
     tiene_google = user.socialaccount_set.filter(provider='google').exists()
 
-    context = {
-        'user': user,
-        'puede_cambiar_usuario': puede_cambiar_usuario,
-        'puede_cambiar_contrasena': puede_cambiar_contrasena,
-        'tiene_google': tiene_google,
+    # Generar inicial y color para avatar si no hay imagen
+    colores = ["#e63946", "#f1faee", "#a8dadc", "#457b9d", "#1d3557", "#ffb703", "#fb8500"]
+    color = random.choice(colores)
+    inicial = user.username[0].upper()
+
+    user_info = {
+        "username": user.username,
+        "perfil_imagen": getattr(user, "perfil_imagen", None),
+        "inicial": inicial,
+        "color": color
     }
-    return render(request, 'usuario.html', context)
+
+    context = {
+        "user": user,
+        "user_info": user_info,
+        "puede_cambiar_usuario": puede_cambiar_usuario,
+        "puede_cambiar_contrasena": puede_cambiar_contrasena,
+        "tiene_google": tiene_google,
+    }
+
+    return render(request, "usuario.html", context)
 
 
 @login_required
 def actualizar_usuario(request):
     user = request.user
-    profile = getattr(user, 'profile', None)
 
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        email = request.POST.get('email')
+    if request.method == "POST":
+        form = ActualizarUsuarioForm(request.POST, request.FILES, instance=user)
 
-        if profile and profile.last_username_change:
-            puede_cambiar_usuario = (timezone.now() - profile.last_username_change) > timedelta(days=14)
-        else:
-            puede_cambiar_usuario = True
+        if form.is_valid():
+            username = form.cleaned_data.get("username")
+            email = form.cleaned_data.get("email")
+            telefono = form.cleaned_data.get("telefono")
+            perfil_imagen = form.cleaned_data.get("perfil_imagen")
+            borrar_imagen = request.POST.get("borrar_imagen")  # Campo oculto desde el formulario
 
-        if puede_cambiar_usuario and username and username != user.username:
-            user.username = username
-            if profile:
-                profile.last_username_change = timezone.now()
-                profile.save()
+            # Validar cambio de username con restricción de 14 días
+            if username and username != user.username:
+                puede_cambiar_usuario = True
+                if hasattr(user, 'last_username_change') and user.last_username_change:
+                    puede_cambiar_usuario = (timezone.now() - user.last_username_change) > timedelta(days=14)
 
-        if email and email != user.email:
-            user.email = email
+                if puede_cambiar_usuario:
+                    user.username = username
+                    user.last_username_change = timezone.now()
+                else:
+                    messages.error(request, "Debe esperar 14 días para volver a cambiar el nombre de usuario.")
 
-        user.save()
-        messages.success(request, 'Datos actualizados correctamente.')
+            # Guardar email y teléfono
+            if email and email != user.email:
+                user.email = email
+            if telefono:
+                user.telefono = telefono
 
-    return redirect('usuario')
+            # Gestionar imagen de perfil
+            if borrar_imagen:
+                # Borrar imagen actual y asignar None
+                user.perfil_imagen.delete(save=False)
+                user.perfil_imagen = None
+            elif perfil_imagen:
+                user.perfil_imagen = perfil_imagen
+
+            user.save()
+            messages.success(request, "Datos actualizados correctamente.")
+            return redirect("usuario")
+
+    else:
+        form = ActualizarUsuarioForm(instance=user)
+
+    return render(request, "usuario.html", {"form": form})
+
 
 
 @login_required
 def cambiar_contrasena(request):
     user = request.user
-    profile = getattr(user, 'profile', None)
 
     if request.method == 'POST':
         old_password = request.POST.get('old_password')
         new_password = request.POST.get('new_password')
 
-        if profile and profile.last_password_change:
-            puede_cambiar_contrasena = (timezone.now() - profile.last_password_change) > timedelta(days=14)
-        else:
-            puede_cambiar_contrasena = True
+        puede_cambiar_contrasena = True
+        if hasattr(user, 'last_password_change') and user.last_password_change:
+            puede_cambiar_contrasena = (timezone.now() - user.last_password_change) > timedelta(days=14)
 
         if puede_cambiar_contrasena and user.check_password(old_password) and new_password:
             user.set_password(new_password)
+            user.last_password_change = timezone.now()
             user.save()
-            if profile:
-                profile.last_password_change = timezone.now()
-                profile.save()
             update_session_auth_hash(request, user)
             messages.success(request, 'Contraseña actualizada correctamente.')
         else:
@@ -135,11 +163,10 @@ def cambiar_contrasena(request):
     return redirect('usuario')
 
 
-Usuario = get_user_model()
+# ===========================
+# API y Auth (sin cambios)
+# ===========================
 
-# ================================
-# 📌 API de Usuarios (JSON)
-# ================================
 @login_required
 def logout_view(request):
     logout(request)
@@ -148,7 +175,6 @@ def logout_view(request):
 
 @require_http_methods(["GET"])
 def lista_usuarios(request):
-    """ Devuelve lista de usuarios en JSON """
     usuarios = Usuario.objects.values("id", "username", "email")
     return JsonResponse(list(usuarios), safe=False)
 
@@ -156,7 +182,6 @@ def lista_usuarios(request):
 @csrf_exempt
 @require_http_methods(["POST"])
 def registrar_usuario(request):
-    """ Registro de usuario vía API """
     try:
         data = json.loads(request.body.decode("utf-8"))
         username = data.get("username")
@@ -181,7 +206,6 @@ def registrar_usuario(request):
         except ValidationError as e:
             return JsonResponse({"error": list(e.messages)}, status=400)
 
-        # Crear usuario (sin campo teléfono porque no existe en el modelo por defecto)
         user = Usuario.objects.create_user(
             username=username,
             password=password,
@@ -199,7 +223,6 @@ def registrar_usuario(request):
 @csrf_exempt
 @require_http_methods(["POST"])
 def iniciar_sesion(request):
-    """ Login vía API """
     try:
         data = json.loads(request.body.decode("utf-8"))
         username = data.get("username")
@@ -222,17 +245,17 @@ def iniciar_sesion(request):
                 })
             else:
                 return JsonResponse({"error": "Cuenta desactivada"}, status=400)
-        # 🔒 Bloque reservado para Restauranteadmin (comentado)
+
         try:
-            admin = Restauranteadmin.objects.get(username=username)
-            if check_password(password, admin.password):  # valida password encriptado
-                request.session["restaurante_admin_id"] = admin.id  # guarda en sesión
+            admin = Restauranteadmin.objects.get(usuario__username=username)
+            if check_password(password, admin.password):
+                request.session["restaurante_admin_id"] = admin.id
                 return JsonResponse({
                     "message": "Inicio de sesión exitoso (admin restaurante)",
-                    "redirect": "templates/principal_priv.html",  # 👈 redirigir a dashboard de admins
+                    "redirect": "templates/principal_priv.html",
                     "admin": {
                         "id": admin.id,
-                        "username": admin.username,
+                        "username": admin.usuario.username,
                         "restaurante_id": admin.restaurante.id,
                         "restaurante_nombre": admin.restaurante.nombre
                     }
@@ -251,14 +274,13 @@ def iniciar_sesion(request):
 @csrf_exempt
 @require_http_methods(["POST"])
 def cerrar_sesion(request):
-    """ Logout vía API """
     logout(request)
     return JsonResponse({"message": "Sesión cerrada"})
 
 
-# ================================
-# 📌 Vistas HTML (plantillas)
-# ================================
+# ===========================
+# Vistas HTML
+# ===========================
 
 def inicio(request):
     return render(request, "inicio.html")
@@ -273,7 +295,7 @@ def registro_view(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)  # login automático tras registro
+            login(request, user)
             return redirect("principal_publi")
     else:
         form = UserCreationForm()
@@ -292,11 +314,29 @@ def login_view(request):
     return render(request, "login.html", {"form": form})
 
 
-def logout_view(request):
-    logout(request)
-    return redirect("principal_publi")
-
-
 @login_required
 def perfil_view(request):
     return render(request, "usuario.html")
+
+def principal_publi(request):
+    user_info = None
+    if request.user.is_authenticated:
+        # Inicial del usuario
+        inicial = request.user.username[0].upper()
+
+        # Colores posibles (puede agregar más)
+        colores = ["#e63946", "#539f3a", "#d1a8dc", "#9d4590", "#1d3557", "#ffb703", "#fb8500"]
+
+        # Filtramos colores demasiado claros para que el fondo nunca se vea blanco
+        colores = [c for c in colores if c.lower() not in ['#ffffff', '#f1faee', '#f2f2f2']]  
+
+        color = random.choice(colores)
+
+
+        user_info = {
+            "username": request.user.username,
+            "inicial": inicial,
+            "color": color
+        }
+
+    return render(request, "principal_publi.html", {"user_info": user_info})
