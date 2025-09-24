@@ -209,38 +209,42 @@ def iniciar_sesion(request):
             return JsonResponse({"error": "Username y password son requeridos"}, status=400)
 
         user = authenticate(request, username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                return JsonResponse({
-                    "message": "Inicio de sesión exitoso",
-                    "user": {
-                        "id": user.id,
-                        "username": user.username,
-                        "email": user.email
-                    }
-                })
-            else:
-                return JsonResponse({"error": "Cuenta desactivada"}, status=400)
-        # 🔒 Bloque reservado para Restauranteadmin (comentado)
-        try:
-            admin = Restauranteadmin.objects.get(username=username)
-            if check_password(password, admin.password):  # valida password encriptado
-                request.session["restaurante_admin_id"] = admin.id  # guarda en sesión
-                return JsonResponse({
-                    "message": "Inicio de sesión exitoso (admin restaurante)",
-                    "redirect": "templates/principal_priv.html",  # 👈 redirigir a dashboard de admins
-                    "admin": {
-                        "id": admin.id,
-                        "username": admin.username,
-                        "restaurante_id": admin.restaurante.id,
-                        "restaurante_nombre": admin.restaurante.nombre
-                    }
-                })
-            else:
-                return JsonResponse({"error": "Credenciales inválidas"}, status=400)
-        except Restauranteadmin.DoesNotExist:
+        if user is None:
             return JsonResponse({"error": "Credenciales inválidas"}, status=400)
+
+        if not user.is_active:
+            return JsonResponse({"error": "Cuenta desactivada"}, status=400)
+
+        # Si llega aquí, el usuario es válido
+        login(request, user)
+
+        # Verificamos si es administrador de restaurante
+        from reservas.models import Restauranteadmin
+        try:
+            admin = Restauranteadmin.objects.get(usuario=user)
+            # 👆 aquí buscamos por usuario, no por username
+
+            return JsonResponse({
+                "message": "Inicio de sesión exitoso (admin restaurante)",
+                "redirect": "/dashboard_restaurante/",  # o donde quieras redirigir
+                "admin": {
+                    "id": admin.id,
+                    "usuario": admin.usuario.username,
+                    "restaurante_id": admin.restaurante.id,
+                    "restaurante_nombre": admin.restaurante.nombre
+                }
+            })
+        except Restauranteadmin.DoesNotExist:
+            # Si no es admin, es un usuario normal
+            return JsonResponse({
+                "message": "Inicio de sesión exitoso",
+                "redirect": "/pagina_principal/",
+                "user": {
+                    "id": user.id,
+                    "username": user.username,
+                    "email": user.email
+                }
+            })
 
     except json.JSONDecodeError:
         return JsonResponse({"error": "JSON inválido"}, status=400)
