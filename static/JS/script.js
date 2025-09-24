@@ -131,3 +131,14 @@ if (leftBtn && menu) {
         }
     });
 }
+
+
+// Color aleatorio para el avatar si no hay imagen
+document.addEventListener("DOMContentLoaded", () => {
+    const avatar = document.getElementById("userAvatar");
+    if (avatar) {
+        const colors = ["#e63946", "#f1faee", "#a8dadc", "#457b9d", "#1d3557", "#ffbe0b", "#fb5607", "#ff006e"];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        avatar.style.backgroundColor = randomColor;
+    }
+});

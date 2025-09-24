@@ -1,32 +1,50 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const sidebar = document.getElementById('sidebar');
-    const hamburger = document.querySelector('.hamburger-btn');
+const modal = document.getElementById("modalFoto");
+const btnAbrir = document.getElementById("abrirModal");
+const spanCerrar = modal.querySelector(".cerrar");
+const cancelarModal = document.getElementById("cancelarModal");
 
-    hamburger.addEventListener('click', function() {
-        sidebar.classList.toggle('collapsed');
-    });
+const inputModal = document.getElementById('perfilInputModal');
+const previewModal = document.getElementById('perfilPreviewModal');
+const borrarModal = document.getElementById('borrarImagenModal');
 
-    const sections = ['perfil', 'reservas', 'configuracion', 'seguridad', 'personalizacion', 'notificaciones'];
-    const menuLinks = Array.from(document.querySelectorAll('.menu a'));
-    function onScroll() {
-        let scrollPos = window.scrollY || document.documentElement.scrollTop;
-        let found = false;
-        for (let i = 0; i < sections.length; i++) {
-            let section = document.getElementById(sections[i]);
-            if (section) {
-                let offset = section.offsetTop - 80;
-                let nextSection = sections[i+1] ? document.getElementById(sections[i+1]) : null;
-                let nextOffset = nextSection ? nextSection.offsetTop - 80 : Infinity;
-                if (scrollPos >= offset && scrollPos < nextOffset) {
-                    menuLinks.forEach(link => link.classList.remove('scrolled'));
-                    if (menuLinks[i]) menuLinks[i].classList.add('scrolled');
-                    found = true;
-                    break;
-                }
-            }
-        }
-        if (!found) menuLinks.forEach(link => link.classList.remove('scrolled'));
+const coloresAleatorios = ["e63946","f1faee","a8dadc","457b9d","1d3557","ffb703","fb8500"];
+
+// Abrir modal
+btnAbrir.onclick = () => modal.style.display = "block";
+// Cerrar modal
+spanCerrar.onclick = cancelarModal.onclick = () => modal.style.display = "none";
+window.onclick = e => { if(e.target == modal) modal.style.display = "none"; }
+
+// Preview al seleccionar archivo
+inputModal.addEventListener('change', function() {
+    const file = this.files[0];
+    if(file){
+        const reader = new FileReader();
+        reader.onload = e => previewModal.src = e.target.result;
+        reader.readAsDataURL(file);
     }
-    window.addEventListener('scroll', onScroll);
-    onScroll();
+});
+
+// Borrar imagen -> asignar mismo color que principal_publi
+borrarModal.addEventListener('click', function() {
+    inputModal.value = '';
+    previewModal.src = 'https://ui-avatars.com/api/?name={{ user.username|urlencode }}&background={{ user.avatar_color }}&color=FFFFFF&size=140';
+});
+
+
+// Guardar cambios: se asigna al input real del formulario principal y cierra modal
+document.getElementById('guardarModal').addEventListener('click', function() {
+    const inputPrincipal = document.getElementById('perfilInput');
+    const previewPrincipal = document.getElementById('perfilPreview');
+    const borrarInput = document.getElementById('borrarImagenInput');
+
+    if(inputModal.files[0]){
+        inputPrincipal.files = inputModal.files;
+        borrarInput.value = '0';
+    } else if(previewModal.src.includes('ui-avatars.com')) {
+        inputPrincipal.value = '';
+        borrarInput.value = '1';
+    }
+    previewPrincipal.src = previewModal.src;
+    modal.style.display = "none";
 });

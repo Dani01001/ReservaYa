@@ -6,57 +6,101 @@
     <title>Configuración de Perfil</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{% static 'CSS/usuario.css' %}">
-    <script src="{% static 'JS/.js' %}" defer></script>
 </head>
 <body>
-    <a href="{% url 'principal_publi' %}" class="volver-btn" title="Volver">Volver<br>&#8592;</a>
+    <a href="{% url 'principal_publi' %}" class="volver-btn" title="Volver">⬅ Volver</a>
+    
     <div class="container">
         <aside class="sidebar" id="sidebar">
-            <button class="hamburger-btn" title="Menú">&#9776;</button>
             <h2>Mi Perfil</h2>
             <ul class="menu">
+                <button class="hamburger-btn" title="Menú" style="display: block;">&#9776;</button>
                 <li><a href="#perfil" class="active"><span class="icon">👤</span><span class="text">Perfil</span></a></li>
                 <li><a href="#reservas"><span class="icon">📅</span><span class="text">Reservas</span></a></li>
                 <li><a href="#configuracion"><span class="icon">⚙️</span><span class="text">Configuración</span></a></li>
                 <li><a href="#seguridad"><span class="icon">🔒</span><span class="text">Seguridad</span></a></li>
-                <li><a href="#personalizacion"><span class="icon">🎨</span><span class="text">Personalización</span></a></li>
-                <li><a href="#notificaciones"><span class="icon">🔔</span><span class="text">Notificaciones</span></a></li>
-                <li><a href="#cerrar-sesion"><span class="icon">🚪</span><span class="text">Cerrar sesión</span></a></li>
+                <li><a href="{% url 'logout_view' %}"><span class="icon">🚪</span><span class="text">Cerrar sesión</span></a></li>
             </ul>
         </aside>
+        
         <main class="profile-main">
+            <!-- PERFIL -->
             <div class="profile-header" id="perfil">
                 <div class="avatar">
-                    <span>👤</span>
+                {% if user.perfil_imagen %}
+                    <img src="{{ user.perfil_imagen.url }}" alt="{{ user.username }}">
+                {% else %}
+                    <div style="
+                        background-color: #{{ user.avatar_color }};
+                        width:100%; height:100%;
+                        display:flex; justify-content:center; align-items:center;
+                        font-size:3rem; color:white;">
+                        {{ user.username|first|upper }}
+                    </div>
+                {% endif %}
                 </div>
                 <div class="profile-info">
                     <h1>{{ user.username }}</h1>
                     <p>{{ user.email }}</p>
-                    {% if tiene_google %}
-                        <div class="google-status"><span>🔗</span> Sesión con Google</div>
+                    {% if user.telefono %}
+                        <p>📱 {{ user.telefono }}</p>
                     {% else %}
-                        <div class="google-status no"><span>⛔</span> No usas Google</div>
+                        <p class="no-phone">📱 No has configurado tu teléfono</p>
                     {% endif %}
                 </div>
             </div>
+
+            <!-- CONFIGURACIÓN -->
             <div class="section" id="configuracion">
                 <h3>Configuración de Usuario</h3>
                 <div class="section-content">
-                    <form method="post" action="{% url 'actualizar_usuario' %}">
+                    <form method="post" action="{% url 'actualizar_usuario' %}" enctype="multipart/form-data">
                         {% csrf_token %}
+                        
+                        <!-- Usuario -->
                         <label>Usuario:
                             <input type="text" name="username" value="{{ user.username }}" {% if not puede_cambiar_usuario %}disabled{% endif %}>
                         </label>
                         {% if not puede_cambiar_usuario %}
                             <div class="info-msg">Solo puedes cambiar tu usuario cada 14 días.</div>
                         {% endif %}
+                        
+                        <!-- Email -->
                         <label>Email:
                             <input type="email" name="email" value="{{ user.email }}">
                         </label>
-                        <button type="submit" {% if not puede_cambiar_usuario %}disabled{% endif %}>Guardar cambios</button>
+                        
+                        <!-- Teléfono -->
+                        <label>Teléfono:
+                            <input type="text" name="telefono" value="{{ user.telefono }}">
+                        </label>
+                        
+                        <!-- Foto de perfil -->
+                        <button type="button" id="abrirModal" class="btn-cambiar-foto">Cambiar foto</button>
+
+                        <!-- MODAL -->
+                        <div id="modalFoto" class="modal">
+                            <div class="modal-content">
+                                <span class="cerrar">&times;</span>
+                                <h3>Actualizar Foto de Perfil</h3>
+                                <div class="preview-avatar-modal">
+                                    <img id="perfilPreviewModal" src="{% if user.perfil_imagen %}{{ user.perfil_imagen.url }}{% else %}https://ui-avatars.com/api/?name={{ user.username|urlencode }}&background=730707&color=FFFFFF&size=140{% endif %}" alt="Avatar">
+                                </div>
+                                <input type="file" id="perfilInputModal" accept="image/*">
+                                <button type="button" id="borrarImagenModal">Borrar imagen</button>
+                                <div class="modal-actions">
+                                    <button type="button" id="guardarModal">Guardar cambios</button>
+                                    <button type="button" id="cancelarModal">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="submit">Guardar cambios</button>
                     </form>
                 </div>
             </div>
+
+            <!-- SEGURIDAD -->
             <div class="section" id="seguridad">
                 <h3>Cambiar Contraseña</h3>
                 <div class="section-content">
@@ -75,31 +119,18 @@
                     </form>
                 </div>
             </div>
+
+            <!-- RESERVAS -->
             <div class="section" id="reservas">
                 <h3>Mis Reservas</h3>
                 <div class="section-content">
                     <p>No tienes reservas activas.</p>
                 </div>
             </div>
-            <div class="section" id="personalizacion">
-                <h3>Personalización</h3>
-                <div class="section-content">
-                    <label>Tema:
-                        <select>
-                            <option>Claro</option>
-                            <option>Oscuro</option>
-                        </select>
-                    </label>
-                </div>
-            </div>
-            <div class="section" id="notificaciones">
-                <h3>Notificaciones</h3>
-                <div class="section-content">
-                    <label><input type="checkbox" checked> Recibir notificaciones por email</label><br>
-                    <label><input type="checkbox"> Notificaciones push</label>
-                </div>
-            </div>
         </main>
     </div>
+
+    <!-- JS -->
+    <script src="{% static 'JS/.js' %}"></script>
 </body>
 </html>

@@ -8,6 +8,7 @@
     --white: #fff;
     --hover: #ffebee;
 }
+
 html, body {
     height: 100%;
     margin: 0;
@@ -16,11 +17,13 @@ html, body {
     line-height: 1.6;
     background: var(--background-color);
 }
+
 .container {
     display: flex;
     height: 100vh;
     width: 100vw;
 }
+
 .sidebar {
     background: var(--white);
     width: var(--sidebar-width);
@@ -34,11 +37,13 @@ html, body {
     z-index: 2;
     overflow: hidden;
 }
+
 .sidebar.collapsed {
     width: var(--sidebar-collapsed);
     min-width: var(--sidebar-collapsed);
     box-shadow: none;
 }
+
 .sidebar h2 {
     text-align: center;
     margin: 32px 0 24px 0;
@@ -47,18 +52,22 @@ html, body {
     letter-spacing: 1px;
     transition: opacity 0.3s;
 }
+
 .sidebar.collapsed h2 {
     display: none !important;
 }
+
 .menu {
     list-style: none;
     padding: 0;
     margin: 0;
     flex: 1;
 }
+
 .menu li {
     margin: 0 0 18px 0;
 }
+
 .menu a {
     display: flex;
     align-items: center;
@@ -73,32 +82,39 @@ html, body {
     transform: translateX(0);
     border-radius: 8px;
 }
+
 .sidebar.collapsed .menu a {
     justify-content: center;
     padding: 18px 0;
 }
+
 .sidebar.collapsed .menu a span.text {
     display: none;
 }
+
 .menu a.active, .menu a:hover, .menu a.scrolled {
     background: var(--hover);
     color: var(--primary-color);
     border-left: 4px solid var(--primary-color);
 }
-.sidebar.collapsed .menu a.active, 
+
+.sidebar.collapsed .menu a.active,
 .sidebar.collapsed .menu a:hover, 
 .sidebar.collapsed .menu a.scrolled {
     border-left: none;
     background: var(--hover);
+    margin-top: 50px;
 }
+
 .menu .icon {
     font-size: 1.5em;
     min-width: 28px;
     text-align: center;
 }
+
 .hamburger-btn {
     position: absolute;
-    top: 18px;
+    top: 3.2%;
     right: 18px;
     background: none;
     border: none;
@@ -108,33 +124,101 @@ html, body {
     z-index: 3;
     transition: background 0.2s;
 }
-/* Flecha eliminada del sidebar */
+
+/* Avatar */
+.avatar {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #790000;
+    border: 3px solid #730707; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.preview-avatar {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #730707;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.preview-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+}
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 320px;
+    text-align: center;
+    position: relative;
+}
+.cerrar {
+    position: absolute;
+    top: 10px; right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+}
+.preview-avatar-modal img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+.modal-actions button {
+    margin: 5px;
+}
 
 /* Botón volver fuera del menú */
 .volver-btn {
     position: fixed;
-    top: 24px;
-    right: 32px;
-    background: var(--primary-color);
-    color: var(--white);
-    border: none;
-    border-radius: 25%;
-    width: 65px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1em;
-    box-shadow: 0 2px 8px #0002;
-    cursor: pointer;
-    z-index: 10;
-    transition: background 0.2s;
-    line-height: 0.8;
-    text-align: center;
+    top: 20px;
+    right: 20px;
+    display: inline-block;
+    padding: 10px 20px;
+    background: #fff;
+    color: #730707;
+    font-weight: bold;
     text-decoration: none;
+    border: 2px solid #730707;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    z-index: 10; /* Sobre todo */
 }
+
 .volver-btn:hover {
-    background: var(--secondary-color);
+    color: #fff;
+    background: #730707;
+    transform: translateX(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
 }
 
 .profile-main {
@@ -146,10 +230,13 @@ html, body {
     position: relative;
     transition: filter 0.3s;
 }
+
 .sidebar.collapsed ~ .profile-main {
     filter: blur(0.02em);
 }
+
 /* Títulos y textos principales */
+
 .profile-header {
     display: flex;
     align-items: center;
@@ -168,30 +255,20 @@ html, body {
     from { opacity: 0; transform: translateY(-30px);}
     to { opacity: 1; transform: translateY(0);}
 }
-.avatar {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background: var(--primary-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.2em;
-    color: var(--white);
-    box-shadow: 0 2px 8px #0002;
-    transition: box-shadow 0.3s;
-}
+
 .profile-info h1 {
     margin: 0 0 4px 0;
     font-size: 2.1rem;
     color: var(--primary-color);
     text-align: left;
 }
+
 .profile-info p {
     margin: 0;
     color: var(--secondary-color);
     font-size: 1.1rem;
 }
+
 .google-status {
     margin-top: 6px;
     font-size: 1.02em;
@@ -200,9 +277,11 @@ html, body {
     align-items: center;
     gap: 6px;
 }
+
 .google-status.no {
     color: #ef4444;
 }
+
 .section {
     background: #efefef;
     border-radius: 12px;
@@ -214,10 +293,12 @@ html, body {
     margin-right: auto;
     animation: fadeInUp 0.7s;
 }
+
 @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(30px);}
     to { opacity: 1; transform: translateY(0);}
 }
+
 .section h3 {
     margin-top: 0;
     color: var(--primary-color);
@@ -225,11 +306,13 @@ html, body {
     text-align: center;
     margin-bottom: 18px;
 }
+
 .section-content label {
     color: var(--secondary-color);
     font-size: 1.05rem;
     margin-bottom: 7px;
 }
+
 .section-content input[type="text"],
 .section-content input[type="email"],
 .section-content input[type="password"],
@@ -241,6 +324,7 @@ html, body {
     font-size: 1.05rem;
     width: 100%;
 }
+
 .section-content button,
 .section-content input[type="submit"] {
     padding: 12px;
@@ -257,12 +341,14 @@ html, body {
     color: #333;
     transition: 0.5s;
 }
+
 .section-content button:disabled,
 .section-content input[type="submit"]:disabled {
     background: #BFBFBF;
     color: #fff;
     cursor: not-allowed;
 }
+
 .section-content button:hover:not(:disabled),
 .section-content input[type="submit"]:hover:not(:disabled) {
     background: var(--secondary-color);
@@ -270,11 +356,13 @@ html, body {
     transform: scale(1.02);
     box-shadow: 0 8px 24px rgba(77, 5, 5, 0.18);
 }
+
 .section-content .info-msg {
     color: #f59e42;
     font-size: 0.93em;
     margin-bottom: 8px;
 }
+
 @media (max-width: 900px) {
     .profile-main {
         padding: 32px 10px 10px 10px;
@@ -283,6 +371,7 @@ html, body {
         max-width: 98vw;
     }
 }
+
 @media (max-width: 600px) {
     .container {
         flex-direction: column;
