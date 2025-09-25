@@ -89,16 +89,22 @@ ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
+        'APP': {
+            'client_id': "1051641894738-r45og5d99a3iod757dd99b121309ou7j.apps.googleusercontent.com",
+            'secret': "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",  # 👈 el secreto de Google Cloud
+            'key': ""
+        },
         'SCOPE': [
             'profile',
             'email',
         ],
         'AUTH_PARAMS': {
-            'access_type': 'online',  # 'offline' si quieres refresh tokens
-            'prompt': 'select_account',  # fuerza a Google a mostrar la pantalla de login
+            'access_type': 'online',
+            'prompt': 'select_account',
         }
     }
 }
+
 # SOCIALACCOUNT_PROVIDERS = {
 #     'google': {
 #         'APP': {
