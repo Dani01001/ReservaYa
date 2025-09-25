@@ -43,10 +43,10 @@
                     </li>
                     {% else %}
                     <li class="boton_nav" id="registroItem">
-                        <a href="#" onclick="abrirVentanaEmergente('{% url "registro" %}'); return false;">Registro</a>
+                        <a href="#" onclick="abrirVentanaEmergente('{% url "registro" %}'); return false;" style="width: 100%; height: 100%;">Registro</a>
                     </li>
                     <li class="boton_nav" id="loginItem">
-                        <a href="#" class="iniciar_sesion" onclick="abrirVentanaEmergente('{% url "login" %}'); return false;">Iniciar Sesión</a>
+                        <a href="#" class="iniciar_sesion" onclick="abrirVentanaEmergente('{% url "login" %}'); return false;" style="width: 100%; height: 100%;">Iniciar Sesión</a>
                     </li>
                     {% endif %}
                 </ul>

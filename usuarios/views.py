@@ -8,25 +8,28 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 import json
-from django.contrib.auth.models import User
+import random
 from django.conf import settings
-from .models import Restauranteadmin   
-from django.contrib.auth.hashers import make_password, check_password
+from .models import Restauranteadmin
+from django.contrib.auth.hashers import check_password
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from datetime import timedelta
 from django.utils import timezone
-from .forms import CompletarDatosForm
-
-
+from .forms import CompletarDatosForm, ActualizarUsuarioForm
 
 User = get_user_model()
+
+
+# ===========================
+# Perfil y datos de usuario
+# ===========================
 
 @login_required
 def completar_datos(request):
     user = request.user
 
-    if user.username and user.telefono:
+    if user.username and getattr(user, "telefono", None):
         mensaje = "Los datos ya fueron completados. Cierra la ventana."
         return render(request, "completar_datos.html", {
             "datos_completados": True,
@@ -123,7 +126,6 @@ def actualizar_usuario(request):
 
             # Gestionar imagen de perfil
             if borrar_imagen:
-                # Borrar imagen actual y asignar None
                 user.perfil_imagen.delete(save=False)
                 user.perfil_imagen = None
             elif perfil_imagen:
@@ -137,7 +139,6 @@ def actualizar_usuario(request):
         form = ActualizarUsuarioForm(instance=user)
 
     return render(request, "usuario.html", {"form": form})
-
 
 
 @login_required
@@ -165,7 +166,7 @@ def cambiar_contrasena(request):
 
 
 # ===========================
-# API y Auth (sin cambios)
+# API y Auth
 # ===========================
 
 @login_required
@@ -176,7 +177,7 @@ def logout_view(request):
 
 @require_http_methods(["GET"])
 def lista_usuarios(request):
-    usuarios = Usuario.objects.values("id", "username", "email")
+    usuarios = User.objects.values("id", "username", "email")
     return JsonResponse(list(usuarios), safe=False)
 
 
@@ -193,10 +194,10 @@ def registrar_usuario(request):
         if not username or not password or not email:
             return JsonResponse({"error": "Username, password y email son requeridos"}, status=400)
 
-        if Usuario.objects.filter(username=username).exists():
+        if User.objects.filter(username=username).exists():
             return JsonResponse({"error": "Usuario ya existe"}, status=400)
 
-        if Usuario.objects.filter(email=email).exists():
+        if User.objects.filter(email=email).exists():
             return JsonResponse({"error": "Email ya está registrado"}, status=400)
 
         if password != password2:
@@ -207,7 +208,7 @@ def registrar_usuario(request):
         except ValidationError as e:
             return JsonResponse({"error": list(e.messages)}, status=400)
 
-        user = Usuario.objects.create_user(
+        user = User.objects.create_user(
             username=username,
             password=password,
             email=email
@@ -239,33 +240,14 @@ def iniciar_sesion(request):
         if not user.is_active:
             return JsonResponse({"error": "Cuenta desactivada"}, status=400)
 
-        # Si llega aquí, el usuario es válido
         login(request, user)
 
         # Verificamos si es administrador de restaurante
-        from reservas.models import Restauranteadmin
         try:
-            admin = Restauranteadmin.objects.get(usuario__username=username)
-            if check_password(password, admin.password):
-                request.session["restaurante_admin_id"] = admin.id
-                return JsonResponse({
-                    "message": "Inicio de sesión exitoso (admin restaurante)",
-                    "redirect": "templates/principal_priv.html",
-                    "admin": {
-                        "id": admin.id,
-                        "username": admin.usuario.username,
-                        "restaurante_id": admin.restaurante.id,
-                        "restaurante_nombre": admin.restaurante.nombre
-                    }
-                })
-            else:
-                return JsonResponse({"error": "Credenciales inválidas"}, status=400)
             admin = Restauranteadmin.objects.get(usuario=user)
-            # 👆 aquí buscamos por usuario, no por username
-
             return JsonResponse({
                 "message": "Inicio de sesión exitoso (admin restaurante)",
-                "redirect": "/dashboard_restaurante/",  # o donde quieras redirigir
+                "redirect": "/dashboard_restaurante/",
                 "admin": {
                     "id": admin.id,
                     "usuario": admin.usuario.username,
@@ -274,41 +256,6 @@ def iniciar_sesion(request):
                 }
             })
         except Restauranteadmin.DoesNotExist:
-            # Si no es admin, es un usuario normal
-            return JsonResponse({
-                "message": "Inicio de sesión exitoso",
-                "redirect": "/pagina_principal/",
-                "user": {
-                    "id": user.id,
-                    "username": user.username,
-                    "email": user.email
-                }
-            })
-
-        if not user.is_active:
-            return JsonResponse({"error": "Cuenta desactivada"}, status=400)
-
-        # Si llega aquí, el usuario es válido
-        login(request, user)
-
-        # Verificamos si es administrador de restaurante
-        #from reservas.models import Restauranteadmin
-        try:
-            admin = Restauranteadmin.objects.get(usuario=user)
-            # 👆 aquí buscamos por usuario, no por username
-
-            return JsonResponse({
-                "message": "Inicio de sesión exitoso (admin restaurante)",
-                "redirect": "/dashboard_restaurante/",  # o donde quieras redirigir
-                "admin": {
-                    "id": admin.id,
-                    "usuario": admin.usuario.username,
-                    "restaurante_id": admin.restaurante.id,
-                    "restaurante_nombre": admin.restaurante.nombre
-                }
-            })
-        except Restauranteadmin.DoesNotExist:
-            # Si no es admin, es un usuario normal
             return JsonResponse({
                 "message": "Inicio de sesión exitoso",
                 "redirect": "/pagina_principal/",
@@ -340,10 +287,6 @@ def inicio(request):
     return render(request, "inicio.html")
 
 
-def principal_publi(request):
-    return render(request, "principal_publi.html")
-
-
 def registro_view(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
@@ -372,20 +315,14 @@ def login_view(request):
 def perfil_view(request):
     return render(request, "usuario.html")
 
+
 def principal_publi(request):
     user_info = None
     if request.user.is_authenticated:
-        # Inicial del usuario
         inicial = request.user.username[0].upper()
-
-        # Colores posibles (puede agregar más)
         colores = ["#e63946", "#539f3a", "#d1a8dc", "#9d4590", "#1d3557", "#ffb703", "#fb8500"]
-
-        # Filtramos colores demasiado claros para que el fondo nunca se vea blanco
-        colores = [c for c in colores if c.lower() not in ['#ffffff', '#f1faee', '#f2f2f2']]  
-
+        colores = [c for c in colores if c.lower() not in ['#ffffff', '#f1faee', '#f2f2f2']]
         color = random.choice(colores)
-
 
         user_info = {
             "username": request.user.username,
