@@ -1,6 +1,5 @@
 from django.urls import path
 from . import views
-
 urlpatterns = [
     # API JSON
     path('', views.lista_usuarios, name='lista_usuarios'),
@@ -16,4 +15,5 @@ urlpatterns = [
     path('principal_publi/', views.principal_publi, name='principal_publi'),
     path('completar-datos/', views.completar_datos, name='completar_datos'),
     path('perfil/', views.perfil_view, name='perfil_view'),
+    path("principal_priv/", views.principal_priv, name="principal_priv"),
 ]

@@ -17,6 +17,7 @@ from django.contrib.auth import update_session_auth_hash
 from datetime import timedelta
 from django.utils import timezone
 from .forms import CompletarDatosForm, ActualizarUsuarioForm
+from django.urls import reverse
 
 User = get_user_model()
 
@@ -247,7 +248,7 @@ def iniciar_sesion(request):
             admin = Restauranteadmin.objects.get(usuario=user)
             return JsonResponse({
                 "message": "Inicio de sesión exitoso (admin restaurante)",
-                "redirect": "/dashboard_restaurante/",
+                "redirect": reverse("principal_priv"),
                 "admin": {
                     "id": admin.id,
                     "usuario": admin.usuario.username,
@@ -331,3 +332,6 @@ def principal_publi(request):
         }
 
     return render(request, "principal_publi.html", {"user_info": user_info})
+
+def principal_priv(request):
+    return render(request, "principal_priv.html")

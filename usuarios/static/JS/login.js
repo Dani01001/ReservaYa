@@ -1,15 +1,15 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("formLogin");
     const mensaje = document.getElementById("mensaje");
 
-    form.addEventListener("submit", function(e) {
+    form.addEventListener("submit", function (e) {
         e.preventDefault();
 
         const data = {
             username: document.getElementById("username").value,
             password: document.getElementById("password").value
         };
-        
+
         fetch(`/api/usuarios/login/`, {
             method: "POST",
             headers: {
@@ -36,12 +36,18 @@ document.addEventListener("DOMContentLoaded", function() {
                     localStorage.setItem("username", respuesta.username);
                 }
 
+                // 🔥 NUEVO: si el backend manda un redirect, respetarlo
+                if (respuesta.redirect) {
+                    window.location.href = respuesta.redirect;
+                    return; // cortamos aquí para no ejecutar el resto
+                }
+
                 // Cerrar ventana emergente y actualizar página principal
                 if (window.opener) {
                     window.opener.location.reload();
                     window.close();
                 } else {
-                    window.location.href = "principal_publi.html";
+                    window.location.href = "principal_publi.html"; // se mantiene tu redirección por defecto
                 }
             }
         })
@@ -50,5 +56,5 @@ document.addEventListener("DOMContentLoaded", function() {
             mensaje.style.color = "red";
             console.error(error);
         });
-    });
-});
+    }); // 👈 cierre del addEventListener del form
+}); // 👈 cierre del DOMContentLoaded

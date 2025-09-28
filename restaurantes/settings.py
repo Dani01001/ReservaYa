@@ -42,7 +42,7 @@ DEFAULT_PERMISSION_CLASSES = [
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.sites',  # obligatorio para allauth
+    #'django.contrib.sites',  # obligatorio para allauth
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -87,23 +87,23 @@ LOGOUT_REDIRECT_URL = '/'      # pagina a la que redirige al cerrar sesion
 ACCOUNT_LOGIN_METHODS = {'username', 'email'}
 ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
 
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'APP': {
-            'client_id': "1051641894738-r45og5d99a3iod757dd99b121309ou7j.apps.googleusercontent.com",
-            'secret': "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",  # 👈 el secreto de Google Cloud
-            'key': ""
-        },
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-            'prompt': 'select_account',
-        }
-    }
-}
+#SOCIALACCOUNT_PROVIDERS = {
+    #'google': {
+        #'APP': {
+            #'client_id': "1051641894738-r45og5d99a3iod757dd99b121309ou7j.apps.googleusercontent.com",
+            #'secret': "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",  # 👈 el secreto de Google Cloud
+            #'key': ""
+        #},
+        #'SCOPE': [
+            #'profile',
+            #'email',
+        #],
+        #'AUTH_PARAMS': {
+            #'access_type': 'online',
+            #'prompt': 'select_account',
+        #}
+    #}
+#}
 
 # SOCIALACCOUNT_PROVIDERS = {
 #     'google': {
@@ -126,7 +126,8 @@ SOCIALACCOUNT_PROVIDERS = {
 
 
 # Indica el sitio actual (obligatorio para allauth)
-SITE_ID = 1
+
+#SITE_ID = 1
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",             # Cors debe ir al inicio SIEMPRE
