@@ -8,8 +8,6 @@ env/
 venv/
 *.egg-info/
 
-# Base de datos SQLite
-
 # Archivos de sistema
 .DS_Store
 Thumbs.db
