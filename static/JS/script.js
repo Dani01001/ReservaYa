@@ -7,11 +7,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const userName = document.getElementById('userName');
     const btnLogout = document.getElementById('btnLogout');
     const btnPerfil = document.getElementById('btnPerfil');
-
     const token = localStorage.getItem("token");
     const username = localStorage.getItem("username");
     const userSections = document.querySelectorAll('.userSection');
+    window.addEventListener("message", function(event) {
+        const data = event.data;
+        if (!data || data.type !== "login-success") return;
 
+        console.log("Mensaje recibido:", data);
+        if (data.redirect) {
+            window.location.href = data.redirect;
+        } else {
+            window.location.reload();
+        }
+    });
     if (token && username) {
         if (registroItem) registroItem.style.display = 'none';
         if (loginItem) loginItem.style.display = 'none';

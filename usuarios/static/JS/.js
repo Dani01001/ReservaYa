@@ -1,50 +1,162 @@
-const modal = document.getElementById("modalFoto");
-const btnAbrir = document.getElementById("abrirModal");
-const spanCerrar = modal.querySelector(".cerrar");
-const cancelarModal = document.getElementById("cancelarModal");
+document.addEventListener("DOMContentLoaded", () => {
+    const reservasContainer = document.querySelector("#reservas .section-content");
 
-const inputModal = document.getElementById('perfilInputModal');
-const previewModal = document.getElementById('perfilPreviewModal');
-const borrarModal = document.getElementById('borrarImagenModal');
-
-const coloresAleatorios = ["e63946","f1faee","a8dadc","457b9d","1d3557","ffb703","fb8500"];
-
-// Abrir modal
-btnAbrir.onclick = () => modal.style.display = "block";
-// Cerrar modal
-spanCerrar.onclick = cancelarModal.onclick = () => modal.style.display = "none";
-window.onclick = e => { if(e.target == modal) modal.style.display = "none"; }
-
-// Preview al seleccionar archivo
-inputModal.addEventListener('change', function() {
-    const file = this.files[0];
-    if(file){
-        const reader = new FileReader();
-        reader.onload = e => previewModal.src = e.target.result;
-        reader.readAsDataURL(file);
+    // Obtener cookie CSRF
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+            const cookies = document.cookie.split(";");
+            for (let cookie of cookies) {
+                cookie = cookie.trim();
+                if (cookie.startsWith(name + "=")) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
     }
-});
 
-// Borrar imagen -> asignar mismo color que principal_publi
-borrarModal.addEventListener('click', function() {
-    inputModal.value = '';
-    previewModal.src = 'https://ui-avatars.com/api/?name={{ user.username|urlencode }}&background={{ user.avatar_color }}&color=FFFFFF&size=140';
-});
+    const csrftoken = getCookie("csrftoken");
 
+    // Función para cargar reservas
+    async function cargarReservas() {
+        try {
+            const token = localStorage.getItem("token");
+            const response = await fetch("/usuario/mis_reservas/", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    ...(token ? { "Authorization": `Token ${token}` } : {}),
+                },
+                credentials: "include"
+            });
 
-// Guardar cambios: se asigna al input real del formulario principal y cierra modal
-document.getElementById('guardarModal').addEventListener('click', function() {
-    const inputPrincipal = document.getElementById('perfilInput');
-    const previewPrincipal = document.getElementById('perfilPreview');
-    const borrarInput = document.getElementById('borrarImagenInput');
+            if (!response.ok) throw new Error("Error al cargar reservas");
 
-    if(inputModal.files[0]){
-        inputPrincipal.files = inputModal.files;
-        borrarInput.value = '0';
-    } else if(previewModal.src.includes('ui-avatars.com')) {
-        inputPrincipal.value = '';
-        borrarInput.value = '1';
+            const reservas = await response.json();
+            renderReservas(reservas);
+
+        } catch (err) {
+            console.error(err);
+            reservasContainer.innerHTML = `<p>Error cargando reservas.</p>`;
+        }
     }
-    previewPrincipal.src = previewModal.src;
-    modal.style.display = "none";
+
+    // Función para renderizar reservas
+    function renderReservas(reservas) {
+        if (reservas.length === 0) {
+            reservasContainer.innerHTML = `<p>No tienes reservas activas.</p>`;
+            return;
+        }
+
+        reservasContainer.innerHTML = "";
+        reservas.forEach(r => {
+            const div = document.createElement("div");
+            div.classList.add("reserva-item");
+            div.innerHTML = `
+                <p><strong>Restaurante:</strong> ${r.restaurante.nombre}</p>
+                <p><strong>Mesa:</strong> ${r.mesa_asignada}</p>
+                <p><strong>Fecha:</strong> ${r.fecha}</p>
+                <p><strong>Hora:</strong> ${r.hora}</p>
+                <p><strong>Personas:</strong> ${r.cantidad_personas}</p>
+                <button class="btn-editar" data-id="${r.id}">Editar</button>
+                <button class="btn-cancelar" data-id="${r.id}">Cancelar</button>
+                <hr>
+            `;
+            reservasContainer.appendChild(div);
+        });
+
+        // Agregar eventos
+        document.querySelectorAll(".btn-cancelar").forEach(btn => {
+            btn.addEventListener("click", cancelarReserva);
+        });
+
+        document.querySelectorAll(".btn-editar").forEach(btn => {
+            btn.addEventListener("click", editarReserva);
+        });
+    }
+
+    // Función para cancelar reserva
+    async function cancelarReserva(e) {
+        const reservaId = e.target.dataset.id;
+        if (!confirm("¿Seguro que deseas cancelar esta reserva?")) return;
+
+        try {
+            const token = localStorage.getItem("token");
+            const response = await fetch(`/api/reservas/${reservaId}/`, {
+                method: "DELETE",
+                headers: {
+                    "X-CSRFToken": csrftoken,
+                    ...(token ? { "Authorization": `Token ${token}` } : {}),
+                },
+                credentials: "include"
+            });
+
+            if (!response.ok) throw new Error("Error al cancelar reserva");
+
+            alert("Reserva cancelada correctamente.");
+            cargarReservas(); // refrescar lista
+
+        } catch (err) {
+            console.error(err);
+            alert("No se pudo cancelar la reserva.");
+        }
+    }
+
+    // Función para editar reserva
+    function editarReserva(e) {
+        const reservaId = e.target.dataset.id;
+        const div = e.target.closest(".reserva-item");
+
+        // Crear inputs para editar
+        div.innerHTML += `
+            <div class="editar-form">
+                <label>Fecha: <input type="date" id="editFecha" value="${div.querySelector("p:nth-child(3)").textContent.split(": ")[1]}"></label>
+                <label>Hora: <input type="time" id="editHora" value="${div.querySelector("p:nth-child(4)").textContent.split(": ")[1]}"></label>
+                <label>Personas: <input type="number" id="editPersonas" min="1" max="20" value="${div.querySelector("p:nth-child(5)").textContent.split(": ")[1]}"></label>
+                <button class="btn-guardar">Guardar</button>
+                <button class="btn-cancelar-edicion">Cancelar</button>
+            </div>
+        `;
+
+        div.querySelector(".btn-guardar").addEventListener("click", async () => {
+            const nuevaFecha = div.querySelector("#editFecha").value;
+            const nuevaHora = div.querySelector("#editHora").value;
+            const nuevasPersonas = div.querySelector("#editPersonas").value;
+
+            try {
+                const token = localStorage.getItem("token");
+                const response = await fetch(`/api/reservas/${reservaId}/`, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": csrftoken,
+                        ...(token ? { "Authorization": `Token ${token}` } : {}),
+                    },
+                    credentials: "include",
+                    body: JSON.stringify({
+                        fecha: nuevaFecha,
+                        hora: nuevaHora,
+                        cantidad_personas: nuevasPersonas
+                    })
+                });
+
+                if (!response.ok) throw new Error("Error al actualizar reserva");
+                alert("Reserva actualizada correctamente.");
+                cargarReservas();
+
+            } catch (err) {
+                console.error(err);
+                alert("No se pudo actualizar la reserva.");
+            }
+        });
+
+        div.querySelector(".btn-cancelar-edicion").addEventListener("click", () => {
+            cargarReservas(); // recarga para quitar inputs
+        });
+    }
+
+    // Cargar reservas al inicio
+    cargarReservas();
 });

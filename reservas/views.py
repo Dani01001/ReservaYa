@@ -9,7 +9,9 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from django.http import JsonResponse
-from .models import Restaurante, Mesa, Reserva
+from .models import Restaurante, Mesa, Reserva, fecha_fin, duracion_horas
+from django.utils.dateparse import parse_date
+from datetime import timedelta
 from .serializers import RestauranteSerializer, MesaSerializer, ReservaSerializer
 
 
@@ -89,6 +91,8 @@ def crear_reserva(request):
     restaurante_id = request.data.get("restaurante")
     fecha = request.data.get("fecha")
     hora = request.data.get("hora")
+    duracion_horas = int(request.data.get("duracion_horas", 1))
+    cantidad_personas = int(request.data.get("cantidad_personas", 1))
 
     if not restaurante_id or not fecha or not hora:
         return Response({"error": "Debes especificar restaurante, fecha y hora."}, status=400)
@@ -98,19 +102,42 @@ def crear_reserva(request):
     except Restaurante.DoesNotExist:
         return Response({"error": "El restaurante no existe."}, status=404)
 
-    mesas_ocupadas = Reserva.objects.filter(
-        mesa__restaurante=restaurante,
-        fecha=fecha,
-        hora=hora
-    ).values_list("mesa_id", flat=True)
+    # Buscar mesas que puedan acomodar la cantidad de personas
+    mesas_disponibles = Mesa.objects.filter(
+        restaurante=restaurante,
+        capacidad__gte=cantidad_personas
+    )
 
-    mesa_disponible = Mesa.objects.filter(
-        restaurante=restaurante
-    ).exclude(id__in=mesas_ocupadas).first()
+    if not mesas_disponibles.exists():
+        return Response({"error": "No hay mesas disponibles para esa cantidad de personas."}, status=400)
+
+    # Convertir fecha y hora a datetime
+    from datetime import datetime, timedelta
+    fecha_hora_inicio = datetime.strptime(f"{fecha} {hora}", "%Y-%m-%d %H:%M")
+    fecha_hora_fin = fecha_hora_inicio + timedelta(hours=duracion_horas)
+
+    # Filtrar mesas que no tengan reservas solapadas
+    mesa_disponible = None
+    for mesa in mesas_disponibles:
+        reservas_ocupadas = Reserva.objects.filter(
+            mesa=mesa,
+            fecha=fecha,
+        )
+        solapada = False
+        for r in reservas_ocupadas:
+            inicio_r = datetime.combine(r.fecha, r.hora)
+            fin_r = inicio_r + timedelta(hours=r.duracion_horas if hasattr(r, 'duracion_horas') else 1)
+            if (fecha_hora_inicio < fin_r and fecha_hora_fin > inicio_r):
+                solapada = True
+                break
+        if not solapada:
+            mesa_disponible = mesa
+            break
 
     if not mesa_disponible:
-        return Response({"error": "No hay mesas disponibles en ese horario."}, status=400)
+        return Response({"error": "No hay mesas libres en ese horario."}, status=400)
 
+    # Crear la reserva
     data = request.data.copy()
     data["usuario"] = user.id
     data["mesa"] = mesa_disponible.id
@@ -136,7 +163,6 @@ def crear_reserva(request):
         return Response(info_extra, status=201)
 
     return Response(serializer.errors, status=400)
-
 
 # ======== VIEWSETS DRF ========
 class RestauranteViewSet(viewsets.ModelViewSet):

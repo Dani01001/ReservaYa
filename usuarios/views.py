@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 import json
 import random
 from django.conf import settings
+from reservas.models import Reserva, Mesa
 from .models import Restauranteadmin
 #from django.contrib.auth.hashers import check_password
 from django.contrib import messages
@@ -18,6 +19,12 @@ from datetime import timedelta
 from django.utils import timezone
 from .forms import CompletarDatosForm, ActualizarUsuarioForm
 from django.urls import reverse
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+from reservas.serializers import ReservaSerializer
+from django.shortcuts import get_object_or_404
 
 User = get_user_model()
 
@@ -284,6 +291,57 @@ def cerrar_sesion(request):
 # Vistas HTML
 # ===========================
 
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def mis_reservas(request):
+    reservas = Reserva.objects.filter(usuario=User).order_by('-fecha', 'hora').select_related('restaurante', 'mesa')
+    serializer = ReservaSerializer(reservas, many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def cancelar_reserva(request, reserva_id):
+    reserva = get_object_or_404(Reserva, id=reserva_id, usuario=request.user)
+    reserva.delete()
+    return Response({"message": "Reserva cancelada"})
+
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def editar_reserva(request, reserva_id):
+    reserva = get_object_or_404(Reserva, id=reserva_id, usuario=request.user)
+
+    nueva_hora = request.data.get('hora')
+    nueva_cantidad = request.data.get('cantidad_personas')
+
+    if not nueva_hora or not nueva_cantidad: 
+        return Response({"error": "Hora y cantidad_personas son requeridos"}, status=400)
+    try:
+        nueva_cantidad = int(nueva_cantidad)
+    except ValueError:
+        return Response({"error": "cantidad_personas invalida"}, status=400)
+    
+    if nueva_cantidad > reserva.mesa.capacidad:
+        return Response({"error": "La nueva cantidad excede la capacidad de la mesa"}, status=400)
+    
+    conflict = Reserva.objects.filter(
+        mesa=reserva.mesa,
+        fecha=reserva.fecha,
+        hora=nueva_hora
+    ).exclude(id=reserva.id).exists()
+
+    if conflict:
+        return Response({"error": "Mesa no disponible"}, status=400)
+
+    reserva.hora = nueva_hora
+    reserva.cantidad_personas = nueva_cantidad
+    reserva.save()
+
+    serializer = ReservaSerializer(reserva)
+    return Response(serializer.data, status=200)
+
 def inicio(request):
     return render(request, "inicio.html")
 
@@ -316,6 +374,10 @@ def login_view(request):
 def perfil_view(request):
     return render(request, "usuario.html")
 
+@login_required
+def perfil_usuario(request):
+    reservas = Reserva.objects.filter(usuario=request.user).select_related('restaurante').order_by('-fecha')
+    return render(request, "usuario.html", {"reservas": reservas})
 
 def principal_publi(request):
     user_info = None

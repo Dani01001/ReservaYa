@@ -120,16 +120,41 @@
                 </div>
             </div>
 
-            <!-- RESERVAS -->
-            <div class="section" id="reservas">
-                <h3>Mis Reservas</h3>
-                <div class="section-content">
-                    <p>No tienes reservas activas.</p>
-                </div>
-            </div>
-        </main>
+    <!-- RESERVAS -->
+<div class="section" id="reservas">
+    <h3>Mis Reservas</h3>
+    <div class="section-content" id="misReservas">
+        {% if reservas %}
+            <table class="tabla-reservas">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Personas</th>
+                        <th>Mesa</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in reservas %}
+                    <tr data-reserva-id="{{ r.id }}">
+                        <td>{{ r.fecha }}</td>
+                        <td>{{ r.hora }}</td>
+                        <td>{{ r.cantidad_personas }}</td>
+                        <td>{{ r.mesa.numero }}</td>
+                        <td>
+                            <button class="editarReserva">Editar</button>
+                            <button class="cancelarReserva">Cancelar</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No tienes reservas activas.</p>
+        {% endif %}
     </div>
-
+</div>
     <!-- JS -->
     <script src="{% static 'JS/.js' %}"></script>
 </body>

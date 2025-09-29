@@ -30,3 +30,14 @@ class Reserva(models.Model):
     def __str__(self):
         return f"Reserva de {self.nombre_cliente} para {self.cantidad_personas} el {self.fecha} a las {self.hora}"
 
+class fecha_fin(models.Model):
+    fecha_fin = models.DateTimeField()
+
+    def __str__(self):
+        return f"Fecha fin: {self.fecha_fin}"
+    
+class duracion_horas (models.Model):
+    duracion_horas = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f"Duracion en horas: {self.duracion_horas}"

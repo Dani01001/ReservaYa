@@ -1,41 +1,44 @@
-    {% load static %}
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>reservas</title>
-    <link rel="stylesheet" href="{% static 'CSS/reservas.css' %}">
-    </head>
-    <body>
-        <main>
-            <div class="container-prin">
-                <div class="reserva">
-                    <h2>Reserva tu mesa</h2>
-                    <form id="formReserva">
-                        <label for="nombre">Nombre:</label>
-                        <input type="text" id="nombre" name="nombre" required>
-                    
-                        <label for="fecha">Fecha:</label>
-                        <input type="date" id="fecha" name="fecha" required>
-                    
-                        <label for="hora">Hora:</label>
-                        <input type="time" id="hora" name="hora" required>
-                    
-                        <label for="personas">Cantidad de personas:</label>
-                        <input type="number" id="personas" name="personas" min="1" max="20" required>
-                    
-                        <input type="submit" value="Reservar">
-                    </form>
-                </div>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reservas</title>
+<link rel="stylesheet" href="{% static 'CSS/reservas.css' %}">
+</head>
+<body>
+    <main>
+        <div class="container-prin">
+            <div class="reserva">
+                <h2>Reserva tu mesa</h2>
+                <form id="formReserva">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+
+                    <label for="fecha">Fecha:</label>
+                    <input type="date" id="fecha" name="fecha" required>
+
+                    <label for="hora">Hora:</label>
+                    <input type="time" id="hora" name="hora" required>
+
+                    <label for="duracion">Duración (horas):</label>
+                    <input type="number" id="duracion" name="duracion" min="1" max="8" value="1" required>
+
+                    <label for="personas">Cantidad de personas:</label>
+                    <input type="number" id="personas" name="personas" min="1" max="20" required>
+
+                    <input type="submit" value="Reservar">
+                </form>
+                <div id="mensaje-reserva"></div>
             </div>
-        </main>
-    <script>
-        window.SERVER_HOST = "{{ SERVER_HOST }}";
-    </script>
-    <script src="{% static 'JS/config.js' %}"></script>
-    <script src="{% static 'JS/reservas.js' %}"></script>
-    </body>
-    </html>
+        </div>
+    </main>
 
-
+<script>
+    window.SERVER_HOST = "{{ SERVER_HOST }}";
+</script>
+<script src="{% static 'JS/config.js' %}"></script>
+<script src="{% static 'JS/reservas.js' %}"></script>
+</body>
+</html>
