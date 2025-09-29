@@ -19,4 +19,5 @@ urlpatterns = [
     path('login/', user_views.login_view, name='login'),
     path('logout/', user_views.logout_view, name='logout'),
     path('perfil/', user_views.perfil_view, name='perfil'),
+    path('principal_publi/', TemplateView.as_view(template_name='principal_publi.html'), name="principal_publi"),
 ]

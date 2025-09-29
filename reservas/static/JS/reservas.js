@@ -1,4 +1,21 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // === Obtener cookie CSRF ===
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+            const cookies = document.cookie.split(";");
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith(name + "=")) {
+                    cookieValue = cookie.substring(name.length + 1);
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    const csrfToken = getCookie("csrftoken"); // ✅ para incluirlo en el fetch
     const form = document.getElementById("formReserva");
 
     // Extraer restaurante_id desde querystring (?restaurante=1)
@@ -28,13 +45,15 @@ document.addEventListener("DOMContentLoaded", () => {
             // Obtener token (si existe en localStorage)
             const token = localStorage.getItem("token");
 
-            const response = await fetch(`/api/usuarios/login/`, {
+            // ✅ Aquí es donde cambiamos la URL, debe ir a CREAR RESERVA, no a login
+            const response = await fetch(`/api/reservas/crear_reserva/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    ...(token ? { "Authorization": `Token ${token}` } : {})
+                    "X-CSRFToken": csrfToken, // 🔑 CSRF obligatorio
+                    ...(token ? { "Authorization": `Token ${token}` } : {}),
                 },
-                credentials: "include",  // 🔑 permite enviar cookies de sesión
+                credentials: "include",  // 🔑 importante para sesión
                 body: JSON.stringify(payload),
             });
 

@@ -11,7 +11,7 @@ import json
 import random
 from django.conf import settings
 from .models import Restauranteadmin
-from django.contrib.auth.hashers import check_password
+#from django.contrib.auth.hashers import check_password
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from datetime import timedelta
@@ -259,7 +259,7 @@ def iniciar_sesion(request):
         except Restauranteadmin.DoesNotExist:
             return JsonResponse({
                 "message": "Inicio de sesión exitoso",
-                "redirect": "/pagina_principal/",
+                "redirect": reverse("principal_publi"),
                 "user": {
                     "id": user.id,
                     "username": user.username,

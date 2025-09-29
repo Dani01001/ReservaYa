@@ -8,7 +8,8 @@
 </head>
 <body>
     <div class="container-login">
-        <form id="formLogin" class="login">
+        <form id="formLogin" class="login" method="POST">
+            {% csrf_token %}
             <h2>Inicio de Sesión</h2>
             <div class="form_input">
                 <label for="username">Usuario:</label>

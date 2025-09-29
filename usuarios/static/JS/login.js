@@ -9,11 +9,27 @@ document.addEventListener("DOMContentLoaded", function () {
             username: document.getElementById("username").value,
             password: document.getElementById("password").value
         };
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';'); 
+                for (let cookie of cookies) {
+                    cookie = cookie.trim();
+                    if (cookie.startsWith(name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getCookie('csrftoken');
 
         fetch(`/api/usuarios/login/`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrftoken
             },
             body: JSON.stringify(data),
             credentials: "include"
@@ -36,18 +52,20 @@ document.addEventListener("DOMContentLoaded", function () {
                     localStorage.setItem("username", respuesta.username);
                 }
 
-                // 🔥 NUEVO: si el backend manda un redirect, respetarlo
+                // 🔥 Si el backend manda un redirect, respetarlo
                 if (respuesta.redirect) {
                     window.location.href = respuesta.redirect;
-                    return; // cortamos aquí para no ejecutar el resto
+                    return;
                 }
 
-                // Cerrar ventana emergente y actualizar página principal
-                if (window.opener) {
-                    window.opener.location.reload();
-                    window.close();
+                // ✅ NUEVO: cerrar modal en lugar de redirigir
+                const modal = document.getElementById("loginModal");
+                if (modal) {
+                    modal.style.display = "none"; // Oculta el modal
+                    location.reload(); // Recarga la página para mostrar el estado logueado
                 } else {
-                    window.location.href = "principal_publi.html"; // se mantiene tu redirección por defecto
+                    // fallback si no hay modal (comportamiento anterior)
+                    window.location.href = "principal_publi.html";
                 }
             }
         })
@@ -56,5 +74,5 @@ document.addEventListener("DOMContentLoaded", function () {
             mensaje.style.color = "red";
             console.error(error);
         });
-    }); // 👈 cierre del addEventListener del form
-}); // 👈 cierre del DOMContentLoaded
+    }); // cierre del addEventListener del form
+}); // cierre del DOMContentLoaded
