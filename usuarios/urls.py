@@ -15,9 +15,9 @@ urlpatterns = [
     path('principal_publi/', views.principal_publi, name='principal_publi'),
     path('completar-datos/', views.completar_datos, name='completar_datos'),
     path('perfil/', views.perfil_view, name='perfil_view'),
-    path("principal_priv/", views.principal_priv, name="principal_priv"),
     path("usuario/mis_reservas/", views.mis_reservas, name="mis_reservas"),
     path("api/reservas/<int:reserva_id>/cancelar/", views.cancelar_reserva, name="cancelar_reserva"),
     path("api/reservas/<int:reserva_id>/editar/", views.editar_reserva, name="editar_reserva"),
+    path("reservaya_rest/", views.reservaya_rest, name="reservaya_rest"),
 
 ]

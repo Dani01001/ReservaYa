@@ -395,5 +395,5 @@ def principal_publi(request):
 
     return render(request, "principal_publi.html", {"user_info": user_info})
 
-def principal_priv(request):
-    return render(request, "principal_priv.html")
+def reservaya_rest(request):
+    return render(request, "reservaya_rest.html")

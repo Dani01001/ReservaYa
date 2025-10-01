@@ -8,6 +8,15 @@ admins = [
     {"usuario": "Talleyrand_costanera", 
      "password": "adminpass1", 
      "restaurante": "Talleyrand_costanera"},
+     {"usuario": "Alma_cocina_con_fuego", 
+     "password": "adminpass2", 
+     "restaurante": "Alma_cocina_con_Fuego"},
+     {"usuario": "Bar_San_Roque", 
+     "password": "adminpass3", 
+     "restaurante": "Bar_San_Roque"},
+     {"usuario": "Tierra_Colorada", 
+     "password": "adminpass4", 
+     "restaurante": "Tierra_Colorada"},
 ]
 
 for admin in admins:

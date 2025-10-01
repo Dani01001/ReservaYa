@@ -112,22 +112,24 @@ header{
 }
 
 
-.mid h1{
-    font-family:cursive;
+.mid h1, h2{
+    font-family:'Ethos-Regular', serif;
     text-align: center;
     color: white;
-    font-size: 3rem;
+    font-size: 5rem;
     font-weight: bold;
     text-shadow: 2px 2px 5px rgba(0,0,0,0.7); /* mejora visibilidad */
+    margin: 0;
 }
 
 .mid p{
-    font-family:cursive;
+    font-family:'Ethos-Regular', serif;
     text-align: center;
     color: white;
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     /* font-weight: bold; */
     text-shadow: 2px 2px 5px rgba(0,0,0,0.7); /* mejora visibilidad */
+    margin: 0;
 }
 
 
@@ -140,9 +142,9 @@ img{
     display: flex ;
     justify-content: center; /* centra en el eje X */
     /* align-items: top; */
-    padding: 150px 0px 100px 0;
+    padding: 100px 0px 100px 0;
     /* width: auto; */
-    height: 500px;
+    height: 250px;
 }
 
 .registro, .contacto{
@@ -379,7 +381,7 @@ a{
 
 
 
-.container_restaurantes {
+.container_restaurantes, .container_bares {
     /* background-color: blue; */
     display: flex;
     gap: 50px;
@@ -441,6 +443,32 @@ a{
 .sucursal p {
     margin: 0;
 }
+
+.txt-detalles a {
+    display: flex;
+    margin: 0;
+    font-size: 1.05rem;
+    width: 100%;
+    text-decoration: none;
+    color: #25343b;
+}
+
+.txt-detalles a:hover {
+    display: flex;
+    margin: 0;
+    font-size: 1.05rem;
+    width: 100%;
+    text-decoration:underline;
+    color: #25343b;
+}
+
+/* .ubicacion{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+    margin-top: 0;
+} */
 
 footer{
     /* background-color: var(--secondary-color);
